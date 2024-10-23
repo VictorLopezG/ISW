@@ -3,6 +3,7 @@ import User from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
+import { format as formatRut } from 'rut.js';
 import { ACCESS_TOKEN_SECRET } from "../config/configEnv.js";
 
 export async function loginService(user) {
@@ -78,7 +79,7 @@ export async function registerService(user) {
     const newUser = userRepository.create({
       nombreCompleto,
       email,
-      rut,
+      rut:formatRut(rut),
       password: await encryptPassword(user.password),
       rol: "usuario",
     });
