@@ -21,6 +21,7 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
+
 export function formatPostUpdate(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
