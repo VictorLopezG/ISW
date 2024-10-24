@@ -55,7 +55,31 @@ const Navbar = () => {
                             }} 
                             activeClassName="active"
                         >
-                            Inicio
+                            Pedidos
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/home" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Cocina
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/home" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Mesas
                         </NavLink>
                     </li>
                     {userRole === 'administrador' && (
