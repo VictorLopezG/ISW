@@ -70,18 +70,22 @@ const Navbar = () => {
                             Cocina
                         </NavLink>
                     </li>
+
+                    {userRole === 'administrador' && 'Administrador_local' && (
                     <li>
                         <NavLink 
-                            to="/home" 
+                            to="/admin_local" 
                             onClick={() => { 
                                 setMenuOpen(false); 
                                 addActiveClass();
                             }} 
                             activeClassName="active"
                         >
-                            Mesas
+                            Administrar Local
                         </NavLink>
                     </li>
+                    )}
+                    
                     {userRole === 'administrador' && (
                     <li>
                         <NavLink 
@@ -96,6 +100,7 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+
                     <li>
                         <NavLink 
                             to="/auth" 
