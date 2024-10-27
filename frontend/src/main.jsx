@@ -6,6 +6,7 @@ import Users from '@pages/Users';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
+import Admin_local from '@pages/Admin_local';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 
@@ -26,7 +27,15 @@ const router = createBrowserRouter([
           <Users />
         </ProtectedRoute>
         ),
-    }
+      },
+      {
+        path: '/admin_local',
+        element: (
+        <ProtectedRoute allowedRoles={['administrador','administrador_local']}>
+          <Admin_local/>
+        </ProtectedRoute>
+        ),
+      }
     ]
   },
   {
