@@ -66,6 +66,7 @@ export default function Popup({ show, setShow, data, action }) {
                                 options: [
                                     { value: 'administrador', label: 'Administrador' },
                                     { value: 'usuario', label: 'Usuario' },
+                                    { value: 'Admin Local', label: 'Administrador Local' },
                                     { value: 'mesero', label: 'Mesero' },
                                     { value: 'cocinero', label: 'Cocinero' },
                                 ],
