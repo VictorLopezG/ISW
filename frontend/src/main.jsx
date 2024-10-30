@@ -8,6 +8,8 @@ import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
 import Admin_local from '@pages/Admin_local';
 import ProtectedRoute from '@components/ProtectedRoute';
+import Homecaja from '@pages/HomeCaja';
+import Orders from '@pages/Orders';
 import '@styles/styles.css';
 
 const router = createBrowserRouter([
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home/>
+      },
+      {
+        path: '/orders',
+        element: <Orders/>
+      },
+      {
+        path: '/homecaja',
+        element: <Homecaja/>
       },
       {
         path: '/users',
