@@ -55,6 +55,8 @@ export async function registerService(user) {
 
     const { nombreCompleto, rut, email } = user;
 
+    user.rut=formatRut(rut)
+
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
       message
@@ -79,7 +81,7 @@ export async function registerService(user) {
     const newUser = userRepository.create({
       nombreCompleto,
       email,
-      rut:formatRut(rut),
+      rut,
       password: await encryptPassword(user.password),
       rol: "usuario",
     });

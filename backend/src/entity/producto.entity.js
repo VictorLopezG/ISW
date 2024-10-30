@@ -1,21 +1,30 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
-const Mesaschema = new EntitySchema({
-    name: "Mesa",
-    tableName: "mesas",
+const Producto = new EntitySchema({
+    name: "Producto",
+    tableName: "productos",
     columns: {
         id: {
             type: "int",
             primary: true,
             generated: true,
         },
-        numeroMesa: {
+        nombre: {
+            type: "varchar",
+            length: 31,
+            nullable: false
+        },
+        descripcion: {
             type: "varchar",
             length: 255,
-            nullable: false,
+            nullable: true
         },
-        capacidad: {
+        valor: {
+            type: "int",
+            nullable: false
+        },
+        stock: {
             type: "int",
             nullable: false,
         },
@@ -33,20 +42,20 @@ const Mesaschema = new EntitySchema({
     },
     indices: [
         {
-            name: "IDX_MESA",
+            name: "IDX_PROD",
             columns: ["id"],
             unique: true,
         },
         {
-            name: "IDX_NumeraMesa",
+            name: "IDX_NombreProd",
             columns: ["numeroMesa"],
             unique: true,
         },
         {
-            name: "IDX_capacidad_Mesa",
+            name: "IDX_updatedAt",
             columns: ["capacidad"],
         },
     ],
 });
 
-export default MesaSchema;
+export default ProductoSchema;
