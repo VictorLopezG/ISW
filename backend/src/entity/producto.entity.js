@@ -1,7 +1,7 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
-const Producto = new EntitySchema({
+const ProductoSchema = new EntitySchema({
     name: "Producto",
     tableName: "productos",
     columns: {
@@ -48,12 +48,12 @@ const Producto = new EntitySchema({
         },
         {
             name: "IDX_NombreProd",
-            columns: ["numeroMesa"],
+            columns: ["nombre"],
             unique: true,
         },
         {
             name: "IDX_updatedAt",
-            columns: ["capacidad"],
+            columns: ["updatedAt"],
         },
     ],
 });
