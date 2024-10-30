@@ -48,7 +48,7 @@ const Navbar = () => {
                 <ul>
                     <li>
                         <NavLink 
-                            to="/home" 
+                            to="/orders" 
                             onClick={() => { 
                                 setMenuOpen(false); 
                                 addActiveClass();
@@ -68,6 +68,18 @@ const Navbar = () => {
                             activeClassName="active"
                         >
                             Cocina
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/homecaja" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Caja
                         </NavLink>
                     </li>
 

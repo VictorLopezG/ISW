@@ -69,6 +69,7 @@ export default function Popup({ show, setShow, data, action }) {
                                     { value: 'Admin Local', label: 'Administrador Local' },
                                     { value: 'mesero', label: 'Mesero' },
                                     { value: 'cocinero', label: 'Cocinero' },
+                                    { value: 'cajero', label: 'Cajero' },
                                 ],
                                 required: true,
                                 defaultValue: userData.rol || "",
