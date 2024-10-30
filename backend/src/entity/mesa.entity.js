@@ -1,7 +1,7 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
-const Mesaschema = new EntitySchema({
+const MesaSchema = new EntitySchema({
     name: "Mesa",
     tableName: "mesas",
     columns: {

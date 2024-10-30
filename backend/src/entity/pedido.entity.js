@@ -57,7 +57,7 @@ const PedidoSchema = new EntitySchema({
         },
         {
             name: "IDX_FECHA",
-            columns: ["fecha"],
+            columns: ["createdAt"],
         },
         {
             name: "IDX_TOTAL",
