@@ -10,12 +10,13 @@ const PedidoSchema = new EntitySchema({
             primary: true,
             generated: true,
         },
-        fecha: {
-            type: "timestamp with time zone",
+        descripcion: {
+            type: "varchar",
+            length: 255,
             nullable: false,
         },
         total: {
-            type: "numeric",
+            type: "int",
             nullable: false,
         },
         estado: {
@@ -40,11 +41,11 @@ const PedidoSchema = new EntitySchema({
             nullable: false,
         },
     },
+    //clave foranea
     relations : {
         mesaID: {
             target: "mesas",
             type: "many-to-one",
-            onDelete: "CASCADE",
             joinColumn: { name: "mesaID", referencedColumnName: "id" },
         }
     },
