@@ -10,7 +10,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	place-items: center;
-	min-width: 100%;
+	min-width: 100%; 	
 	min-height: 100vh;
 	overflow-x: hidden;
 	font-family: "Montserrat", sans-serif;

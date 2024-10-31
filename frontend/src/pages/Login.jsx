@@ -32,13 +32,14 @@ const Login = () => {
                 title="Iniciar sesión"
                 fields={[
                     {
+                        
                         label: "Correo electrónico",
                         name: "email",
                         placeholder: "example@gmail.cl",
                         fieldType: 'input',
                         type: "email",
                         required: true,
-                        minLength: 15,
+                        minLength: 25,
                         maxLength: 30,
                         errorMessageData: errorEmail,
                         validate: {
