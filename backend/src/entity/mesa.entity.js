@@ -10,10 +10,10 @@ const MesaSchema = new EntitySchema({
             primary: true,
             generated: true,
         },
-        numeroMesa: {
+        descripcion: {
             type: "varchar",
             length: 255,
-            nullable: false,
+            nullable: true,
         },
         capacidad: {
             type: "int",
@@ -22,12 +22,6 @@ const MesaSchema = new EntitySchema({
         createdAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
-            nullable: false,
-        },
-        updatedAt: {
-            type: "timestamp with time zone",
-            default: () => "CURRENT_TIMESTAMP",
-            onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
         },
     },
@@ -39,7 +33,7 @@ const MesaSchema = new EntitySchema({
         },
         {
             name: "IDX_NumeraMesa",
-            columns: ["numeroMesa"],
+            columns: ["descripcion"],
             unique: true,
         },
         {
