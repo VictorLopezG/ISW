@@ -15,11 +15,6 @@ const ProductoSchema = new EntitySchema({
             length: 31,
             nullable: false
         },
-        descripcion: {
-            type: "varchar",
-            length: 255,
-            nullable: true
-        },
         valor: {
             type: "int",
             nullable: false
