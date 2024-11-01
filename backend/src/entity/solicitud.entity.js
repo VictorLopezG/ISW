@@ -22,13 +22,6 @@ const SolicitudSchema = new EntitySchema({
             default: () => "CURRENT_TIMESTAMP",
             nullable: false,
         },
-        updatedAt: {
-            type: "timestamp with time zone",
-            default: () => "CURRENT_TIMESTAMP",
-            onUpdate: "CURRENT_TIMESTAMP",
-            nullable: false,
-        },
-        // Relacion mesa-pedido
     },
     //clave foranea
     relations : {
