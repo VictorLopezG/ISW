@@ -108,3 +108,30 @@ export async function deleteMesaService(query) {
         return [null, "Error interno del servidor"];
     }
 }
+
+export async function createMesaService(mesa) {
+    try {
+      const mesaRepository = AppDataSource.getRepository(Mesa);
+  
+      const { descripcion,capacidad } = mesa;
+  
+      const createErrorMessage = (dataInfo, message) => ({
+        dataInfo,
+        message
+      });
+  
+      const newMesa = mesaRepository.create({
+        descripcion,capacidad
+      });
+  
+      await mesaRepository.save(newMesa);
+  
+      const { dataMesa } = newMesa;
+  
+      return [dataMesa, null];
+    } catch (error) {
+      console.error("Error al crear la mesa", error);
+      return [null, "Error interno del servidor"];
+    }
+  }
+  

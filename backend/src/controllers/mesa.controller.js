@@ -4,11 +4,12 @@ import {
   getMesaService,
   getMesasService,
   updateMesaService,
+  createMesaService
 } from "../services/mesa.service.js";
 import {
   mesaBodyValidation,
   mesaQueryValidation,
-} from "../validations/mesa.validations.js";
+} from "../validations/mesa.validation.js";
 import {
   handleErrorClient,
   handleErrorServer,
@@ -27,7 +28,7 @@ export async function getMesa(req, res) {
 
     if (errorMesa) return handleErrorClient(res, 404, errorMesa);
 
-    handleSuccess(res, 200, "Usuario encontrado", Mesa);
+    handleSuccess(res, 200, "Mesa encontrada", Mesa);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
@@ -121,5 +122,24 @@ export async function deleteMesa(req, res) {
     handleSuccess(res, 200, "Mesa eliminada correctamente", mesaDelete);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function createMesa(req, res) {
+  try {
+      const { body } = req;
+
+      const { error } = mesaBodyValidation.validate(body);
+
+      if (error)
+          return handleErrorClient(res, 400, "Error de validación", error.message);
+
+      const [newMesa, errorNewMesa] = await createMesaService(body);
+
+      if (errorNewMesa) return handleErrorClient(res, 400, "Error al crear la mesa", errorNewMesa);
+
+      handleSuccess(res, 201, "Mesa creada con éxito", newMesa);
+  } catch (error) {
+      handleErrorServer(res, 500, error.message);
   }
 }
