@@ -7,6 +7,7 @@ import {
   getPedido,
   getPedidos,
   updatePedido,
+  createPedido,
 } from "../controllers/pedido.controller.js";
 
 const router = Router();
@@ -16,9 +17,9 @@ router
   .use(isAdmin);
 
 router
-  .get("/", getPedidos)
-  .get("/detail/", getPedido)
-  .patch("/detail/", updatePedido)
-  .delete("/detail/", deletePedido);
-
+  .get("/all", getPedidos)
+  .get("/id:/", getPedido)
+  .patch("/id:/", updatePedido)
+  .delete("/id:/", deletePedido)
+  .post("/create/",createPedido);
 export default router;
