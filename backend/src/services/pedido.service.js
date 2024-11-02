@@ -113,3 +113,30 @@ export async function deletePedidoService(query) {
         return [null, "Error interno del servidor"];
     }
 }
+
+export async function createPedidoService(pedido) {
+    try {
+      const pedidoRepository = AppDataSource.getRepository(Pedido);
+  
+      const { mesaID, estado, total } = pedido;
+  
+      const createErrorMessage = (dataInfo, message) => ({
+        dataInfo,
+        message
+      });
+  
+      const newPedido = pedidoRepository.create({
+        mesaID, estado, total
+      });
+  
+      await pedidoRepository.save(newPedido);
+  
+      const { dataPedido } = newPedido;
+  
+      return [dataPedido, null];
+    } catch (error) {
+      console.error("Error al crear el pedido", error);
+      return [null, "Error interno del servidor"];
+    }
+  }
+  

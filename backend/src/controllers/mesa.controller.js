@@ -8,7 +8,7 @@ import {
 import {
   mesaBodyValidation,
   mesaQueryValidation,
-} from "../validations/mesa.validation.js";//falta hacer las validaciones
+} from "../validations/mesa.validations.js";
 import {
   handleErrorClient,
   handleErrorServer,

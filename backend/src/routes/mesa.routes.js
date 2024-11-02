@@ -16,9 +16,9 @@ router
   .use(isAdmin);
 
 router
-  .get("/", getMesas)
-  .get("/detail/", getMesa)
-  .patch("/detail/", updateMesa)
-  .delete("/detail/", deleteMesa);
+  .get("/all", getMesas)
+  .get("/id:/", getMesa)
+  .patch("/id:/", updateMesa)
+  .delete("/id:/", deleteMesa);
 
 export default router;

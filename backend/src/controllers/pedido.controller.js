@@ -1,5 +1,6 @@
 "use strict";
 import {
+    createPedidoService,
     deletePedidoService,
     getPedidoService,
     getPedidosService,
@@ -19,11 +20,11 @@ export async function getPedido(req, res) {
     try {
         const { id, mesaID, total, estado } = req.query;
 
-        const { error } = pedidoQueryValidation.validate({  id, mesaID, total, estado });
+        const { error } = pedidoQueryValidation.validate({ id, mesaID, total, estado });
 
         if (error) return handleErrorClient(res, 400, error.message);
 
-        const [Pedido, errorPedido] = await getPedidoService({  id, mesaID, total, estado });
+        const [Pedido, errorPedido] = await getPedidoService({ id, mesaID, total, estado });
 
         if (errorPedido) return handleErrorClient(res, 404, errorPedido);
 
@@ -53,13 +54,13 @@ export async function getPedidos(req, res) {
 
 export async function updatePedido(req, res) {
     try {
-        const {   id, mesaID, total, estado } = req.query;
+        const { id, mesaID, total, estado } = req.query;
         const { body } = req;
 
         const { error: queryError } = pedidoQueryValidation.validate({
-            id, 
-            mesaID, 
-            total, 
+            id,
+            mesaID,
+            total,
             estado,
         });
 
@@ -82,7 +83,7 @@ export async function updatePedido(req, res) {
                 bodyError.message,
             );
 
-        const [pedido, pedidoError] = await updatePedidoService({  id, mesaID, total, estado }, body);
+        const [pedido, pedidoError] = await updatePedidoService({ id, mesaID, total, estado }, body);
 
         if (pedidoError) return handleErrorClient(res, 400, "Error modificando el pedido", pedidoError);
 
@@ -94,12 +95,12 @@ export async function updatePedido(req, res) {
 
 export async function deletePedido(req, res) {
     try {
-        const {  id, mesaID, total, estado } = req.query;
+        const { id, mesaID, total, estado } = req.query;
 
         const { error: queryError } = pedidoQueryValidation.validate({
-            id, 
-            mesaID, 
-            total, 
+            id,
+            mesaID,
+            total,
             estado,
         });
 
@@ -113,15 +114,34 @@ export async function deletePedido(req, res) {
         }
 
         const [pedidoDelete, errorPedidoDelete] = await deletePedidoService({
-            id, 
-            mesaID, 
-            total, 
+            id,
+            mesaID,
+            total,
             estado,
         });
 
         if (errorPedidoDelete) return handleErrorClient(res, 404, "Error eliminado el pedido", errorPedidoDelete);
 
         handleSuccess(res, 200, "Pedido eliminado correctamente", pedidoDelete);
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+    }
+}
+
+export async function createPedido(req, res) {
+    try {
+        const { body } = req;
+
+        const { error } = pedidoBodyValidation.validate(body);
+
+        if (error)
+            return handleErrorClient(res, 400, "Error de validación", error.message);
+
+        const [newPedido, errorNewpedido] = await createPedidoService(body);
+
+        if (errorNewpedido) return handleErrorClient(res, 400, "Error registrando al usuario", errorNewUser);
+
+        handleSuccess(res, 201, "Usuario registrado con éxito", newPedido);
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
