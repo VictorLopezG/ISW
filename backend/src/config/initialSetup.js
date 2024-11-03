@@ -1,6 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Mesa from "../entity/mesa.entity.js";
+import Producto from "../entity/producto.entity.js"
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -10,11 +11,15 @@ async function createUsers() {
 
     const mesaRepository = AppDataSource.getRepository(Mesa);
 
+    const productoRepository = AppDataSource.getRepository(Producto)
+
     const countM = await mesaRepository.count();
 
     const count = await userRepository.count();
 
-    if (count > 0 && countM > 0) return;
+    const countP = await productoRepository.count();
+
+    if (count > 0 && countM > 0 && countP > 0) return;
 
     if (count == 0) {
       await Promise.all([
@@ -89,6 +94,16 @@ async function createUsers() {
         mesaRepository.create({
           descripcion: "1",
           capacidad: "4",
+        }),
+      )]);
+    }
+
+    if (countP == 0){
+      await Promise.all([ productoRepository.save(
+        productoRepository.create({
+          nombre: "Papas fritas",
+          valor: "2000",
+          stock: "10"
         }),
       )]);
     }
