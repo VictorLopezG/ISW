@@ -9,7 +9,7 @@ import {
 import {
     pedidoBodyValidation,
     pedidoQueryValidation,
-} from "../validations/pedido.validations.js";//falta hacer las validaciones
+} from "../validations/pedido.validation.js";//falta hacer las validaciones
 import {
     handleErrorClient,
     handleErrorServer,
@@ -18,7 +18,7 @@ import {
 
 export async function getPedido(req, res) {
     try {
-        const { id, mesaID, total, estado } = req.query;
+        const { id, mesaID, total, estado } = req.params;
 
         const { error } = pedidoQueryValidation.validate({ id, mesaID, total, estado });
 

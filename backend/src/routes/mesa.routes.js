@@ -7,6 +7,7 @@ import {
   getMesa,
   getMesas,
   updateMesa,
+  createMesa,
 } from "../controllers/mesa.controller.js";
 
 const router = Router();
@@ -16,9 +17,9 @@ router
   .use(isAdmin);
 
 router
-  .get("/all", getMesas)
-  .get("/id:/", getMesa)
-  .patch("/id:/", updateMesa)
-  .delete("/id:/", deleteMesa);
-
+  .get("/all", getMesas) //listo
+  .get("/:id", getMesa) //listo
+  .put("/:id", updateMesa) //
+  .delete("/:id", deleteMesa) // listo
+  .post("/createM",createMesa); //listo
 export default router;

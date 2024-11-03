@@ -23,7 +23,6 @@ const SolicitudSchema = new EntitySchema({
             nullable: false,
         },
     },
-    //clave foranea
     relations : {
         id_Pedido: {
             target: "pedidos",

@@ -4,11 +4,12 @@ import {
   getMesaService,
   getMesasService,
   updateMesaService,
+  createMesaService
 } from "../services/mesa.service.js";
 import {
   mesaBodyValidation,
   mesaQueryValidation,
-} from "../validations/mesa.validations.js";
+} from "../validations/mesa.validation.js";
 import {
   handleErrorClient,
   handleErrorServer,
@@ -17,17 +18,14 @@ import {
 
 export async function getMesa(req, res) {
   try {
-    const { id, descripcion,capacidad} = req.query;
+    const { id } = req.params;
 
-    const { error } = mesaQueryValidation.validate({ id, descripcion,capacidad });
 
-    if (error) return handleErrorClient(res, 400, error.message);
-
-    const [Mesa, errorMesa] = await getMesaService({ id, descripcion,capacidad });
+    const [Mesa, errorMesa] = await getMesaService({ id });
 
     if (errorMesa) return handleErrorClient(res, 404, errorMesa);
 
-    handleSuccess(res, 200, "Usuario encontrado", Mesa);
+    handleSuccess(res, 200, "Mesa encontrada", Mesa);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
@@ -53,25 +51,21 @@ export async function getMesas(req, res) {
 
 export async function updateMesa(req, res) {
   try {
-    const {id, descripcion,capacidad } = req.query;
+    const { id } = req.params;
     const { body } = req;
+ 
 
-    const { error: queryError } = mesaQueryValidation.validate({
-        id,
-        descripcion,
-        capacidad,
-    });
+    const userfound = await getMesaService({ id });
 
-    if (queryError) {
-      return handleErrorClient(
-        res,
-        400,
-        "Error de validación en la consulta",
-        queryError.message,
-      );
+    if (!userfound) return handleErrorClient(res, 404, "Mesa no encontrada")
+    else {
+      console.log("Mesa encontrada");
     }
 
+
+
     const { error: bodyError } = mesaBodyValidation.validate(body);
+
 
     if (bodyError)
       return handleErrorClient(
@@ -81,7 +75,9 @@ export async function updateMesa(req, res) {
         bodyError.message,
       );
 
-    const [mesa, mesaError] = await updateMesaService({ id, descripcion,capacidad }, body);
+
+      
+    const [mesa, mesaError] = await updateMesaService({ id }, body);
 
     if (mesaError) return handleErrorClient(res, 400, "Error modificando la mesa", mesaError);
 
@@ -93,32 +89,44 @@ export async function updateMesa(req, res) {
 
 export async function deleteMesa(req, res) {
   try {
-    const { id, descripcion,capacidad } = req.query;
+    const { id } = req.params;
+    console.log(id);
 
-    const { error: queryError } = mesaQueryValidation.validate({
-        id,
-         descripcion,
-         capacidad,
-    });
+    const userfound = await getMesaService({ id });
 
-    if (queryError) {
-      return handleErrorClient(
-        res,
-        400,
-        "Error de validación en la consulta",
-        queryError.message,
-      );
+    if (!userfound) return handleErrorClient(res, 404, "Mesa no encontrada")
+    else {
+      console.log("Mesa encontrada");
     }
 
-    const [mesaDelete, errorMesaDelete] = await deleteMesaService({
-        id,
-        descripcion,
-        capacidad,
-    });
+
+    const [mesaDelete, errorMesaDelete] = await deleteMesaService({ id });
+
+
+    console.log(mesaDelete);
 
     if (errorMesaDelete) return handleErrorClient(res, 404, "Error eliminado la mesa", errorMesaDelete);
 
     handleSuccess(res, 200, "Mesa eliminada correctamente", mesaDelete);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
+  }
+}
+
+export async function createMesa(req, res) {
+  try {
+    const { body } = req;
+
+    const { error } = mesaBodyValidation.validate(body);
+
+    if (error)
+      return handleErrorClient(res, 400, "Error de validación", error.message);
+
+    const [newMesa, errorNewMesa] = await createMesaService(body);
+
+    if (errorNewMesa) return handleErrorClient(res, 400, "Error al crear la mesa", errorNewMesa);
+
+    handleSuccess(res, 201, "Mesa creada con éxito", newMesa);
   } catch (error) {
     handleErrorServer(res, 500, error.message);
   }
