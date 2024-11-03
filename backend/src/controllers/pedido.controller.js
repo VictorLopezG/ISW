@@ -9,7 +9,7 @@ import {
 import {
     pedidoBodyValidation,
     pedidoQueryValidation,
-} from "../validations/pedido.validations.js";//falta hacer las validaciones
+} from "../validations/pedido.validation.js";//falta hacer las validaciones
 import {
     handleErrorClient,
     handleErrorServer,
