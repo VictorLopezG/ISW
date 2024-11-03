@@ -33,8 +33,7 @@ export const mesaQueryValidation = Joi.object({
     .unknown(false)
     .messages({
         "object.unknown": "No se permiten propiedades adicionales.",
-        "object.missing":
-            "Debes proporcionar al menos un parámetro: id, capacidad o descripcion.",
+        "object.missing":"Debes proporcionar al menos un parámetro: id, capacidad o descripcion.",
     });
 
 export const mesaBodyValidation = Joi.object({

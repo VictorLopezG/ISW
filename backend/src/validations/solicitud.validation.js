@@ -1,7 +1,7 @@
 "use strict";
 import Joi from "joi";
 
-export const pedidoQueryValidation = Joi.object({
+export const solicitudQueryValidation = Joi.object({
     id_Producto: Joi.number()
         .integer()
         .positive()
@@ -37,7 +37,7 @@ export const pedidoQueryValidation = Joi.object({
             "Debes proporcionar al menos un parámetro: id del Producto,id del Pedido o cantidad.",
     });
 
-export const pedidoBodyValidation = Joi.object({
+export const solicitudBodyValidation = Joi.object({
     id_Producto: Joi.number()
     .integer()
     .positive()
