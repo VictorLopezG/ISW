@@ -18,7 +18,7 @@ import {
 
 export async function getSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = req.query;
+        const { id_Pedido, id_Producto, cantidad } = req.params;
 
         const { error } = solicitudQueryValidation.validate({ id_Pedido, id_Producto, cantidad });
 

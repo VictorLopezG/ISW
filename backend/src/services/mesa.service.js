@@ -4,17 +4,21 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getMesaService(query) {
     try {
-        const { id, descripcion,capacidad } = query;
+       
+        const { id} = query;
+      
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
+        
 
         const mesaFound = await mesaRepository.findOne({
-            where: [{ id: id }, { descripcion:descripcion }, { capacidad:capacidad }],
+            where: [{ id: id }],
         });
 
         if (!mesaFound) return [null, "Mesa no encontrada o no existe"];
 
-        const { mesaData } = mesaFound;
+        const { ...mesaData } = mesaFound;
+       
 
         return [mesaData, null];
     } catch (error) {
@@ -31,9 +35,10 @@ export async function getMesasService() {
 
         if (!mesas || mesas.length === 0) return [null, "No hay mesas"];
 
-        const mesasData = mesas.map(({  mesa }) => mesa);
+        const mesasData = mesas.map(({ ...mesa }) => mesa);
 
         return [mesasData, null];
+        
     } catch (error) {
         console.error("Error al obtener a las mesas:", error);
         return [null, "Error interno del servidor"];
@@ -42,42 +47,31 @@ export async function getMesasService() {
 
 export async function updateMesaService(query, body) {
     try {
-        const { id, descripcion,capacidad } = query;
+        const { id} = query;
+        const { descripcion,capacidad } = body;
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
 
-        const mesaFound = await mesaRepository.findOne({
-            where: [{ id: id }, { descripcion:descripcion }, { capacidad:capacidad }],
-        });
 
-        if (!mesaFound) return [null, "mesa no encontrado"];
 
-        const existingMesa = await mesaRepository.findOne({
-            where: [{ id: id }, { descripcion:descripcion }, { capacidad:capacidad }],
-        });
-
-        if (existingMesa && existingMesa.id !== mesaFound.id) {
-            return [null, "No se puede cambiar la id de un mesa"];
-        }
 
         const dataMesaUpdate = {
-            id:body.id,
+            id: id,
             capacidad: body.capacidad,
             descripcion:body.descripcion,
-            updatedAt: new Date(),
         };
 
-        await mesaRepository.update({ id: mesaFound.id }, dataMesaUpdate);
+        await mesaRepository.update({ id: id }, dataMesaUpdate);
 
         const mesaData = await mesaRepository.findOne({
-            where: { id: mesaFound.id },
+            where: { id: id },
         });
 
         if (!mesaData) {
             return [null, "Mesa no encontrada después de actualizar"];
         }
 
-        const { mesaUpdated } = mesaData;
+        const { ...mesaUpdated } = mesaData;
 
         return [mesaUpdated, null];
     } catch (error) {
@@ -88,6 +82,7 @@ export async function updateMesaService(query, body) {
 
 export async function deleteMesaService(query) {
     try {
+        console.log("holaa");
         const { id, descripcion,capacidad } = query;
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
@@ -100,9 +95,10 @@ export async function deleteMesaService(query) {
 
         const mesaDeleted = await mesaRepository.remove(mesaFound);
 
-        const { dataMesa } = mesaDeleted;
+        const { ...dataMesa } = mesaDeleted;
 
         return [dataMesa, null];
+
     } catch (error) {
         console.error("Error al eliminar el mesa:", error);
         return [null, "Error interno del servidor"];

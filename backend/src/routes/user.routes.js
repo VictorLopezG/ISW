@@ -18,7 +18,7 @@ router
 router
   .get("/", getUsers)
   .get("/detail/", getUser)
-  .patch("/detail/", updateUser)
+  .patch("/detail/", updateUser)  /* averiguar */ 
   .delete("/detail/", deleteUser);
 
 export default router;
