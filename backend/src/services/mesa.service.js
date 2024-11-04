@@ -52,9 +52,6 @@ export async function updateMesaService(query, body) {
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
 
-
-
-
         const dataMesaUpdate = {
             id: id,
             capacidad: body.capacidad,
@@ -122,7 +119,7 @@ export async function createMesaService(mesa) {
   
       await mesaRepository.save(newMesa);
   
-      const { dataMesa } = newMesa;
+      const { ...dataMesa } = newMesa;
   
       return [dataMesa, null];
     } catch (error) {
