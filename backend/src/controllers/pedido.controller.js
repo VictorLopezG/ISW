@@ -18,13 +18,9 @@ import {
 
 export async function getPedido(req, res) {
     try {
-        const { id, mesaID, total, estado } = req.params;
+        const { id } = req.params;
 
-        const { error } = pedidoQueryValidation.validate({ id, mesaID, total, estado });
-
-        if (error) return handleErrorClient(res, 400, error.message);
-
-        const [Pedido, errorPedido] = await getPedidoService({ id, mesaID, total, estado });
+        const [Pedido, errorPedido] = await getPedidoService({ id });
 
         if (errorPedido) return handleErrorClient(res, 404, errorPedido);
 
@@ -54,24 +50,13 @@ export async function getPedidos(req, res) {
 
 export async function updatePedido(req, res) {
     try {
-        const { id, mesaID, total, estado } = req.query;
+        const { id} = req.params;
         const { body } = req;
 
-        const { error: queryError } = pedidoQueryValidation.validate({
-            id,
-            mesaID,
-            total,
-            estado,
-        });
+        const pedidoFound = await getPedidoService({ id });
 
-        if (queryError) {
-            return handleErrorClient(
-                res,
-                400,
-                "Error de validación en la consulta",
-                queryError.message,
-            );
-        }
+        if (!pedidoFound) return handleErrorClient(res, 404, "Pedido no encontrado");
+
 
         const { error: bodyError } = pedidoBodyValidation.validate(body);
 
@@ -82,8 +67,9 @@ export async function updatePedido(req, res) {
                 "Error de validación en los datos enviados",
                 bodyError.message,
             );
+            
 
-        const [pedido, pedidoError] = await updatePedidoService({ id, mesaID, total, estado }, body);
+        const [pedido, pedidoError] = await updatePedidoService({ id }, body);
 
         if (pedidoError) return handleErrorClient(res, 400, "Error modificando el pedido", pedidoError);
 
@@ -95,30 +81,15 @@ export async function updatePedido(req, res) {
 
 export async function deletePedido(req, res) {
     try {
-        const { id, mesaID, total, estado } = req.query;
+        const { id} = req.query;
 
-        const { error: queryError } = pedidoQueryValidation.validate({
-            id,
-            mesaID,
-            total,
-            estado,
-        });
+        const pedidoFound = await getPedidoService({ id });
 
-        if (queryError) {
-            return handleErrorClient(
-                res,
-                400,
-                "Error de validación en la consulta",
-                queryError.message,
-            );
-        }
+        if (!pedidoFound) return handleErrorClient(res, 404, "Pedido no encontrado");
+
 
         const [pedidoDelete, errorPedidoDelete] = await deletePedidoService({
-            id,
-            mesaID,
-            total,
-            estado,
-        });
+            id,});
 
         if (errorPedidoDelete) return handleErrorClient(res, 404, "Error eliminado el pedido", errorPedidoDelete);
 
@@ -130,16 +101,19 @@ export async function deletePedido(req, res) {
 
 export async function createPedido(req, res) {
     try {
+
         const { body } = req;
+    
 
         const { error } = pedidoBodyValidation.validate(body);
-
+        
+        
         if (error)
             return handleErrorClient(res, 400, "Error de validación", error.message);
 
         const [newPedido, errorNewpedido] = await createPedidoService(body);
 
-        if (errorNewpedido) return handleErrorClient(res, 400, "Error registrando al usuario", errorNewUser);
+        if (errorNewpedido) return handleErrorClient(res, 400, "Error registrando al usuario", errorNewpedido);
 
         handleSuccess(res, 201, "Usuario registrado con éxito", newPedido);
     } catch (error) {

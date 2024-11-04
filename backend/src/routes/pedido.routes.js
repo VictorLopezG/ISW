@@ -17,9 +17,9 @@ router
   .use(isAdmin);
 
 router
-  .get("/allP", getPedidos)
-  .get("/:idP", getPedido)
-  .patch("/:idP", updatePedido)
-  .delete("/:idP", deletePedido)
-  .post("/:createP",createPedido);
+  .get("/all", getPedidos)          //listo
+  .get("/:id", getPedido)           //listo
+  .put("/:id", updatePedido)        //listo
+  .delete("/:id", deletePedido)     //listo
+  .post("/:createP",createPedido);  //listo
 export default router;

@@ -90,7 +90,6 @@ export async function updateMesa(req, res) {
 export async function deleteMesa(req, res) {
   try {
     const { id } = req.params;
-    console.log(id);
 
     const userfound = await getMesaService({ id });
 

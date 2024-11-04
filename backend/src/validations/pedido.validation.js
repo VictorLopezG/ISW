@@ -18,6 +18,7 @@ export const pedidoQueryValidation = Joi.object({
             "number.integer": "El id debe ser un número entero.",
             "number.positive": "El id debe ser un número positivo.",
         }),
+
     total: Joi.number()
         .positive()
         .integer()
@@ -27,17 +28,17 @@ export const pedidoQueryValidation = Joi.object({
             "number.positive": "El total debe ser un número positivo.",
         }),
     estado: Joi.string()
-    .min(1)
-    .max(20)
-    .pattern(/^[a-zA-Z0-9]+$/)
-    .messages({
-      "string.empty": "El estado no puede estar vacía.",
-      "string.base": "El estado debe ser de tipo string.",
-      "string.min": "El estado debe tener como mínimo 8 caracteres.",
-      "string.max": "El estado debe tener como máximo 26 caracteres.",
-      "string.pattern.base":
-        "El estado solo puede contener letras y números.",
-    }),
+        .min(1)
+        .max(20)
+        .pattern(/^[a-zA-Z0-9]+$/)
+        .messages({
+            "string.empty": "El estado no puede estar vacía.",
+            "string.base": "El estado debe ser de tipo string.",
+            "string.min": "El estado debe tener como mínimo 8 caracteres.",
+            "string.max": "El estado debe tener como máximo 26 caracteres.",
+            "string.pattern.base":
+                "El estado solo puede contener letras y números.",
+        }),
 
 })
     .or("id,capacidad,descripcion")
@@ -58,6 +59,15 @@ export const pedidoBodyValidation = Joi.object({
             "string.min": "La descripcion debe tener como mínimo 1 caracterer.",
             "string.max": "La descripcion debe tener como máximo 50 caracteres.",
         }),
+    descripcion: Joi.string()
+        .min(1)
+        .max(50)
+        .messages({
+            "string.empty": "La descripcion no puede estar vacía.",
+            "string.base": "La descripcion debe ser de tipo string.",
+            "string.min": "La descripcion debe tener como mínimo 1 caracterer.",
+            "string.max": "La descripcion debe tener como máximo 50 caracteres.",
+        }),
     total: Joi.number()
         .integer()
         .positive()
@@ -65,10 +75,19 @@ export const pedidoBodyValidation = Joi.object({
             "number.base": "El total debe ser de tipo integer.",
             "number.positive": "El total debe ser minimo 1.",
         }),
+    mesaID: Joi.number()
+        .positive()
+        .integer()
+        .messages({
+            "number.base": "El id debe ser un número.",
+            "number.integer": "El id debe ser un número entero.",
+            "number.positive": "El id debe ser un número positivo.",
+        }),
 })
     .or(
         "estado",
         "total",
+        "mesaID",
     )
     .unknown(false)
     .messages({

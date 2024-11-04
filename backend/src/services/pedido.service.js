@@ -4,17 +4,17 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getPedidoService(query) {
     try {
-        const { mesaID, id, estado, total } = query;
+        const { id} = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
 
         const pedidoFound = await pedidoRepository.findOne({
-            where: [{ id: id }, { mesaID: mesaID }, { total: total }, { estado: estado }],
+            where: [{ id: id }],
         });
 
         if (!pedidoFound) return [null, "Pedido no encontrado o no existe"];
 
-        const { pedidoData } = pedidoFound;
+        const { ...pedidoData } = pedidoFound;
 
         return [pedidoData, null];
     } catch (error) {
@@ -31,7 +31,7 @@ export async function getPedidosService() {
 
         if (!pedidos || pedidos.length === 0) return [null, "No hay pedidos"];
 
-        const pedidosData = pedidos.map(({  pedido }) => pedido);
+        const pedidosData = pedidos.map(({  ...pedido }) => pedido);
 
         return [pedidosData, null];
     } catch (error) {
@@ -42,25 +42,13 @@ export async function getPedidosService() {
 
 export async function updatePedidoService(query, body) {
     try {
-        const { mesaID, id, estado, total } = query;
+        const { id} = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
 
-        const pedidoFound = await pedidoRepository.findOne({
-            where: [{ id: id }, { mesaID: mesaID }, { total: total }, { estado: estado }],
-        });
-
-        if (!pedidoFound) return [null, "Pedido no encontrado"];
-
-        const existingPedido = await pedidoRepository.findOne({
-            where: [{ id: id }, { mesaID: mesaID }, { total: total }, { estado: estado }],
-        });
-
-        if (existingPedido && existingPedido.id !== pedidoFound.id) {
-            return [null, "No se puede cambiar la id de un pedido"];
-        }
 
         const datapedidoUpdate = {
+            id: id,
             mesaID: body.mesaID,
             total: body.total,
             descripcion: body.descripcion,
@@ -68,17 +56,17 @@ export async function updatePedidoService(query, body) {
             updatedAt: new Date(),
         };
 
-        await pedidoRepository.update({ id: pedidoFound.id }, datapedidoUpdate);
+        await pedidoRepository.update({ id:id }, datapedidoUpdate);
 
         const pedidoData = await pedidoRepository.findOne({
-            where: { id: pedidoFound.id },
+            where: { id: id },
         });
 
         if (!pedidoData) {
             return [null, "Pedido no encontrado después de actualizar"];
         }
 
-        const { pedidoUpdated } = pedidoData;
+        const { ...pedidoUpdated } = pedidoData;
 
         return [pedidoUpdated, null];
     } catch (error) {
@@ -105,7 +93,7 @@ export async function deletePedidoService(query) {
 
         const pedidoDeleted = await pedidoRepository.remove(pedidoFound);
 
-        const { dataPedido } = pedidoDeleted;
+        const { ...dataPedido } = pedidoDeleted;
 
         return [dataPedido, null];
     } catch (error) {
@@ -117,8 +105,9 @@ export async function deletePedidoService(query) {
 export async function createPedidoService(pedido) {
     try {
       const pedidoRepository = AppDataSource.getRepository(Pedido);
-  
-      const { mesaID, estado, total } = pedido;
+    
+      const { mesaID, estado, total, descripcion } = pedido;
+      
   
       const createErrorMessage = (dataInfo, message) => ({
         dataInfo,
@@ -126,12 +115,12 @@ export async function createPedidoService(pedido) {
       });
   
       const newPedido = pedidoRepository.create({
-        mesaID, estado, total
+        mesaID, estado, total, descripcion
       });
   
       await pedidoRepository.save(newPedido);
   
-      const { dataPedido } = newPedido;
+      const { ...dataPedido } = newPedido;
   
       return [dataPedido, null];
     } catch (error) {
