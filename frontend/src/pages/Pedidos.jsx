@@ -12,12 +12,12 @@ const Pedidos = () => {
         label:mesa[0].descripcion
     }));
     
-    const crearSubmit = async (data) => {
+    const submitPedido = async (data) => {
         try {
-            console.log(data)
+            console.log(data);
             const response = await createPedido(data);
             if (response.status === 'Client error') {
-                errorData(response.details);
+                console.log(response);
             }
         } catch (error) {
             console.log(error);
@@ -66,7 +66,7 @@ const Pedidos = () => {
                     },
                 ]}
                 buttonText="Crear Pedido"
-                onSubmit={crearSubmit}
+                onSubmit={submitPedido}
             />
         </main>
         

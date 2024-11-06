@@ -2,14 +2,14 @@ import axios from './root.service.js';
 
 export async function createPedido(data) {
     try {
-        const { descripcion,total,estado } = data;
+        const { descripcion,IDmesa,total } = data;
         const response = await axios.post('/ped/:createP', {
-            descripcion,
-            total,
-            estado,
-            mesaID
+            descripcion:descripcion,
+            total:1,
+            estado:'Pendiente',
+            mesaID:IDmesa
         });
-        
+        console.log(response.data);
         return response.data;
     } catch (error) {
         return error.response.data;
