@@ -1,8 +1,5 @@
 import axios from './root.service.js';
-import cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 import { convertirMinusculas } from '@helpers/formatData.js';
-import axios from 'axios';
 
 export async function crearMesa(datamesa) {
     try {
