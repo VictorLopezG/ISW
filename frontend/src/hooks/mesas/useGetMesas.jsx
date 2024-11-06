@@ -7,12 +7,12 @@ const useMesas = () => {
     const fetchMesas = async () => {
         try {
             const response = await getMesas();
-            console.log(response.data); 
+            //console.log(response.data); 
             const formattedData = response.data.map(mesa => ([{
                 descripcion: mesa.descripcion,
                 id: mesa.id,
                 capacidad: mesa.capacidad,
-                createdAt: mesa.createdAt
+                //createdAt: mesa.createdAt
             }]));
             setMesas(formattedData);
         } catch (error) {

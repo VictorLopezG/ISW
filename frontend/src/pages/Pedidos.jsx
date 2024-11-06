@@ -2,11 +2,16 @@ import { createPedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
 import '@styles/form.css';
 import  useMesas from '@hooks/mesas/useGetMesas.jsx';
-import { useEffect,useState } from 'react';
 
 const Pedidos = () => {
 
     const { mesas, fetchMesas, setMesas }=useMesas();
+
+    const opcionesM=mesas.map(mesa=>({
+        value:mesa[0].id,
+        label:mesa[0].descripcion
+    }));
+    
     const crearSubmit = async (data) => {
         try {
             const response = await createPedido(data);
@@ -24,15 +29,15 @@ const Pedidos = () => {
                 title="Crear un pedido"
                 fields={[
                     {
-                        label: "Id de la mesa",
+                        label: "Mesa del pedido",
                         name: "IDmesa",
-                        placeholder: "",
+                        placeholder: "",    
                         fieldType: 'select',
-                        type: "int",
+                        type: "input",
                         required: true,
                         minLength: 25,
                         maxLength: 30,
-                        
+                        options:opcionesM,
                     },
                     {
                         label: "Descripcion",
@@ -52,7 +57,6 @@ const Pedidos = () => {
                         name: "total",
                         placeholder: "suma de los productos solicitados",
                         disabled: true,
-                        type: "int",
                         required: false,
                         minLength: 0,   
                         maxLength: 255,
@@ -61,16 +65,6 @@ const Pedidos = () => {
                 buttonText="Crear Pedido"
                 onSubmit={crearSubmit}
             />
-            <div class="w-64">
-  <label for="selectExample" class="block text-sm font-medium text-gray-700">Selecciona una opción:</label>
-  <select id="selectExample" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-    {
-        mesas.map(mesa=>(
-            <option key={mesa[0].id}>{mesa[0].descripcion}</option>
-        ))
-    }
-  </select> 
-</div>
         </main>
         
     );
