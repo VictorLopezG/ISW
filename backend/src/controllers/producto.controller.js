@@ -1,12 +1,17 @@
 "user strict";
 import {
+    createProductoService,
     deleteProductoService,
     getProductoService,
     getProductosService,
     updateProductoService,
-    createProductoService,
 } from "../services/producto.service.js";
-import { productoBodyValidation, productoQueryValidation } from "../validations/producto.validation.js";
+
+import { 
+    productoBodyValidation,
+    productoQueryValidation 
+} from "../validations/producto.validation.js";
+
 import {
     handleErrorClient,
     handleErrorServer,
@@ -53,7 +58,8 @@ export async function updateProducto(req, res) {
 
         const [errorProductoFound] = await getProductoService({ id });
 
-        if (errorProductoFound) return handleErrorClient(res, 404, errorProductoFound);
+        if (!errorProductoFound) 
+            return handleErrorClient(res, 404, "Producto no encontrado");
 
         const { error: bodyError } = productoBodyValidation.validate(body);
 
@@ -78,11 +84,12 @@ export async function updateProducto(req, res) {
 export async function deleteproducto(req, res) {
     try {
         const { id, nombre } = req.params;
-        /* Despues hago sus validaciones quiero probar si funcionan 
-        const { error: queryError } = userQueryValidation.validate({
-            rut,
+
+        //Por ahora el codigo solo valida con ID no se me ocurre como hacer 
+        //para diferenciar el nombre y el postman esta funcinoando con el id
+
+        const { error: queryError } = productoQueryValidation.validate({
             id,
-            email,
         });
 
         if (queryError) {
@@ -93,7 +100,7 @@ export async function deleteproducto(req, res) {
                 queryError.message,
             );
         }
-        */
+        
 
         const [ProductoDelete, errorProdDeleted] = await deleteProductoService({
             id,
@@ -108,3 +115,26 @@ export async function deleteproducto(req, res) {
     }
 }
 
+export async function createProducto(req,res) {
+    try{
+        const { body } = req;
+
+        const { error } = productoBodyValidation.validate(body);
+
+        if(error)
+            return handleErrorClient(res,400,"Error de validacion",error.message);
+
+        const [newProducto, errornewProducto] = await createProductoService(body);
+
+        if(errornewProducto) 
+            return handleErrorClient(res,400,"Error al crear el producto");
+        
+        handleSuccess(res,201,"Producto creado con exito", newProducto);
+
+    }catch(error){
+        handleErrorServer(res, 500, error.message);
+    }
+
+
+    
+}

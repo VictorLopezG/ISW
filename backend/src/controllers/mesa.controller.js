@@ -1,10 +1,10 @@
 "use strict";
 import {
+  createMesaService,
   deleteMesaService,
   getMesaService,
   getMesasService,
   updateMesaService,
-  createMesaService
 } from "../services/mesa.service.js";
 import {
   mesaBodyValidation,
@@ -98,11 +98,7 @@ export async function deleteMesa(req, res) {
       console.log("Mesa encontrada");
     }
 
-
     const [mesaDelete, errorMesaDelete] = await deleteMesaService({ id });
-
-
-    console.log(mesaDelete);
 
     if (errorMesaDelete) return handleErrorClient(res, 404, "Error eliminado la mesa", errorMesaDelete);
 
