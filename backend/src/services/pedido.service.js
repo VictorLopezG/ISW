@@ -107,12 +107,6 @@ export async function createPedidoService(pedido) {
       const pedidoRepository = AppDataSource.getRepository(Pedido);
     
       const { mesaID, estado, total, descripcion } = pedido;
-      
-  
-      const createErrorMessage = (dataInfo, message) => ({
-        dataInfo,
-        message
-      });
   
       const newPedido = pedidoRepository.create({
         mesaID, estado, total, descripcion

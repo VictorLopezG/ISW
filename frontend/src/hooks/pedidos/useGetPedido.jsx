@@ -7,7 +7,7 @@ const usePedidos = () => {
     const fetchPedidos = async () => {
         try {
             const response = await getPedidos();
-            const formattedData = response.map(pedido => ({
+            const formattedData = response.data.map(pedido => ({
                 id: pedido.id,
                 descripcion: pedido.descripcion,
                 total: pedido.total,
