@@ -12,6 +12,16 @@ export function formatUserData(user) {
     };
 }
 
+export function formatPostUpdate(user) {
+    return {
+        nombreCompleto: startCase(user.nombreCompleto),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        email: user.email,
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {
@@ -22,12 +32,3 @@ export function convertirMinusculas(obj) {
 }
 
 
-export function formatPostUpdate(user) {
-    return {
-        nombreCompleto: startCase(user.nombreCompleto),
-        rol: startCase(user.rol),
-        rut: formatRut(user.rut),
-        email: user.email,
-        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
-    };
-}

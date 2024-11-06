@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useCreatePedido = () => {
     const [pedido, setPedidos] = useState([]);
-
+  
     const createPedido = async () => {
         try {
             const response = await createPedido();

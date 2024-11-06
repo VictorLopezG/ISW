@@ -9,8 +9,8 @@ import Root from '@pages/Root';
 import Admin_local from '@pages/Admin_local';
 import ProtectedRoute from '@components/ProtectedRoute';
 import Homecaja from '@pages/HomeCaja';
-
 import '@styles/styles.css';
+import Cocineria from './pages/Cocineria';
 import Pedidos from '@pages/Pedidos';
 
 const router = createBrowserRouter([
@@ -22,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home/>
+      },
+      {
+        path: '/cocineria',
+        element: <Cocineria/>
+      },
+      {
+        path: '/orders',
+        element: <Orders/>
       },
       {
         path: '/pedidos',

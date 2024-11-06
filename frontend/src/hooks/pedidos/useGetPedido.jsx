@@ -13,10 +13,10 @@ const usePedidos = () => {
                 total: pedido.total,
                 estado: pedido.estado,
                 mesaID: pedido.mesaID,
-                createdAt: user.createdAt
+                createdAt: pedido.createdAt
             }));
-            dataLogged(formattedData);
-            setUsers(formattedData);
+            console.log(formattedData);
+            setPedidos(formattedData);
         } catch (error) {
             console.error("Error: ", error);
         }

@@ -38,7 +38,7 @@
 
 
 .form {
-	background-color: #eef7ff;
+	background-color: #FFEBEE;
 	/*Color del formulario*/
 	padding: 7vh;
 	display: flex;
@@ -47,7 +47,7 @@
 	align-items: center;
 
 	h1 {
-		color: #003366;
+		color: #212121;
 		/*Color del titulo del formulario*/
 		font-size: 30px;
 		font-weight: bold;
@@ -63,7 +63,7 @@
 	}
 
 	label {
-		color: #003366;
+		color: #212121;
 		/*Color label de inputs del formulario*/
 		font-weight: bold;
 		margin-bottom: 0.7vh;
@@ -72,16 +72,16 @@
 
 	input {
 		display: flex;
-		border: 3px solid #003366;
+		border: 3px solid #212121;
 		/*Color del borde de inputs del formulario*/
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
 		margin-bottom: 0.8vh;
-		background-color: #eef7ff;
+		background-color: #FFEBEE;
 		font-weight: regular;
 		font-size: 16px;
-		color: #003366;
+		color: #212121;
 		border-radius: 12px;
 		background-position: right 10px center;
 		background-size: 25px 25px;
@@ -100,7 +100,7 @@
 
 	select {
 		display: flex;
-		border: 3px solid #003366;
+		border: 3px solid #212121;
 		/*Color del borde de selects del formulario*/
 		border-radius: 12px;
 		padding: 8px 5px;
@@ -183,20 +183,20 @@
 	border-radius: 12px;
 	border: none;
 	width: 100%;
-	background-color: #003366;
+	background-color: #212121;
 	/*Color del boton del formulario*/
-	color: #eef7ff;
+	color: #FFEBEE;
 	font-weight: bold;
 	font-size: 16px;
-	border: 3px solid #003366;
+	border: 3px solid #daa503;
 	/*Color del borde del boton*/
 	margin-top: 10px;
 }
-
+/*cuando se pasa por encima el cursor*/
 .form button:hover {
-	border: 3px solid #003366;
-	background-color: #eef7ff;
-	color: #003366;
+	border: 3px solid #212121;
+	background-color: #FFC107;
+	color: #212121;
 	transition: .3s ease-out;
 }
 
