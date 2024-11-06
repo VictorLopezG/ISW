@@ -48,7 +48,7 @@
 			}
 			.active {
 				font-weight: bold;
-				background-color: #dccbad;  /*Color de fondo de la opción activa*/
+				background-color: #FFC107;  /*Color de fondo de la opción activa*/
 				color: #212121; 			/*Color de la letra de la opción activa*/
 				margin: 0;
 				padding-bottom: 0;
@@ -91,7 +91,7 @@
 
 	.nav-menu.activado ul {
 		display: flex;
-		background-color: #eef7ff; /*Color de fondo de las opciones del menú desplegable*/
+		background-color: #FFEBEE; /*Color de fondo de las opciones del menú desplegable*/
 		justify-content: center;
 		padding: 0;
 	}
@@ -105,7 +105,7 @@
 		width: 100%;
 		height: 60px;
 		a {
-			color: #003366; /*Color de las letras del menú desplegable*/
+			color: #212121; /*Color de las letras del menú desplegable*/
 			font-weight: bold;
 			font-size: 0.9em;
 			text-decoration: none;

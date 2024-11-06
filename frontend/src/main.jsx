@@ -11,6 +11,7 @@ import ProtectedRoute from '@components/ProtectedRoute';
 import Homecaja from '@pages/HomeCaja';
 import Orders from '@pages/Orders';
 import '@styles/styles.css';
+import Cocineria from './pages/Cocineria';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home/>
+      },
+      {
+        path: '/cocineria',
+        element: <Cocineria/>
       },
       {
         path: '/orders',

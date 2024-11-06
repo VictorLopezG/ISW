@@ -72,7 +72,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/home"
+                            to="/cocineria"
                             onClick={() => {
                                 setMenuOpen(false);
                                 addActiveClass();
