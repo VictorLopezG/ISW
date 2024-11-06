@@ -40,9 +40,35 @@ const useEditPedido = (setPedidos) => {
         }
     };
 
+    const handleUpdateStatus = async () => {
+        if (dataPedido.length > 0) {
+            try {
+                
+                const pedidoToUpdate = dataPedido[0];
+                const updatedPedidoData = { ...pedidoToUpdate, estado: "listo" };
+                const {createdAt,id, ...updatedPedidoData2}= updatedPedidoData;
+                
+                const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id);
+                showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
+                const formattedPedido = formatPostUpdate(updatedPedido);
+                setPedidos(prevPedidos =>
+                    prevPedidos.map(pedido => 
+                        pedido.id === formattedPedido.id ? formattedPedido : pedido
+                    )
+                );
+                setDataPedido([]);
+            } catch (error) {
+                console.error('Error al actualizar el pedido:', error);
+                showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el pedido.');
+            }
+        }
+    };
+    
+
     return {
         handleClickUpdate,
         handleUpdate,
+        handleUpdateStatus,
         isPopupOpen,
         setIsPopupOpen,
         dataPedido,
