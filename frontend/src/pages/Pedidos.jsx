@@ -14,6 +14,7 @@ const Pedidos = () => {
     
     const crearSubmit = async (data) => {
         try {
+            console.log(data)
             const response = await createPedido(data);
             if (response.status === 'Client error') {
                 errorData(response.details);
@@ -48,13 +49,15 @@ const Pedidos = () => {
                         required: false,
                         minLength: 0,
                         maxLength: 255,
-                        pattern: /^[a-zA-Z0-9]+$/,
+                        pattern: /^[a-zA-Z0-9 ]+$/,
                         patternMessage: "Debe contener solo letras y números",
-                        onChange: (e) => handleInputChange('descripcion', e.target.value)
+                    
                     },
                     {
                         label: "Total",
                         name: "total",
+                        fieldType:'input',
+                        default:'0',
                         placeholder: "suma de los productos solicitados",
                         disabled: true,
                         required: false,
