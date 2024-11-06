@@ -9,9 +9,9 @@ import Root from '@pages/Root';
 import Admin_local from '@pages/Admin_local';
 import ProtectedRoute from '@components/ProtectedRoute';
 import Homecaja from '@pages/HomeCaja';
-import Orders from '@pages/Orders';
 import '@styles/styles.css';
 import Cocineria from './pages/Cocineria';
+import Pedidos from '@pages/Pedidos';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/orders',
         element: <Orders/>
+      },
+      {
+        path: '/pedidos',
+        element: <Pedidos/>
       },
       {
         path: '/homecaja',

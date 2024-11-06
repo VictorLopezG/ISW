@@ -1,13 +1,17 @@
 "user strict";
 import {
+    createProductoService,
     deleteProductoService,
     getProductoService,
     getProductosService,
     updateProductoService,
-
 } from "../services/producto.service.js";
-/*Recoradar añadir la funcino para agergar un prodcuto*/ 
-/*Por ahora voy a omitir validaciones*/
+
+import { 
+    productoBodyValidation,
+    productoQueryValidation 
+} from "../validations/producto.validation.js";
+
 import {
     handleErrorClient,
     handleErrorServer,
@@ -49,30 +53,15 @@ export async function getProductos(req, res) {
 
 export async function updateProducto(req, res) {
     try {
-        const { id, nombre, cantidad } = req.params;
+        const { id } = req.params;
         const { body } = req;
-        /*
-        Despues hago la validacion
-        const { error: queryError } = userQueryValidation.validate({
-            id,
-            nombre,
-            cantidad,
-        });
 
-        
-        
-        if (queryError) {
-            return handleErrorClient(
-                res,
-                400,
-                "Error de validación en la consulta",
-                queryError.message,
-            );
-        }
+        const [errorProductoFound] = await getProductoService({ id });
 
-        
+        if (!errorProductoFound) 
+            return handleErrorClient(res, 404, "Producto no encontrado");
 
-        const { error: bodyError } = userBodyValidation.validate(body);
+        const { error: bodyError } = productoBodyValidation.validate(body);
 
         if (bodyError)
             return handleErrorClient(
@@ -82,9 +71,7 @@ export async function updateProducto(req, res) {
                 bodyError.message,
             );
 
-        */
-
-        const [producto, errorproducto] = await updateProductoService({ id, nombre, cantidad }, body);
+        const [producto, errorproducto] = await updateProductoService({ id }, body);
 
         if (errorproducto) return handleErrorClient(res, 400, "Error modificando al usuario", errorproducto);
 
@@ -97,11 +84,12 @@ export async function updateProducto(req, res) {
 export async function deleteproducto(req, res) {
     try {
         const { id, nombre } = req.params;
-        /* Despues hago sus validaciones quiero probar si funcionan 
-        const { error: queryError } = userQueryValidation.validate({
-            rut,
+
+        //Por ahora el codigo solo valida con ID no se me ocurre como hacer 
+        //para diferenciar el nombre y el postman esta funcinoando con el id
+
+        const { error: queryError } = productoQueryValidation.validate({
             id,
-            email,
         });
 
         if (queryError) {
@@ -112,7 +100,7 @@ export async function deleteproducto(req, res) {
                 queryError.message,
             );
         }
-        */
+        
 
         const [ProductoDelete, errorProdDeleted] = await deleteProductoService({
             id,
@@ -127,3 +115,26 @@ export async function deleteproducto(req, res) {
     }
 }
 
+export async function createProducto(req,res) {
+    try{
+        const { body } = req;
+
+        const { error } = productoBodyValidation.validate(body);
+
+        if(error)
+            return handleErrorClient(res,400,"Error de validacion",error.message);
+
+        const [newProducto, errornewProducto] = await createProductoService(body);
+
+        if(errornewProducto) 
+            return handleErrorClient(res,400,"Error al crear el producto");
+        
+        handleSuccess(res,201,"Producto creado con exito", newProducto);
+
+    }catch(error){
+        handleErrorServer(res, 500, error.message);
+    }
+
+
+    
+}

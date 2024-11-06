@@ -3,11 +3,11 @@ import { Router } from "express";
 import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
+  createMesa,
   deleteMesa,
   getMesa,
   getMesas,
   updateMesa,
-  createMesa,
 } from "../controllers/mesa.controller.js";
 
 const router = Router();

@@ -19,9 +19,7 @@ export async function createPedido(data) {
 export async function getPedidos() {
     try {
         const { data } = await axios.get('/ped/all');
-     
         return data;
-
     } catch (error) {
         return error.response.data;
     }

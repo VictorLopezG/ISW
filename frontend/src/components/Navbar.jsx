@@ -60,7 +60,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/orders"
+                            to="/pedidos"
                             onClick={() => {
                                 setMenuOpen(false);
                                 addActiveClass();
