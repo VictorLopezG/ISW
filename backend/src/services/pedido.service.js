@@ -42,6 +42,7 @@ export async function getPedidosService() {
 
 export async function updatePedidoService(query, body) {
     try {
+
         const { id} = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
@@ -55,6 +56,7 @@ export async function updatePedidoService(query, body) {
             estado: body.estado,
             updatedAt: new Date(),
         };
+
 
         await pedidoRepository.update({ id:id }, datapedidoUpdate);
 

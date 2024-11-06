@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import Table from "../components/Table";
-import Popup from '../components/Popup';
+
 import Search from '../components/Search';
 
 import usePedido from '@hooks/pedidos/useGetPedido.jsx';
@@ -9,8 +9,8 @@ import useEditPedido from '@hooks/pedidos/useEditPedido.jsx';
 import useDeletePedido from '@hooks/pedidos/useDeletePedido.jsx';
 
 import DeleteIcon from '../assets/deleteIcon.svg';
-import UpdateIcon from '../assets/updateIcon.svg';
-import UpdateIconDisable from '../assets/updateIconDisabled.svg';
+import gorritoChefAmarillo from '../assets/chefHatIconAmarillo.svg';
+import gorritoChef from '../assets/chefHatIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 
 const Cocineria = () => {
@@ -20,8 +20,8 @@ const Cocineria = () => {
   const {
     handleClickUpdate,
     handleUpdate,
-    isPopupOpen,
-    setIsPopupOpen,
+    handleUpdateStatus,
+
     dataPedido,
     setDataPedido
   } = useEditPedido(setPedidos);
@@ -36,14 +36,18 @@ const Cocineria = () => {
     setDataPedido(selectedPedidos);
   }, [setDataPedido]);
 
+
+  
+
   const columns = [
     { title: "ID", field: "id", width: 350, responsive: 0 },
     { title: "Descripción", field: "descripcion", width: 300, responsive: 3 },
     { title: "Total", field: "total", width: 150, responsive: 2 },
-    { title: "Estado", field: "estado", width: 200, responsive: 2 },
+    {title: "Estado", field: "estado", width: 200, responsive: 2,},
     { title: "MesaID", field: "mesaID", width: 200, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
+  
 
   return (
     <main>
@@ -58,9 +62,19 @@ const Cocineria = () => {
             <h1 className="text-3xl font-bold text-[#212121]">Pedidos</h1>
             <div className="flex space-x-4 items-center">
               <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
-              <button onClick={handleClickUpdate} disabled={dataPedido.length === 0} className="focus:outline-none">
-                <img src={dataPedido.length === 0 ? UpdateIconDisable : UpdateIcon} alt="edit" />
+
+
+              <button onClick={handleUpdateStatus} // Cambia el estado a "listo"
+                  disabled={dataPedido.length === 0}
+                  className="focus:outline-none px-10 py-2 bg-[#212121] text-[#212121] font-bold rounded-lg hover:bg-[#212121] hover:text-[#212121] transition-all duration-300 ease-in-out" 
+                  
+                  >
+
+                <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChefAmarillo} alt="edit" />
+               
+
               </button>
+
               <button onClick={() => handleDelete(dataPedido)} disabled={dataPedido.length === 0} className="focus:outline-none">
                 <img src={dataPedido.length === 0 ? DeleteIconDisable : DeleteIcon} alt="delete" />
               </button>
@@ -76,7 +90,14 @@ const Cocineria = () => {
           />
         </div>
 
-        <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataPedido} action={handleUpdate} />
+    {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+
+
+
+  
+
+
+        
       </div>
     </main>
   );

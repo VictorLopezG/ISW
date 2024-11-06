@@ -11,6 +11,7 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+
 instance.interceptors.request.use(
   (config) => {
     const token = cookies.get('jwt-auth', { path: '/' });
