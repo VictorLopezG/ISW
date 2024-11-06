@@ -8,13 +8,13 @@ import { AppDataSource } from "../config/configDb.js";
 //lista,usando el id del producto o su nombre
 export async function getProductoService(query) {
     try {
-        const { id } = query;
+        const { id , nombre } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
         const productoFound = await productoRepository.findOne(
             {
-                where: [{ id: id }],
+                where: [{ id: id }, { nombre: nombre }],
             }
         );
         if (!productoFound) return [null, "Producto no encontrado"]
@@ -49,12 +49,12 @@ export async function getProductosService() {
 //creo que aca deberia estar la validacion para el rol no estoy seguro
 export async function updateProductoService(query, body) {
     try {
-        const { id } = query;
+        const { id , nombre , stock } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
         const productoFound = await productoRepository.findOne({
-            where: [{ id: id }]
+            where: [{ id: id }, { nombre: nombre }, { stock: stock }],
         });
 
         if (!productoFound)
@@ -95,11 +95,11 @@ export async function updateProductoService(query, body) {
 
 export async function deleteProductoService(query) {
     try {
-        const { id, nombre } = query;
+        const { id, nombre, stock } = query;
         const productoRepository = AppDataSource.getRepository(Producto)
         const productoFound = await productoRepository.findOne(
             {
-                where: [{ id: id }, { nombre: nombre }],
+                where: [{ id: id }, { nombre: nombre },{ stock: stock }],
             }
         );
         if (!productoFound)
@@ -122,18 +122,33 @@ export async function createProductoService(producto) {
 
         const { nombre, valor, stock } = producto;
 
+        const createErrorMessage = (DataInfo, message) => ({
+            DataInfo,
+            message
+        })
 
-        const newProducto = productoRepository.create({
-            nombre, valor, stock
+        const existingNombre = await productoRepository.findOne({
+            where: {
+                nombre,
+            },
         });
 
-        await mesaRepository.save(newProducto);
+        //if (existingNombre) 
+        //    return [null,createErrorMessage("Nombre","Nombre ya en uso")];
+
+        const newProducto = productoRepository.create({
+            nombre, 
+            valor, 
+            stock,
+        });
+
+        await productoRepository.save(newProducto);
 
         const { ...dataProducto } = newProducto;
 
         return [dataProducto, null];
     } catch (error) {
-        console.error("Error al crear la mesa", error);
+        console.error("Error al crear el Producto", error);
         return [null, "Error interno del servidor"];
     }
 }

@@ -4,12 +4,12 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getMesaService(query) {
     try {
-       
-        const { id} = query;
-      
+
+        const { id } = query;
+
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
-        
+
 
         const mesaFound = await mesaRepository.findOne({
             where: [{ id: id }],
@@ -18,7 +18,7 @@ export async function getMesaService(query) {
         if (!mesaFound) return [null, "Mesa no encontrada o no existe"];
 
         const { ...mesaData } = mesaFound;
-       
+
 
         return [mesaData, null];
     } catch (error) {
@@ -38,7 +38,7 @@ export async function getMesasService() {
         const mesasData = mesas.map(({ ...mesa }) => mesa);
 
         return [mesasData, null];
-        
+
     } catch (error) {
         console.error("Error al obtener a las mesas:", error);
         return [null, "Error interno del servidor"];
@@ -47,15 +47,15 @@ export async function getMesasService() {
 
 export async function updateMesaService(query, body) {
     try {
-        const { id} = query;
-        const { descripcion,capacidad } = body;
+        const { id } = query;
+        const { descripcion, capacidad } = body;
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
 
         const dataMesaUpdate = {
             id: id,
             capacidad: body.capacidad,
-            descripcion:body.descripcion,
+            descripcion: body.descripcion,
         };
 
         await mesaRepository.update({ id: id }, dataMesaUpdate);
@@ -80,12 +80,12 @@ export async function updateMesaService(query, body) {
 export async function deleteMesaService(query) {
     try {
         console.log("holaa");
-        const { id, descripcion,capacidad } = query;
+        const { id, descripcion, capacidad } = query;
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
 
         const mesaFound = await mesaRepository.findOne({
-            where: [{ id: id }, { descripcion:descripcion }, { capacidad:capacidad }],
+            where: [{ id: id }, { descripcion: descripcion }, { capacidad: capacidad }],
         });
 
         if (!mesaFound) return [null, "mesa no encontrado"];
@@ -104,27 +104,26 @@ export async function deleteMesaService(query) {
 
 export async function createMesaService(mesa) {
     try {
-      const mesaRepository = AppDataSource.getRepository(Mesa);
-  
-      const { descripcion,capacidad } = mesa;
-  
-      const createErrorMessage = (dataInfo, message) => ({
-        dataInfo,
-        message
-      });
-  
-      const newMesa = mesaRepository.create({
-        descripcion,capacidad
-      });
-  
-      await mesaRepository.save(newMesa);
-  
-      const { ...dataMesa } = newMesa;
-  
-      return [dataMesa, null];
+        const mesaRepository = AppDataSource.getRepository(Mesa);
+
+        const { descripcion, capacidad } = mesa;
+
+        const createErrorMessage = (dataInfo, message) => ({
+            dataInfo,
+            message
+        });
+
+        const newMesa = mesaRepository.create({
+            descripcion, capacidad
+        });
+
+        await mesaRepository.save(newMesa);
+
+        const { ...dataMesa } = newMesa;
+
+        return [dataMesa, null];
     } catch (error) {
-      console.error("Error al crear la mesa", error);
-      return [null, "Error interno del servidor"];
+        console.error("Error al crear la mesa", error);
+        return [null, "Error interno del servidor"];
     }
-  }
-  
+}
