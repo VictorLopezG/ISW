@@ -83,13 +83,13 @@ export async function updateProducto(req, res) {
 
 export async function deleteproducto(req, res) {
     try {
-        const { id, nombre } = req.params;
+        const { id } = req.params;
 
         //Por ahora el codigo solo valida con ID no se me ocurre como hacer 
         //para diferenciar el nombre y el postman esta funcinoando con el id
 
         const { error: queryError } = productoQueryValidation.validate({
-            id,
+            id
         });
 
         if (queryError) {
@@ -103,8 +103,7 @@ export async function deleteproducto(req, res) {
         
 
         const [ProductoDelete, errorProdDeleted] = await deleteProductoService({
-            id,
-            nombre,
+            id
         });
 
         if (errorProdDeleted) return handleErrorClient(res, 404, "Error eliminando el producto", errorProdDeleted);
