@@ -9,7 +9,7 @@ import {
 import {
     solicitudBodyValidation,
     solicitudQueryValidation,
-} from "../validations/solicitud.validations.js";
+} from "../validations/solicitud.validation.js";
 import {
     handleErrorClient,
     handleErrorServer,
@@ -18,13 +18,13 @@ import {
 
 export async function getSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = req.params;
+        const { id_Pedido, id_Producto } = req.params;
 
-        const { error } = solicitudQueryValidation.validate({ id_Pedido, id_Producto, cantidad });
+        const { error } = solicitudQueryValidation.validate({ id_Pedido, id_Producto });
 
         if (error) return handleErrorClient(res, 400, error.message);
 
-        const [Solicitud, errorSolicitud] = await getSolicitudService({ id_Pedido, id_Producto, cantidad });
+        const [Solicitud, errorSolicitud] = await getSolicitudService({ id_Pedido, id_Producto });
 
         if (errorSolicitud) return handleErrorClient(res, 404, errorSolicitud);
 
@@ -34,7 +34,7 @@ export async function getSolicitud(req, res) {
     }
 }
 
-export async function getSolicituds(req, res) {
+export async function getSolicitudes(req, res) {
     try {
         const [solicitudes, errorSolicitudes] = await getSolicitudsService();
 
@@ -54,7 +54,7 @@ export async function getSolicituds(req, res) {
 
 export async function updateSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = req.query;
+        const { id_Pedido, id_Producto } = req.query;
         const { body } = req;
 
         const { error: queryError } = solicitudQueryValidation.validate({
@@ -92,10 +92,10 @@ export async function updateSolicitud(req, res) {
 
 export async function deleteSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = req.query;
+        const { id_Pedido, id_Producto} = req.query;
 
         const { error: queryError } = solicitudQueryValidation.validate({
-            id_Pedido, id_Producto, cantidad
+            id_Pedido, id_Producto
         });
 
         if (queryError) {
@@ -108,7 +108,7 @@ export async function deleteSolicitud(req, res) {
         }
 
         const [solicitudDelete, errorSolicitudDelete] = await deleteSolicitudService({
-            id_Pedido, id_Producto, cantidad
+            id_Pedido, id_Producto
         });
 
         if (errorSolicitudDelete) return handleErrorClient(res, 404, "Error eliminado la solicitud", errorSolicitudDelete);
