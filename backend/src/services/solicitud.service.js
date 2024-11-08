@@ -4,12 +4,12 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getSolicitudService(query) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = query;
+        const { id_Pedido, id_Producto } = query;
 
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }, { cantidad: cantidad }],
+            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }],
         });
 
         if (!solicitudFound) return [null, "Solicitud no encontrada o no existe"];
@@ -31,7 +31,7 @@ export async function getSolicitudsService() {
 
         if (!solicitudes || solicitudes.length === 0) return [null, "No hay solicitudes"];
 
-        const solicitudesData = solicitudes.map(({ solicitud }) => solicitud);
+        const solicitudesData = solicitudes.map(({ ...solicitud }) => solicitud);
 
         return [solicitudesData, null];
     } catch (error) {
@@ -47,30 +47,28 @@ export async function updateSolicitudService(query, body) {
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }, { cantidad: cantidad }],
+            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }],
         });
 
         if (!solicitudFound) return [null, "Solicitud no encontrada"];
 
         const datasolicitudUpdate = {
-            mesaID: body.mesaID,
-            total: body.total,
-            descripcion: body.descripcion,
-            estado: body.estado,
-            updatedAt: new Date(),
+            id_Pedido:body.id_Pedido,
+            id_Producto:body.id_Producto,
+            cantidad:body.cantidad,
         };
 
         await solicitudRepository.update({ id_Pedido:solicitudFound.id_Pedido,id_Producto:solicitudFound.id_Producto }, datasolicitudUpdate);
 
         const solicitudData = await solicitudRepository.findOne({
-            where: { id_Pedido:solicitudFound.id_Pedido,id_Producto:solicitudFound.id_Producto },
+            where: { id_Pedido:body.id_Pedido,id_Producto:body.id_Producto },
         });
 
         if (!solicitudData) {
             return [null, "Solicitud no encontrado después de actualizar"];
         }
 
-        const { solicitudUpdated } = solicitudData;
+        const { ...solicitudUpdated } = solicitudData;
 
         return [solicitudUpdated, null];
     } catch (error) {
@@ -81,12 +79,12 @@ export async function updateSolicitudService(query, body) {
 
 export async function deleteSolicitudService(query) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = query;
+        const { id_Pedido, id_Producto } = query;
 
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }, { cantidad: cantidad }],
+            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }],
         });
 
         if (!solicitudFound) return [null, "Solicitud no encontrada"];
@@ -95,7 +93,7 @@ export async function deleteSolicitudService(query) {
 
         const { dataSolicitud } = solicitudDeleted;
 
-        return [dataSolicitud, null];
+        return [...dataSolicitud, null];
     } catch (error) {
         console.error("Error al eliminar la solicitud:", error);
         return [null, "Error interno del servidor"];
@@ -108,18 +106,13 @@ export async function createSolicitudService(solicitud) {
   
       const { id_Pedido, id_Producto, cantidad } = solicitud;
   
-      const createErrorMessage = (dataInfo, message) => ({
-        dataInfo,
-        message
-      });
-  
       const newSolicitud = solicitudRepository.create({
-        id_Pedido, id_Producto, cantidad
+        id_Pedido:id_Pedido, id_Producto:id_Producto, cantidad:cantidad
       });
   
       await solicitudRepository.save(newSolicitud);
   
-      const { dataSolicitud } = newSolicitud;
+      const { ...dataSolicitud } = newSolicitud;
   
       return [dataSolicitud, null];
     } catch (error) {

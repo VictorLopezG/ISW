@@ -8,13 +8,13 @@ import { AppDataSource } from "../config/configDb.js";
 //lista,usando el id del producto o su nombre
 export async function getProductoService(query) {
     try {
-        const { id , nombre } = query;
+        const { id  } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
         const productoFound = await productoRepository.findOne(
             {
-                where: [{ id: id }, { nombre: nombre }],
+                where: [{ id: id }],
             }
         );
         if (!productoFound) return [null, "Producto no encontrado"]
@@ -95,11 +95,11 @@ export async function updateProductoService(query, body) {
 
 export async function deleteProductoService(query) {
     try {
-        const { id, nombre, stock } = query;
+        const { id } = query;
         const productoRepository = AppDataSource.getRepository(Producto)
         const productoFound = await productoRepository.findOne(
             {
-                where: [{ id: id }, { nombre: nombre },{ stock: stock }],
+                where: [{ id: id }],
             }
         );
         if (!productoFound)
@@ -137,9 +137,9 @@ export async function createProductoService(producto) {
         //    return [null,createErrorMessage("Nombre","Nombre ya en uso")];
 
         const newProducto = productoRepository.create({
-            nombre, 
-            valor, 
-            stock,
+            nombre:nombre, 
+            valor:valor, 
+            stock:stock,
         });
 
         await productoRepository.save(newProducto);
