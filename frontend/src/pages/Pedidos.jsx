@@ -2,19 +2,27 @@ import { createPedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
 import '@styles/form.css';
 import  useMesas from '@hooks/mesas/useGetMesas.jsx';
+import useProducto from '@hooks/productos/useGetProductos';
 
 const Pedidos = () => {
 
-    const { mesas, fetchMesas, setMesas }=useMesas();
+    const { mesas }=useMesas();
 
     const opcionesM=mesas.map(mesa=>({
         value:mesa[0].id,
         label:mesa[0].descripcion
     }));
+
+    const {productos}=useProducto();
+    
+    const opcionesP=productos.map(producto=>({
+        value:producto[0].id,
+        label:producto[0].nombre
+    }));
     
     const submitPedido = async (data) => {
         try {
-            console.log(data);
+            //console.log(data);
             const response = await createPedido(data);
             if (response.status === 'Client error') {
                 console.log(response);
@@ -31,13 +39,10 @@ const Pedidos = () => {
                 fields={[
                     {
                         label: "Mesa del pedido",
-                        name: "IDmesa",
-                        placeholder: "",    
+                        name: "IDmesa",    
                         fieldType: 'select',
                         type: "input",
                         required: true,
-                        minLength: 25,
-                        maxLength: 30,
                         options:opcionesM,
                     },
                     {
@@ -52,6 +57,16 @@ const Pedidos = () => {
                         pattern: /^[a-zA-Z0-9 ]+$/,
                         patternMessage: "Debe contener solo letras y números",
                     
+                    },
+                    {
+                        label: "Producto",
+                        name: "prod",
+                        placeholder: "Plato solicitado",
+                        fieldType: 'select',
+                        type: "imput",
+                        required: true,
+                        options:opcionesP
+                        
                     },
                     {
                         label: "Total",
