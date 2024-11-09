@@ -16,6 +16,7 @@ export async function createProducto(data) {
 export async function getProductos() {
     try {
         const { data } = await axios.get('/producto/all/');
+        //console.log(data);
         return data;
     } catch (error) {
         return error.response.data;
