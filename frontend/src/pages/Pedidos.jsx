@@ -1,25 +1,26 @@
 import { createPedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
+import prodForm from '@components/ProdForm';
 import '@styles/form.css';
-import  useMesas from '@hooks/mesas/useGetMesas.jsx';
-import useProducto from '@hooks/productos/useGetProductos';
+import useMesas from '@hooks/mesas/useGetMesas.jsx';
+import useProducto from '@hooks/productos/useGetProductos.jsx';
 
 const Pedidos = () => {
 
-    const { mesas }=useMesas();
+    const { mesas } = useMesas();
 
-    const opcionesM=mesas.map(mesa=>({
-        value:mesa[0].id,
-        label:mesa[0].descripcion
+    const opcionesM = mesas.map(mesa => ({
+        value: mesa[0].id,
+        label: mesa[0].descripcion
     }));
 
-    const {productos}=useProducto();
-    
-    const opcionesP=productos.map(producto=>({
-        value:producto[0].id,
-        label:producto[0].nombre
+    const { productos ,fetchProductos,setProductos} = useProducto();
+
+    const opcionesP = productos.map(producto => ({
+        value: producto[0].id,
+        label: producto[0].nombre
     }));
-    
+
     const submitPedido = async (data) => {
         try {
             //console.log(data);
@@ -39,11 +40,11 @@ const Pedidos = () => {
                 fields={[
                     {
                         label: "Mesa del pedido",
-                        name: "IDmesa",    
+                        name: "IDmesa",
                         fieldType: 'select',
                         type: "input",
                         required: true,
-                        options:opcionesM,
+                        options: opcionesM,
                     },
                     {
                         label: "Descripcion",
@@ -56,35 +57,48 @@ const Pedidos = () => {
                         maxLength: 255,
                         pattern: /^[a-zA-Z0-9 ]+$/,
                         patternMessage: "Debe contener solo letras y números",
-                    
+
                     },
                     {
                         label: "Producto",
                         name: "prod",
                         placeholder: "Plato solicitado",
                         fieldType: 'select',
-                        type: "imput",
+                        type: "input",
                         required: true,
-                        options:opcionesP
-                        
+                        options: opcionesP
+                    },
+                    {
+                        label:"Cantidad",
+                        name:"cantidad",
+                        type:"input",
+                        fieldType:"input"
+
+                    },
+                    {
+                        type:"add",
+                        label:"añadir productos"
                     },
                     {
                         label: "Total",
                         name: "total",
-                        fieldType:'input',
-                        default:'0',
+                        fieldType: 'input',
+                        default: '0',
                         placeholder: "suma de los productos solicitados",
                         disabled: true,
                         required: false,
-                        minLength: 0,   
+                        minLength: 0,
                         maxLength: 255,
                     },
                 ]}
                 buttonText="Crear Pedido"
                 onSubmit={submitPedido}
             />
+            <prodForm>
+
+            </prodForm>
         </main>
-        
+
     );
 };
 
