@@ -1,6 +1,5 @@
 import { createPedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
-import prodForm from '@components/ProdForm';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
