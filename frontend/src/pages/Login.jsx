@@ -64,11 +64,6 @@ const Login = () => {
                 ]}
                 buttonText="Iniciar sesión"
                 onSubmit={loginSubmit}
-                footerContent={
-                    <p>
-                        ¿No tienes cuenta?, <a href="/register">¡Regístrate aquí!</a>
-                    </p>
-                }
             />
         </main>
     );
