@@ -1,9 +1,9 @@
 import { createPedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
-import prodForm from '@components/ProdForm';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
+import { createSolicitud } from '../services/solicitud.service';
 
 const Pedidos = () => {
 
@@ -22,11 +22,27 @@ const Pedidos = () => {
     }));
 
     const submitPedido = async (data) => {
+        const {IDmesa,descripcion,total,id_Producto,cantidad}=data;
+        const pedido={IDmesa,descripcion,total}
+        let id_Pedido=0;
         try {
-            //console.log(data);
-            const response = await createPedido(data);
+            const response = await createPedido(pedido);
             if (response.status === 'Client error') {
                 console.log(response);
+            }else{
+                console.log(response.data);
+            }
+            id_Pedido=response.data.id;
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            const solicitud ={id_Pedido,id_Producto,cantidad}
+            const response = await createSolicitud(solicitud);
+            if (response.status === 'Client error') {
+                console.log(response);
+            }else{
+                console.log(response.data);
             }
         } catch (error) {
             console.log(error);
@@ -61,7 +77,7 @@ const Pedidos = () => {
                     },
                     {
                         label: "Producto",
-                        name: "prod",
+                        name: "id_Producto",
                         placeholder: "Plato solicitado",
                         fieldType: 'select',
                         type: "input",
