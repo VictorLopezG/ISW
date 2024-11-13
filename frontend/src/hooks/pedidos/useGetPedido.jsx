@@ -4,6 +4,7 @@ import { getPedidos } from '@services/pedido.service.js';
 const usePedidos = () => {
     const [pedidos, setPedidos] = useState([]);
 
+//observar finally
     const fetchPedidos = async () => {
         try {
             const response = await getPedidos();
@@ -22,9 +23,7 @@ const usePedidos = () => {
         }
     };
 
-    useEffect(() => {
-        fetchPedidos();
-    }, []);
+
 
     return { pedidos, fetchPedidos, setPedidos };
 };
