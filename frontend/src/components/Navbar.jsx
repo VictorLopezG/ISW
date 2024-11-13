@@ -105,7 +105,7 @@ const Navbar = () => {
                                 }}
                                 activeClassName="active"
                             >
-                                Administrar Local
+                                Administrar
                             </NavLink>
                         </li>
                     )}

@@ -79,12 +79,12 @@ export async function updatePedidoService(query, body) {
 
 export async function deletePedidoService(query) {
     try {
-        const { id, mesaID, total } = query;
+        const { id } = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
 
         const pedidoFound = await pedidoRepository.findOne({
-            where: [{ id: id }, { mesaID: mesaID }, { total: total }],
+            where: [{ id: id }],
         });
 
         if (!pedidoFound) return [null, "Pedido no encontrado"];

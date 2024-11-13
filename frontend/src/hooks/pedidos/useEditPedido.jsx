@@ -12,13 +12,14 @@ const useEditPedido = (setPedidos) => {
             setIsPopupOpen(true);
         }
     };
-
+    /*Actualiza todo*/
     const handleUpdate = async (updatedPedidoData) => {
         if (updatedPedidoData) {
             try {
                 const updatedPedido = await updatePedido(updatedPedidoData, dataPedido[0].id);
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
+                /*recuerda borrar esta validacion o cambiarla*/ 
                 const formattedPedido = formatPostUpdate(updatedPedido);
 
                 setPedidos(prevPedidos => prevPedidos.map(pedido => {
@@ -39,7 +40,7 @@ const useEditPedido = (setPedidos) => {
             }
         }
     };
-
+    /*Actualiza solo el estado*/ 
     const handleUpdateStatus = async () => {
         if (dataPedido.length > 0) {
             try {

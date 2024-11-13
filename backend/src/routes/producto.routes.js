@@ -19,9 +19,9 @@ router
 
 router
     .get("/all/",getProductos)
-    .get("/detail/id/:id",getProducto) // Ids Funciona
-    .post("/detail/crearProducto",createProducto)
-    .put("/detail/actualizarProducto/id/:id",updateProducto) // Ids
-    .delete("/detail/eliminarProductoID/:id",deleteproducto) // Id
+    .get("/:id",getProducto) // Ids Funciona
+    .post("/crearProducto",createProducto)
+    .put("/:id",updateProducto) // Ids
+    .delete("/eliminarProductoID/:id",deleteproducto) // Id
 
 export default router;

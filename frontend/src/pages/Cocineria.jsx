@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Table from "../components/Table";
 
@@ -26,19 +26,12 @@ const Cocineria = () => {
     setDataPedido
   } = useEditPedido(setPedidos);
 
-
-
   const { handleDelete } = useDeletePedido(fetchPedidos, setDataPedido);
-//revisar
-  useEffect(() => {
-    fetchPedidos();
-  }, [])
-  
 
   const handleIdFilterChange = (e) => {
     setFilterId(e.target.value);
   };
-//
+
   const handleSelectionChange = useCallback((selectedPedidos) => {
     setDataPedido(selectedPedidos);
   }, [setDataPedido]);
@@ -58,9 +51,9 @@ const Cocineria = () => {
 
   return (
     <main>
-      <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
-        <div className="bg-[#212121] p-12 rounded-3xl text-center text-rose-100 flex flex-col items-center space-y-4 my-11">
-          <h1 className="text-3xl font-bold text-[#FFC107]">COCINA</h1>
+      <div className="h-screen w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
+        <div className="bg-[#212121] p-8 rounded-3xl text-center text-rose-100 flex flex-col items-center space-y-4">
+          <h1 className="text-2xl font-bold text-[#FFC107]">COCINA</h1>
           <h2 className="text-1xl font-light">Preparación de productos</h2>
         </div>
 
@@ -73,12 +66,11 @@ const Cocineria = () => {
 
               <button onClick={handleUpdateStatus} // Cambia el estado a "listo"
                   disabled={dataPedido.length === 0}
-                  className="focus:outline-none px-10 py-2 bg-[#212121] text-[#FFC107] font-bold rounded-lg hover:bg-[#FFC107] hover:text-[#212121] transition-all duration-300 ease-in-out" 
+                  className="focus:outline-none px-10 py-2 bg-[#212121] text-[#212121] font-bold rounded-lg hover:bg-[#212121] hover:text-[#212121] transition-all duration-300 ease-in-out" 
                   
                   >
 
-                <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChef} alt="edit" />
-               
+                <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChefAmarillo} alt="edit" />
 
               </button>
 
