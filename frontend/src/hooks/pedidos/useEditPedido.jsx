@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { updatePedido } from '@services/pedido.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatPedidoData } from '../../helpers/formatData';
 
 const useEditPedido = (setPedidos) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -20,7 +21,7 @@ const useEditPedido = (setPedidos) => {
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
                 /*recuerda borrar esta validacion o cambiarla*/ 
-                const formattedPedido = formatPostUpdate(updatedPedido);
+                const formattedPedido = formatPedidoData(updatedPedido);
 
                 setPedidos(prevPedidos => prevPedidos.map(pedido => {
                     console.log("Pedido actual:", pedido);
@@ -51,7 +52,7 @@ const useEditPedido = (setPedidos) => {
                 
                 const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id);
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
-                const formattedPedido = formatPostUpdate(updatedPedido);
+                const formattedPedido = formatPedidoData(updatedPedido);
                 setPedidos(prevPedidos =>
                     prevPedidos.map(pedido => 
                         pedido.id === formattedPedido.id ? formattedPedido : pedido
