@@ -21,6 +21,13 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+export function formatPedidoData(pedido) {
+    return {
+        ...pedido,
+        mesaID: pedido.mesaID,
+        createdAt: formatTempo(pedido.createdAt, "DD-MM-YYYY")
+    };
+}
 
 export function convertirMinusculas(obj) {
     for (let key in obj) {

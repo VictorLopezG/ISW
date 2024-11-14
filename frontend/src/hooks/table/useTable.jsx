@@ -10,6 +10,7 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
 
     useEffect(() => {
         if (tableRef.current) {
+            
             const updatedColumns = [
                 { 
                     formatter: "rowSelection", 

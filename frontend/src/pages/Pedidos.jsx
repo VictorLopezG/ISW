@@ -50,7 +50,7 @@ const Pedidos = () => {
     };
 
     return (
-        <main className="container">
+        <main className="container h-full">
             <Form
                 title="Crear un pedido"
                 fields={[
