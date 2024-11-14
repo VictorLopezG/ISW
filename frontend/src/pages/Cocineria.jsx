@@ -59,7 +59,7 @@ const Cocineria = () => {
 
   return (
     <main>
-      <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
+      <div className="h-screen w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
         <div className="bg-[#212121] p-12 rounded-3xl text-center text-rose-100 flex flex-col items-center space-y-4 my-11">
           <h1 className="text-3xl font-bold text-[#FFC107]">COCINA</h1>
           <h2 className="text-1xl font-light">Preparación de productos</h2>

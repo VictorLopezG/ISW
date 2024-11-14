@@ -78,22 +78,35 @@ export async function updatePedidoService(query, body) {
 }
 
 export async function deletePedidoService(query) {
+    const t = await sequelize.transaction();
     try {
+        console.log("entro a service")
+        console.log(query)
+        
         const { id } = query;
-
+        console.log(id)
+        
         const pedidoRepository = AppDataSource.getRepository(Pedido);
+
+        console.log("antes de error")
 
         const pedidoFound = await pedidoRepository.findOne({
             where: [{ id: id }],
         });
+   
 
         if (!pedidoFound) return [null, "Pedido no encontrado"];
 
         if (pedidoFound.estado === "pagado") {
             return [null, "No se puede eliminar un pedido una vez pagado"];
         }
-
+      
+//errrorrrrr
+            
+        
         const pedidoDeleted = await pedidoRepository.remove(pedidoFound);
+
+        console.log("despues de error")
 
         const { ...dataPedido } = pedidoDeleted;
 
