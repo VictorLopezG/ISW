@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { updatePedido } from '@services/pedido.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatPedidoData } from '../../helpers/formatData';
 
 const useEditPedido = (setPedidos) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -12,14 +13,15 @@ const useEditPedido = (setPedidos) => {
             setIsPopupOpen(true);
         }
     };
-
+    /*Actualiza todo*/
     const handleUpdate = async (updatedPedidoData) => {
         if (updatedPedidoData) {
             try {
                 const updatedPedido = await updatePedido(updatedPedidoData, dataPedido[0].id);
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
-                const formattedPedido = formatPostUpdate(updatedPedido);
+                /*recuerda borrar esta validacion o cambiarla*/ 
+                const formattedPedido = formatPedidoData(updatedPedido);
 
                 setPedidos(prevPedidos => prevPedidos.map(pedido => {
                     console.log("Pedido actual:", pedido);
@@ -39,7 +41,7 @@ const useEditPedido = (setPedidos) => {
             }
         }
     };
-
+    /*Actualiza solo el estado*/ 
     const handleUpdateStatus = async () => {
         if (dataPedido.length > 0) {
             try {
@@ -50,7 +52,7 @@ const useEditPedido = (setPedidos) => {
                 
                 const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id);
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
-                const formattedPedido = formatPostUpdate(updatedPedido);
+                const formattedPedido = formatPedidoData(updatedPedido);
                 setPedidos(prevPedidos =>
                     prevPedidos.map(pedido => 
                         pedido.id === formattedPedido.id ? formattedPedido : pedido

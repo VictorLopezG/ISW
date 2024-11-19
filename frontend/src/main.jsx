@@ -12,6 +12,7 @@ import Homecaja from '@pages/HomeCaja';
 import '@styles/styles.css';
 import Cocineria from './pages/Cocineria';
 import Pedidos from '@pages/Pedidos';
+import CajaCobro from '@pages/CajaCobro';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
           <Admin_local/>
         </ProtectedRoute>
         ),
+      },
+      {
+        path: '/CajaCobro',
+        element: <CajaCobro/>
       }
     ]
   },

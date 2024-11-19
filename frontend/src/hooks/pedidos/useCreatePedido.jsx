@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useCreatePedido = () => {
     const [pedido, setPedidos] = useState([]);
-  
+
     const createPedido = async () => {
         try {
             const response = await createPedido();
@@ -30,7 +30,7 @@ const useCreatePedido = () => {
         }));
     };
 
-    return { pedido, createPedido, setPedidos,handleInputChange };
+    return { pedido, createPedido, setPedidos, handleInputChange };
 };
 
 export default useCreatePedido;

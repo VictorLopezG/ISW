@@ -81,7 +81,10 @@ export async function updatePedido(req, res) {
 
 export async function deletePedido(req, res) {
     try {
-        const { id} = req.query;
+
+        console.log("entro a controller backend")
+        const { id} = req.params;
+        console.log(id)
 
         const pedidoFound = await getPedidoService({ id });
 
