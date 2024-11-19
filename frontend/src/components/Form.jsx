@@ -86,10 +86,6 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             ))}
                         </select>
                     )}
-                    {
-                        field.type==='add'&&(
-                        <button type='button'>{'+'}</button>
-                    )}
                     {field.type === 'password' && field.name === 'password' && (
                         <span className="toggle-password-icon" onClick={togglePasswordVisibility}>
                             <img src={showPassword ? ViewIcon : HideIcon} />

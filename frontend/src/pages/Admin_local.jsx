@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import Table from '../components/Table';
 import Search from '../components/Search';
 /*hooks */
-import useEditProducto from '@hooks/productos/useEditPedido.jsx'
+import useEditProducto from '@hooks/productos/useEditProducto.jsx'
 import useProducto from '@hooks/productos/useGetProductos.jsx'
 import useCreateProducto from '@hooks/productos/useCreateProducto';
 /*Assets*/ 
