@@ -1,6 +1,20 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
+/*@Entity()
+export class Schedule {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ManyToOne(() => Location, location => location.schedules, { onDelete: 'CASCADE' })
+  location: Location;
+
+  @ManyToOne(() => Movie, movie => movie.schedules, { onDelete: 'CASCADE' })
+  movie: Movie;
+} */
+
+
+
 const PedidoSchema = new EntitySchema({
     name: "Pedido",
     tableName: "pedidos",
@@ -47,6 +61,7 @@ const PedidoSchema = new EntitySchema({
             target: "mesas",
             type: "many-to-one",
             joinColumn: { name: "mesaID", referencedColumnName: "id" },
+            
         }
     },
     indices: [

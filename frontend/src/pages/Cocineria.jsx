@@ -47,13 +47,14 @@ const Cocineria = () => {
 
   const columns = [
     { title: "ID", field: "id", width: 100, responsive: 0 },
-    { title: "Descripción", field: "descripcion", width: 300, responsive: 3 },
+    { title: "Descripción", field: "descripcion", width: 100, responsive: 3 },
     {title: "Estado", field: "estado", width: 100, responsive: 2,},
     { title: "MesaID", field: "mesaID", width: 100, responsive: 2 },
-    { title: "Creado", field: "createdAt", width: 100, responsive: 2 }
+    { title: "Creado", field: "createdAt", width: 100, responsive: 2 },
+  {title: "producto", field: "producto", width: 100, responsive: 2},
   ];
   
-  const pedidosPendientes = pedidos.filter(pedido => pedido.estado === "Pendiente");
+  const {pedidosPendientes} = pedidos.filter(pedido => pedido.estado === "Pendiente");
 
   
 

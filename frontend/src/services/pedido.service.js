@@ -49,6 +49,7 @@ export async function deletePedido(id) {
         return response.data;
     } catch (error) {
         console.log("fallooo en pedido service");
+        console.log(error);
         return error.response.data;
     }
 }

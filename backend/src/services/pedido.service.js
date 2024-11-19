@@ -78,7 +78,7 @@ export async function updatePedidoService(query, body) {
 }
 
 export async function deletePedidoService(query) {
-    const t = await sequelize.transaction();
+
     try {
         console.log("entro a service")
         console.log(query)
