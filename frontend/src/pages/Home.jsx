@@ -10,8 +10,12 @@ const Home = () => {
         </div>
 
       </div>
-      /</main>
+      </main>
   )
 }
+
+
+
+
 
 export default Home;

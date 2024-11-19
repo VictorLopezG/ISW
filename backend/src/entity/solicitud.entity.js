@@ -28,6 +28,7 @@ const SolicitudSchema = new EntitySchema({
             target: "pedidos",
             type: "many-to-one",
             joinColumn: { name: "id_Pedido", referencedColumnName: "id" },
+            onDelete: "CASCADE"
         },
         id_Producto: {
             target: "productos",

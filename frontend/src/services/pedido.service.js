@@ -39,9 +39,17 @@ export async function updatePedido(data, id) {
 
 export async function deletePedido(id) {
     try {
-        const response = await axios.delete(`/ped/:id/?id=${id}`);
+       
+        console.log("entro a service front");
+
+        console.log(id);
+
+        const response = await axios.delete(`/ped/${id}`);
+        console.log("paso el sercixe front");
         return response.data;
     } catch (error) {
+        console.log("fallooo en pedido service");
+        console.log(error);
         return error.response.data;
     }
 }

@@ -1,4 +1,4 @@
-import { createPedido,deletePedido } from '@services/pedido.service.js';
+import { createPedido, deletePedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
@@ -30,7 +30,7 @@ const Pedidos = () => {
                 console.log(response);
             } else {
                 console.log(response.data);
-                
+
             }
             id_Pedido = response.data.id;
         } catch (error) {
@@ -41,9 +41,9 @@ const Pedidos = () => {
             let response = await createSolicitud(solicitud);
             if (response.status === 'Client error') {
                 console.log(response);
-                try{
-                    response =await deletePedido(id_Pedido);
-                }catch(error){
+                try {
+                    response = await deletePedido(id_Pedido);
+                } catch (error) {
                     console.log(response)
                 }
             } else {
@@ -56,7 +56,7 @@ const Pedidos = () => {
 
     return (
         <div>
-            <main className="container">
+            <main className="container h-full">
                 <Form
                     title="Crear un pedido"
                     fields={[
@@ -93,7 +93,7 @@ const Pedidos = () => {
                             label: "Cantidad",
                             name: "cantidad",
                             type: "number",
-                            min:'0',
+                            min: '0',
                             fieldType: "input",
                             required: true
                         },
