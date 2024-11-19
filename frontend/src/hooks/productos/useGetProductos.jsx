@@ -3,6 +3,11 @@ import { getProductos } from '@services/producto.service.js';
 
 const useProducto = () => {
     const [productos, setProductos] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    
+    const handleClickUpdate = () => {
+        setIsPopupOpen(true);
+    };
 
     const fetchProductos = async () => {
         try {
@@ -24,7 +29,7 @@ const useProducto = () => {
         fetchProductos();
     }, []);
 
-    return { productos, fetchProductos, setProductos };
+    return { productos, fetchProductos, setProductos,isPopupOpen,setIsPopupOpen };
 };
 
 export default useProducto;
