@@ -12,7 +12,7 @@ const useProducto = () => {
     const fetchProductos = async () => {
         try {
             const response = await getProductos();
-            console.log(response.data); 
+           
             const formattedData = response.data.map(producto => ([{
                 nombre:producto.nombre,
                 id: producto.id,
@@ -31,8 +31,7 @@ const useProducto = () => {
         fetchProductos();
     }, []);
     
-    console.log("productos");
-    console.log(productos);
+
     return { productos, fetchProductos, setProductos,isPopupOpen,setIsPopupOpen };
 };
 

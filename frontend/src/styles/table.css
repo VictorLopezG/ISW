@@ -1,6 +1,7 @@
 .table-container .tabulator .tabulator-col {
     background-color: #212121;
     color: #fff;
+    width: 100px;
 }
 .tabulator .tabulator-footer .tabulator-page {
     background-color: #fff;
@@ -12,3 +13,6 @@
 .tabulator .tabulator-footer .tabulator-page.active {
     color: #E4332C;
 }
+
+
+
