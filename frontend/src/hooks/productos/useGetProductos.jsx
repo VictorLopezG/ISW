@@ -12,10 +12,12 @@ const useProducto = () => {
     const fetchProductos = async () => {
         try {
             const response = await getProductos();
-            //console.log(response.data); 
+            console.log(response.data); 
             const formattedData = response.data.map(producto => ([{
                 nombre:producto.nombre,
                 id: producto.id,
+                valor:producto.valor,
+                stock:producto.stock,
                 cantidad:producto.cantidad
                 //createdAt: mesa.createdAt
             }]));
@@ -28,7 +30,9 @@ const useProducto = () => {
     useEffect(() => {
         fetchProductos();
     }, []);
-
+    
+    console.log("productos");
+    console.log(productos);
     return { productos, fetchProductos, setProductos,isPopupOpen,setIsPopupOpen };
 };
 

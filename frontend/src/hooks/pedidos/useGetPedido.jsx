@@ -16,14 +16,15 @@ const usePedidos = () => {
                 mesaID: pedido.mesaID,
                 createdAt: pedido.createdAt
             }));
-            console.log(formattedData);
+  
             setPedidos(formattedData);
         } catch (error) {
             console.error("Error: ", error);
         }
     };
 
-
+    console.log("pedidos");
+    console.log(pedidos);
 
     return { pedidos, fetchPedidos, setPedidos };
 };
