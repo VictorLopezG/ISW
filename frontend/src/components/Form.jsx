@@ -3,6 +3,7 @@ import { useState } from 'react';
 import '@styles/form.css';
 import HideIcon from '../assets/HideIcon.svg';
 import ViewIcon from '../assets/ViewIcon.svg';
+import DynamicForm from './DynamicForm';
 
 const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundColor }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -86,6 +87,10 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             ))}
                         </select>
                     )}
+                    {/*field.fieldType === 'dynamic' && (
+                        <DynamicForm>
+                        </DynamicForm>
+                    )*/}
                     {field.type === 'password' && field.name === 'password' && (
                         <span className="toggle-password-icon" onClick={togglePasswordVisibility}>
                             <img src={showPassword ? ViewIcon : HideIcon} />

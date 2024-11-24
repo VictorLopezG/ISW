@@ -4,6 +4,7 @@ import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
 import { createSolicitud } from '../services/solicitud.service';
+import DynamicForm from '../components/DynamicForm';
 
 const Pedidos = () => {
     const { mesas } = useMesas();
@@ -19,6 +20,7 @@ const Pedidos = () => {
         value: producto[0].id,
         label: producto[0].nombre
     }));
+    let total=0;
 
     const submitPedido = async (data) => {
         const { IDmesa, descripcion, total, id_Producto, cantidad } = data;
@@ -56,7 +58,7 @@ const Pedidos = () => {
 
     return (
         <div>
-            <main className="container h-full">
+            <main className="container h-screen">
                 <Form
                     title="Crear un pedido"
                     fields={[
@@ -74,7 +76,7 @@ const Pedidos = () => {
                             placeholder: "Inserte descripcion del pedido",
                             fieldType: 'input',
                             type: "string",
-                            required: false,
+                            required: true,
                             minLength: 0,
                             maxLength: 255,
                             pattern: /^[a-zA-Z0-9 ]+$/,
@@ -82,6 +84,11 @@ const Pedidos = () => {
 
                         },
                         {
+                            fieldType:'dynamic',
+                            options:opcionesP,
+                            required: true
+                        },
+                        {/*
                             label: "Producto",
                             name: "id_Producto",
                             fieldType: 'select',
@@ -96,17 +103,19 @@ const Pedidos = () => {
                             min: '0',
                             fieldType: "input",
                             required: true
-                        },
+                        */},
                         {
-                            label: "Total",
+                            label: `Total $ ${total}`,
                             name: "total",
-                        },
+                        }
                     ]}
                     buttonText="Crear Pedido"
                     onSubmit={submitPedido}
+                    
                 />
-            </main>
-        </div>
+                <DynamicForm/>
+             </main>
+            </div>
     );
 };
 
