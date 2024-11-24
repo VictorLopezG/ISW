@@ -123,3 +123,18 @@ export async function createPedido(req, res) {
         handleErrorServer(res, 500, error.message);
     }
 }
+
+//funcion con consulta sql para la tabla de cocinería viva chile
+export async function getPedidosCocina(req, res) {
+    try {
+        const { body } = req;
+        
+        
+    } catch (error) {
+        handleErrorServer(res, 500, error.message);
+        console.log(error)
+        
+    }
+
+
+}

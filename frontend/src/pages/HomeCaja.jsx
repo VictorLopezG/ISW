@@ -7,7 +7,7 @@ const Homecaja = () => {
     <div className="flex  flex-col items-center justify-center space-y-9
                       min-h-screen bg-gradient-to-r from-rose-100 to-[#FFC107]">
       <button
-        onClick={() => navigate('/CajaCobro')}
+        onClick={() => navigate('/pedidos')}
         className="bg-[#212121] text-white font-bold py-5 px-7 rounded-3xl hover:bg-[#FF5722] 
                    hover:text-black text-5xl "
       >

@@ -6,39 +6,47 @@ import Search from '../components/Search';
 import useEditProducto from '@hooks/productos/useEditProducto.jsx'
 import useProducto from '@hooks/productos/useGetProductos.jsx'
 import useCreateProducto from '@hooks/productos/useCreateProducto';
-/*Assets*/ 
-import DeleteIcon from '../assets/deleteIcon.svg';
-import gorritoChefAmarillo from '../assets/chefHatIconAmarillo.svg';
-import gorritoChef from '../assets/chefHatIcon.svg';
-import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
+import useDeleteProducto from '../hooks/productos/useDeleteProducto';
+/*Assets*/
+
 import check from '../assets/check.svg';
 
 const Admin_local = () => {
-    const { productos, fetchProductos, setProductos } = useProducto();
+    const { fetchProductos, setProductos } = useProducto();
     const [filterId, setFilterId] = useState('');
 
     const {
         handleClickUpdate,
         handleUpdate,
         handleUpdateStatus,
-    
         dataProducto,
         setDataProducto
     } = useEditProducto(setProductos);
-    
+
+    const { productos } = useProducto();
+    const opcionesP = productos.map(producto => ({
+        id: producto[0].id,
+        nombre: producto[0].nombre,
+        valor: producto[0].valor,
+        stock: producto[0].stock
+    }));
+
     const { handleDelete } = useDeleteProducto(fetchProductos, setDataProducto);
 
     const handleIdFilterChange = (e) => {
         setFilterId(e.target.value);
-    };
+      };
+
 
     const handleSelectionChange = useCallback((selectedProductos) => {
-        setDataPedido(selectedProductos);
+        setDataProducto(selectedProductos);
     }, [setDataProducto]);
 
     const columns = [
-        {title: "ID",field: "id", width: 350,responsive:0},
-        {title}
+        { title: "ID", field: "id", width: 100, responsive: 0 },
+        { title: "Nombre", field: "nombre", width: 100, responsive: 3 },
+        { title: "Valor", field: "valor", width: 100, responsive: 2 },
+        { title: "Stock", field: "stock", width: 100, responsive: 2 }
     ];
 
     return (
@@ -53,22 +61,30 @@ const Admin_local = () => {
                     </h2>
                 </div>
 
-                <div className="flex-grow flex items-center justify-center w-full">
+                <div className="flex-col flex items-center justify-center w-full">
+
                     <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-6">
-                        <div className="flex justify-between items-center">
+
+                        <div className="flex flex-col items-start justify-between ">
                             {/*Boton para agregar productos o eliminar prodcutos*/}
 
-                            <button className="flex items-center px-4 py-2 bg-purple-500 text-white rounded space-x-2">
-                            <img src={ check } alt="edit" />
+                            <button className="flex flex-col items-center px-4 py-2 bg-purple-500 text-white rounded space-x-2">
+                                <img src={check} alt="edit" />
 
                                 <span>Gestionar Productos</span>
                             </button>
-
-                            
-
                             {/*Boton para agregar el menu basicamente quedar disponible y actualizar los precios*/}
 
                             {/*boton para generar informes*/}
+
+                            <Table
+                                data={opcionesP}
+                                columns={columns}
+                                filter={filterId}
+                                dataToFilter="id"
+                                initialSortName="id"
+                                onSelectionChange={handleSelectionChange}
+                            />
 
                         </div>
                     </div>
