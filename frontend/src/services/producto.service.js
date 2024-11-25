@@ -3,12 +3,12 @@ import { convertirMinusculas } from '@helpers/formatData.js';
 
 export async function createProducto(data) {
     try {
+
         const dataRegister = convertirMinusculas(data);
-        const { nombre,valor,stock } = dataRegister;
+        const { nombre,valor,stock, categoria} = dataRegister;
         const response = await axios.post('/producto/crearProducto', {
-            nombre:nombre,
-            valor:valor,
-            stock:stock
+            nombre:nombre,valor:valor,stock:stock,categoria:categoria
+
         });
         console.log(response.data);
         return response.data;

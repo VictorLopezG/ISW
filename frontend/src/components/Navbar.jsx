@@ -60,6 +60,18 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink
+                            to="/menu"
+                            onClick={() => {
+                                setMenuOpen(false);
+                                addActiveClass();
+                            }}
+                            activeClassName="active"
+                        >
+                            Menú del día
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
                             to="/pedidos"
                             onClick={() => {
                                 setMenuOpen(false);

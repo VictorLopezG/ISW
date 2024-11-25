@@ -6,7 +6,6 @@ export async function createPedido(data) {
         const response = await axios.post('/ped/:createP', {
             descripcion:descripcion,
             total:1,
-            estado:'Pendiente',
             mesaID:IDmesa
         });
         console.log(response.data);

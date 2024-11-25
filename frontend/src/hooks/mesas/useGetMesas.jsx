@@ -8,12 +8,12 @@ const useMesas = () => {
         try {
             const response = await getMesas();
             //console.log(response.data); 
-            const formattedData = response.data.map(mesa => ([{
+            const formattedData = response.data.map(mesa => ({
                 descripcion: mesa.descripcion,
                 id: mesa.id,
                 capacidad: mesa.capacidad,
                 //createdAt: mesa.createdAt
-            }]));
+            }));
             setMesas(formattedData);
         } catch (error) {
             console.error("Error: ", error);

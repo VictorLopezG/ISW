@@ -6,24 +6,39 @@ import useProducto from '@hooks/productos/useGetProductos.jsx';
 import { createSolicitud } from '../services/solicitud.service';
 
 const Pedidos = () => {
+
+    function filtrarCategoria(lista,categoria){
+        return Array.prototype.filter.call(lista,(producto) => producto.categoria.includes(categoria));
+    }
+
     const { mesas } = useMesas();
 
     const opcionesM = mesas.map(mesa => ({
-        value: mesa[0].id,
-        label: mesa[0].descripcion
+        value: mesa.id,
+        label: mesa.descripcion
     }));
 
-    const { productos } = useProducto();
+    const { productos} = useProducto();
 
     const opcionesP = productos.map(producto => ({
-        value: producto[0].id,
-        label: producto[0].nombre
+        value: producto.id,
+        label: producto.nombre,
+        categoria: producto.categoria,
+        valor:producto.valor,
+        stock:producto.stock,
     }));
 
+    const platosFondo = filtrarCategoria(opcionesP,'plato de fondo');
+    const postres= filtrarCategoria(opcionesP,"postre");
+    const bebestibles = filtrarCategoria(opcionesP,"bebestible");
+    const entradas = filtrarCategoria(opcionesP,"entrada");
+    const ensaladas = filtrarCategoria(opcionesP,"ensalada");
+    
+    let total=0;
+
     const submitPedido = async (data) => {
-        const { IDmesa, descripcion, total, id_Producto, cantidad } = data;
-        const pedido = { IDmesa, descripcion, total }
-        let id_Pedido = 0;
+        const { IDmesa, descripcion, } = data;
+        const pedido = { IDmesa, descripcion }
         try {
             const response = await createPedido(pedido);
             if (response.status === 'Client error') {
@@ -31,23 +46,6 @@ const Pedidos = () => {
             } else {
                 console.log(response.data);
 
-            }
-            id_Pedido = response.data.id;
-        } catch (error) {
-            console.log(error);
-        }
-        try {
-            const solicitud = { id_Pedido, id_Producto, cantidad }
-            let response = await createSolicitud(solicitud);
-            if (response.status === 'Client error') {
-                console.log(response);
-                try {
-                    response = await deletePedido(id_Pedido);
-                } catch (error) {
-                    console.log(response)
-                }
-            } else {
-                console.log(response.data);
             }
         } catch (error) {
             console.log(error);
@@ -74,7 +72,7 @@ const Pedidos = () => {
                             placeholder: "Inserte descripcion del pedido",
                             fieldType: 'input',
                             type: "string",
-                            required: false,
+                            required: true,
                             minLength: 0,
                             maxLength: 255,
                             pattern: /^[a-zA-Z0-9 ]+$/,
@@ -82,31 +80,95 @@ const Pedidos = () => {
 
                         },
                         {
-                            label: "Producto",
-                            name: "id_Producto",
+                            label: "Plato de fondo",
+                            name: "pF",
                             fieldType: 'select',
                             type: "input",
                             required: true,
-                            options: opcionesP
+                            options: platosFondo
                         },
                         {
                             label: "Cantidad",
-                            name: "cantidad",
+                            name: "c_pF",
                             type: "number",
-                            min: '0',
+                            min:0,
                             fieldType: "input",
                             required: true
                         },
                         {
-                            label: "Total",
-                            name: "total",
+                            label: "Entrada",
+                            name: "Entrada",
+                            fieldType: 'select',
+                            type: "input",
+                            required: true,
+                            options: entradas
                         },
+                        {
+                            label: "Cantidad",
+                            name: "c_Ent",
+                            type: "number",
+                            fieldType: "input",
+                            required: true
+                        },
+                        {
+                            label: "Bebida",
+                            name: "bebida",
+                            fieldType: 'select',
+                            type: "input",
+                            required: true,
+                            options: bebestibles
+                        },
+                        {
+                            label: "Cantidad",
+                            name: "c_Be",
+                            type: "number",
+                            min:0,
+                            fieldType: "input",
+                            required: true
+                        },
+                        {
+                            label: "Ensalada",
+                            name: "ensalada",
+                            fieldType: 'select',
+                            type: "input",
+                            required: true,
+                            options: ensaladas
+                        },
+                        {
+                            label: "Cantidad",
+                            name: "c_Ens",
+                            type: "number",
+                            min:0,
+                            fieldType: "input",
+                            required: true
+                        },
+                        {
+                            label: "Postre",
+                            name: "postre",
+                            fieldType: 'select',
+                            type: "input",
+                            required: true,
+                            options:postres
+                        },
+                        {
+                            label: "Cantidad",
+                            name: "c_Pos",
+                            type: "number",
+                            min:0,
+                            fieldType: "input",
+                            required: true
+                        },
+                        {   
+                            label: `Total $ ${total}`,
+                            name: "total",
+                        }
                     ]}
                     buttonText="Crear Pedido"
                     onSubmit={submitPedido}
+                    
                 />
-            </main>
-        </div>
+             </main>
+            </div>
     );
 };
 

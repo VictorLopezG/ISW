@@ -13,6 +13,7 @@ import '@styles/styles.css';
 import Cocineria from './pages/Cocineria';
 import Pedidos from '@pages/Pedidos';
 import CajaCobro from '@pages/CajaCobro';
+import Menu from './pages/Menu';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +29,10 @@ const router = createBrowserRouter([
         path: '/cocineria',
         element: <Cocineria/>
       },
-      /*{
-        path: '/orders',
-        element: <Orders/>
-      },*/
+      {
+        path: '/menu',
+        element: <Menu/>
+      },
       {
         path: '/pedidos',
         element: <Pedidos/>

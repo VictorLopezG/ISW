@@ -51,17 +51,19 @@ const Admin_local = () => {
     const { productos } = useProducto();
 
     const opcionesP = productos.map(producto => ({
-        id: producto[0].id,
-        nombre: producto[0].nombre,
-        valor: producto[0].valor,
-        stock: producto[0].stock
+        id: producto.id,
+        nombre: producto.nombre,
+        valor: producto.valor,
+        stock: producto.stock
     }));
 
     const { handleDelete } = useDeleteProducto(fetchProductos, setDataProducto);
 
     const handleIdFilterChange = (e) => {
+
         setFilternombre(e.target.value);
     };
+
 
 
     const handleSelectionChange = useCallback((selectedProductos) => {
