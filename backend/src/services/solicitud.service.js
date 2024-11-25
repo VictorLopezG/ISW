@@ -55,6 +55,7 @@ export async function updateSolicitudService(query, body) {
         const datasolicitudUpdate = {
             id_Pedido:body.id_Pedido,
             id_Producto:body.id_Producto,
+            estado: body.estado,
             cantidad:body.cantidad,
         };
 
@@ -104,10 +105,10 @@ export async function createSolicitudService(solicitud) {
     try {
       const solicitudRepository = AppDataSource.getRepository(Solicitud);
   
-      const { id_Pedido, id_Producto, cantidad } = solicitud;
+      const { id_Pedido, id_Producto, cantidad, estado } = solicitud;
   
       const newSolicitud = solicitudRepository.create({
-        id_Pedido:id_Pedido, id_Producto:id_Producto, cantidad:cantidad
+        id_Pedido:id_Pedido, id_Producto:id_Producto, cantidad:cantidad, estado:estado
       });
   
       await solicitudRepository.save(newSolicitud);

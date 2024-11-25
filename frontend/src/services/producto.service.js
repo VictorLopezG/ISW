@@ -2,9 +2,9 @@ import axios from './root.service.js';
 
 export async function createProducto(data) {
     try {
-        const { nombre,valor,stock } = data;
+        const { nombre,valor,stock, categoria} = data;
         const response = await axios.post('/ped/:createP', {
-            nombre:nombre,valor:valor,stock:stock
+            nombre:nombre,valor:valor,stock:stock,categoria:categoria
         });
         console.log(response.data);
         return response.data;

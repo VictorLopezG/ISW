@@ -10,7 +10,6 @@ const useCreatePedido = () => {
             const formattedData = response.map(pedido => ({
                 descripcion: pedido.descripcion,
                 total: pedido.total,
-                estado: pedido.estado,
                 mesaID: pedido.mesaID,
             }));
             setPedidos(formattedData);

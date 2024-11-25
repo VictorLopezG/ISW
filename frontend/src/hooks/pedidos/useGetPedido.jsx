@@ -12,7 +12,6 @@ const usePedidos = () => {
                 id: pedido.id,
                 descripcion: pedido.descripcion,
                 total: pedido.total,
-                estado: pedido.estado,
                 mesaID: pedido.mesaID,
                 createdAt: pedido.createdAt
             }));

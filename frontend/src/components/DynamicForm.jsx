@@ -21,22 +21,21 @@ export default function DynamicForm() {
 
     return (
         <div className="bg-[#fcecee] p-10 rounded-3xl flex flex-col items-center space-y-2">
-            <form onSubmit={handleSubmit(data => console.log(data))}>
+            <form onSubmit={handleSubmit(data => console.log(data,opcionesP))}>
                 {fields.map((item, index) => (
                     <div key={item.id}>
-                        <check {...register(`producto.${index}.id_Producto`)} />
                         <label>Producto</label>
                         <select>
                             <option value="">Seleccionar opción</option>
-                            {opcionesP.map((option, optIndex) => (
-                                <option className="options-class" key={optIndex} value={option.value}>
-                                    {option.label}
+                            {opcionesP.map((option) => (
+                                <option className="options-class" key={option.id} value={option.value} >
+                                    {option.label}{option.value}
                                 </option>
                             ))}
                         </select>
                         <label>Cantidad</label>
                         <Controller
-                            render={({ field }) => <input {...field} />}
+                            render={({ field }) => <input type="number" min={1} {...field} />}
                             name={`producto.${index}.cantidad`}
                             control={control}
                         />
