@@ -33,11 +33,6 @@ const PedidoSchema = new EntitySchema({
             type: "int",
             nullable: false,
         },
-        estado: {
-            type: "varchar",
-            length: 50,
-            nullable: false,
-        },
         createdAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
@@ -77,10 +72,6 @@ const PedidoSchema = new EntitySchema({
         {
             name: "IDX_TOTAL",
             columns: ["total"],
-        },
-        {
-            name: "IDX_ESTADO",
-            columns: ["estado"],
         },
     ],
 });

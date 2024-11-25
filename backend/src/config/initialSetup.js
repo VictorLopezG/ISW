@@ -90,7 +90,7 @@ async function createUsers() {
     }
 
     if (countM == 0) {
-      await Promise.all([ mesaRepository.save(
+      await Promise.all([mesaRepository.save(
         mesaRepository.create({
           descripcion: "1",
           capacidad: "4",
@@ -98,14 +98,49 @@ async function createUsers() {
       )]);
     }
 
-    if (countP == 0){
-      await Promise.all([ productoRepository.save(
-        productoRepository.create({
-          nombre: "Papas fritas",
-          valor: "2000",
-          stock: "10"
-        }),
-      )]);
+    if (countP == 0) {
+      await Promise.all([
+        productoRepository.save(
+          productoRepository.create({
+            nombre: "papas fritas",
+            valor: "2000",
+            stock: "10",
+            categoria: "plato de fondo"
+          }),
+        ),
+        productoRepository.save(
+          productoRepository.create({
+            nombre: "helado",
+            valor: "1000",
+            stock: "10",
+            categoria: "postre"
+          }),
+        ),
+        productoRepository.save(
+          productoRepository.create({
+            nombre: "crema de esparragos",
+            valor: "1000",
+            stock: "10",
+            categoria: "entrada"
+          }),
+        ),
+        productoRepository.save(
+          productoRepository.create({
+            nombre: "pepsi",
+            valor: "2000",
+            stock: "10",
+            categoria: "bebestible"
+          }),
+        ),
+        productoRepository.save(
+          productoRepository.create({
+            nombre: "essalada chilena",
+            valor: "1500",
+            stock: "10",
+            categoria: "ensalada"
+          }),
+        ),
+      ]);
     }
 
     console.log("* => Usuarios creados exitosamente");

@@ -49,12 +49,12 @@ export async function getProductosService() {
 //creo que aca deberia estar la validacion para el rol no estoy seguro
 export async function updateProductoService(query, body) {
     try {
-        const { id , nombre , stock } = query;
+        const { id , nombre , stock, categoria } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
         const productoFound = await productoRepository.findOne({
-            where: [{ id: id }, { nombre: nombre }, { stock: stock }],
+            where: [{ id: id }],
         });
 
         if (!productoFound)
@@ -72,6 +72,7 @@ export async function updateProductoService(query, body) {
             nombre: body.nombre,
             valor: body.valor,
             stock: body.stock,
+            categoria:body.categoria,
             updatedAt: new Date(),
         };
         await productoRepository.update({ id: id }, dataProductoUpdate);
@@ -120,7 +121,7 @@ export async function createProductoService(producto) {
     try {
         const productoRepository = AppDataSource.getRepository(Producto);
 
-        const { nombre, valor, stock } = producto;
+        const { nombre, valor, stock, categoria } = producto;
 
         const createErrorMessage = (DataInfo, message) => ({
             DataInfo,
@@ -133,13 +134,13 @@ export async function createProductoService(producto) {
             },
         });
 
-        //if (existingNombre) 
-        //    return [null,createErrorMessage("Nombre","Nombre ya en uso")];
+        if (existingNombre) return [null,createErrorMessage("Nombre","Nombre ya en uso")];
 
         const newProducto = productoRepository.create({
             nombre:nombre, 
             valor:valor, 
             stock:stock,
+            categoria:categoria
         });
 
         await productoRepository.save(newProducto);

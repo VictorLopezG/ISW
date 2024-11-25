@@ -53,7 +53,6 @@ export async function updatePedidoService(query, body) {
             mesaID: body.mesaID,
             total: body.total,
             descripcion: body.descripcion,
-            estado: body.estado,
             updatedAt: new Date(),
         };
 
@@ -121,10 +120,10 @@ export async function createPedidoService(pedido) {
     try {
       const pedidoRepository = AppDataSource.getRepository(Pedido);
     
-      const { mesaID, estado, total, descripcion } = pedido;
+      const { mesaID, total, descripcion } = pedido;
   
       const newPedido = pedidoRepository.create({
-        mesaID, estado, total, descripcion
+        mesaID, total, descripcion
       });
   
       await pedidoRepository.save(newPedido);

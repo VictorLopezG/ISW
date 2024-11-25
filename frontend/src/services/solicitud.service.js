@@ -2,11 +2,12 @@ import axios from './root.service.js';
 
 export async function createSolicitud(data) {
     try {
-        const { id_Pedido,id_Producto,cantidad } = data;
+        const { id_Pedido,id_Producto,cantidad, estado} = data;
         const response = await axios.post('/sol/create', {
             id_Pedido:id_Pedido,
             id_Producto:id_Producto,
             cantidad:cantidad,
+            estado:estado
         });
         console.log(response.data);
         return response.data;

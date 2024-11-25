@@ -50,6 +50,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             defaultValue={field.defaultValue || ''}
                             disabled={field.disabled}
                             onChange={field.onChange}
+                            min={field.min}
                         />
                     )}
                     {field.fieldType === 'textarea' && (
@@ -87,10 +88,6 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             ))}
                         </select>
                     )}
-                    {/*field.fieldType === 'dynamic' && (
-                        <DynamicForm>
-                        </DynamicForm>
-                    )*/}
                     {field.type === 'password' && field.name === 'password' && (
                         <span className="toggle-password-icon" onClick={togglePasswordVisibility}>
                             <img src={showPassword ? ViewIcon : HideIcon} />

@@ -54,8 +54,16 @@ cantidad: Joi.number()
         "number.positive": "La cantidad ser un número positivo.",
         "number.min":"La cantidad debe ser al menos 1",
     }),
+    estado: Joi.string()
+    .min(4)
+    .max(15)
+    .messages({
+      "string.base": "El estado debe ser de tipo string.",
+      "string.min": "El estado debe tener como mínimo 4 caracteres.",
+      "string.max": "El estado debe tener como máximo 15 caracteres.",
+    }),
 })
-.or("id_Producto","id_Pedido","cantidad")
+.or("id_Producto","id_Pedido","cantidad","estado")
 .unknown(false)
 .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
