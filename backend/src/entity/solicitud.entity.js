@@ -16,7 +16,9 @@ const SolicitudSchema = new EntitySchema({
         estado: {
             type: "varchar",
             length: 50,
+
             nullable: false,
+
         },
         cantidad: {
             type: "int",

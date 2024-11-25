@@ -7,8 +7,10 @@ const useProducto = () => {
     const fetchProductos = async () => {
         try {
             const response = await getProductos();
+
             //console.log(response.data); 
             const formattedData = response.data.map(producto => ({
+
                 nombre:producto.nombre,
                 id: producto.id,
                 valor:producto.valor,
@@ -26,7 +28,9 @@ const useProducto = () => {
     useEffect(() => {
         fetchProductos();
     }, []);
+
     return { productos, fetchProductos, setProductos };
+
 };
 
 export default useProducto;

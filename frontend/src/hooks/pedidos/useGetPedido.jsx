@@ -22,8 +22,7 @@ const usePedidos = () => {
         }
     };
 
-    console.log("pedidos");
-    console.log(pedidos);
+
 
     return { pedidos, fetchPedidos, setPedidos };
 };

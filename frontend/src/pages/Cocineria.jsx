@@ -28,39 +28,41 @@ const Cocineria = () => {
 
 
   const { handleDelete } = useDeletePedido(fetchPedidos, setDataPedido);
-//revisar
+  //revisar
   useEffect(() => {
     fetchPedidos();
   }, [])
-  
+
 
   const handleIdFilterChange = (e) => {
     setFilterId(e.target.value);
   };
-//
+  //
   const handleSelectionChange = useCallback((selectedPedidos) => {
     setDataPedido(selectedPedidos);
   }, [setDataPedido]);
 
 
-  
+
 
   const columns = [
-    { title: "ID", field: "id", width: 100, responsive: 0 },
-    { title: "Descripción", field: "descripcion", width: 100, responsive: 3 },
-    {title: "Estado", field: "estado", width: 100, responsive: 2,},
+    { title: "ID", field: "id", width: 50, responsive: 0 },
+    { title: "Estado", field: "estado", width: 100, responsive: 0, },
+    { title: "producto", field: "producto", width: 200, responsive: 0 },
+    { title: "Descripción", field: "descripcion", width: 250, responsive: 1 },
+    
     { title: "MesaID", field: "mesaID", width: 100, responsive: 2 },
-    { title: "Creado", field: "createdAt", width: 100, responsive: 2 },
-  {title: "producto", field: "producto", width: 100, responsive: 2},
-  ];
-  
-  const {pedidosPendientes} = pedidos.filter(pedido => pedido.estado === "Pendiente");
+    { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
 
-  
+  ];
+
+  const { pedidosPendientes } = pedidos.filter(pedido => pedido.estado === "Pendiente");
+
+
 
   return (
     <main>
-      <div className="h-screen w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
+      <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
         <div className="bg-[#212121] p-12 rounded-3xl text-center text-rose-100 flex flex-col items-center space-y-4 my-11">
           <h1 className="text-3xl font-bold text-[#FFC107]">COCINA</h1>
           <h2 className="text-1xl font-light">Preparación de productos</h2>
@@ -74,12 +76,13 @@ const Cocineria = () => {
 
 
               <button onClick={handleUpdateStatus} // Cambia el estado a "listo"
-                  disabled={dataPedido.length === 0}
-                  className="focus:outline-none px-10 py-2 bg-[#212121] text-[#FFC107] font-bold rounded-lg hover:bg-[#FFC107] hover:text-[#212121] transition-all duration-300 ease-in-out" 
-                  
-                  >
+                disabled={dataPedido.length === 0}
+                className="focus:outline-none px-10 py-2 bg-[#212121] text-[#FFC107] font-bold rounded-lg hover:bg-[#FFC107] hover:text-[#212121] transition-all duration-300 ease-in-out"
+
+              >
                 <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChef} alt="edit" />
-              
+
+
 
               </button>
 
@@ -89,7 +92,7 @@ const Cocineria = () => {
             </div>
           </div>
           <Table
-          //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
+            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
             data={pedidos}
             columns={columns}
             filter={filterId}
@@ -99,9 +102,9 @@ const Cocineria = () => {
           />
         </div>
 
-    {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+        {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
 
-        
+
       </div>
     </main>
   );
