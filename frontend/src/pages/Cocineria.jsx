@@ -83,6 +83,7 @@ const Cocineria = () => {
                 <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChef} alt="edit" />
 
 
+
               </button>
 
               <button onClick={() => handleDelete(dataPedido)} disabled={dataPedido.length === 0} className="focus:outline-none">

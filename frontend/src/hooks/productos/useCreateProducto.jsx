@@ -12,6 +12,7 @@ const useCreateProducto = () => {
                 nombre: producto.nombre,
                 valor: producto.valor,
                 stock: producto.stock,
+                categoria:producto.categoria
             }));
             setProductos(formattedData);
         }catch (error){

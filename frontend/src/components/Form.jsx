@@ -3,6 +3,7 @@ import { useState } from 'react';
 import '@styles/form.css';
 import HideIcon from '../assets/HideIcon.svg';
 import ViewIcon from '../assets/ViewIcon.svg';
+import DynamicForm from './DynamicForm';
 
 const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundColor }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -49,6 +50,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             defaultValue={field.defaultValue || ''}
                             disabled={field.disabled}
                             onChange={field.onChange}
+                            min={field.min}
                         />
                     )}
                     {field.fieldType === 'textarea' && (
