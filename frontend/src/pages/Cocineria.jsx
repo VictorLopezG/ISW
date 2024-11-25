@@ -79,7 +79,7 @@ const Cocineria = () => {
                   
                   >
                 <img src={dataPedido.length === 0 ? gorritoChefAmarillo : gorritoChef} alt="edit" />
-               
+              
 
               </button>
 

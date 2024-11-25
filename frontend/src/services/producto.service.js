@@ -1,10 +1,14 @@
 import axios from './root.service.js';
+import { convertirMinusculas } from '@helpers/formatData.js';
 
 export async function createProducto(data) {
     try {
-        const { nombre,valor,stock, categoria} = data;
-        const response = await axios.post('/ped/:createP', {
+
+        const dataRegister = convertirMinusculas(data);
+        const { nombre,valor,stock, categoria} = dataRegister;
+        const response = await axios.post('/producto/crearProducto', {
             nombre:nombre,valor:valor,stock:stock,categoria:categoria
+
         });
         console.log(response.data);
         return response.data;
