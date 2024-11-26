@@ -3,7 +3,7 @@ import Form from '@components/Form';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
-import { createSolicitud } from '../services/solicitud.service';
+import { createSolicitudes } from '../services/solicitud.service';
 
 const Pedidos = () => {
 
@@ -37,18 +37,25 @@ const Pedidos = () => {
     let total=0;
 
     const submitPedido = async (data) => {
-        const { IDmesa, descripcion, } = data;
-        const pedido = { IDmesa, descripcion }
+        const { IDmesa, descripcion, ...solicitudes} = data;
+        const pedido = { IDmesa, descripcion };
+        let id_Pedido;
         try {
             const response = await createPedido(pedido);
             if (response.status === 'Client error') {
                 console.log(response);
             } else {
                 console.log(response.data);
-
+                id_Pedido=response.data.id;
             }
         } catch (error) {
             console.log(error);
+        }
+        const dataSolicitudes={id_Pedido,solicitudes};
+        try{
+            createSolicitudes(dataSolicitudes)
+        }catch(error){
+
         }
     };
 
@@ -97,7 +104,7 @@ const Pedidos = () => {
                         },
                         {
                             label: "Entrada",
-                            name: "Entrada",
+                            name: "entrada",
                             fieldType: 'select',
                             type: "input",
                             required: true,
@@ -120,7 +127,7 @@ const Pedidos = () => {
                         },
                         {
                             label: "Cantidad",
-                            name: "c_Be",
+                            name: "c_Beb",
                             type: "number",
                             min:0,
                             fieldType: "input",
