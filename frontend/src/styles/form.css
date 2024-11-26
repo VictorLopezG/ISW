@@ -39,12 +39,19 @@
 
 .form {
 	background-color: #FFEBEE;
-	/*Color del formulario*/
+	/*Color del formulario*/;
 	padding: 7vh;
 	display: flex;
 	flex-direction: column;
 	border-radius: 24px;
 	align-items: center;
+	
+		margin-top: 5%; /* Igual a la altura del navbar */
+		 /* Ajusta la altura total si es necesario */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	
 
 	h1 {
 		color: #212121;
@@ -268,3 +275,4 @@ input {
 	height: 25px;
 	margin-top: 4px;
 }
+

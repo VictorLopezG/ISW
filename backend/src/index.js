@@ -19,6 +19,8 @@ async function setupServer() {
 
     app.use(
       cors({
+        //modificar origin a la url de producción
+        //origin: "http://146.83.198.35:1342/auth",
         credentials: true,
         origin: true,
       }),
