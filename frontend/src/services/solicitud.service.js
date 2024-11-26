@@ -1,4 +1,6 @@
 import axios from './root.service.js';
+import { getProducto } from './producto.service.js';
+
 
 async function crearSolicitudEX(id_Pedido,id_Producto,cantidad){
     //console.log(id_Pedido,id_Producto,cantidad);
@@ -39,16 +41,24 @@ export async function createSolicitudes(data){
     console.log(data);
     const {pF,entrada,bebida,ensalada,postre,c_pF,c_Ent,c_Beb,c_Ens,c_Pos}=solicitudes;
     try{
+        let total=0;
         const responsepF = await crearSolicitudEX(id_Pedido,pF,c_pF);
-        console.log(responsepF.data);
+        let {valor,...prod}   = await getProducto(pF);
+        total+=valor*c_pF;
         const responseEntrada = await crearSolicitudEX(id_Pedido,entrada,c_Ent);
-        console.log(responseEntrada.data);
+        valor,prod   = await getProducto(entrada);
+        total+=valor*c_Ent;
         const responseBebida = await crearSolicitudEX(id_Pedido,bebida,c_Beb);
-        console.log(responseBebida.data);
+        valor,prod  = await getProducto(bebida);
+        total+=valor*c_Beb;
         const responseEnsalada = await crearSolicitudEX(id_Pedido,ensalada,c_Ens);
-        console.log(responseEnsalada.data);
+        valor,prod  = await getProducto(ensalada);
+        total+=valor*c_Ens;
         const responsePostre = await crearSolicitudEX(id_Pedido,postre,c_Pos);
-        console.log(responsePostre.data);
+        valor,prod  = await getProducto(postre);
+        total+=valor*c_Pos;
+        console.log(total);
+        return total;
     }catch(error){
         return error.response;
     }
