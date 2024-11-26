@@ -16,9 +16,7 @@ const SolicitudSchema = new EntitySchema({
         estado: {
             type: "varchar",
             length: 50,
-
             nullable: false,
-
         },
         cantidad: {
             type: "int",
@@ -47,7 +45,6 @@ const SolicitudSchema = new EntitySchema({
         {
             name: "IDX_ID_PEDIDO",
             columns: ["id_Pedido"],
-            unique: true,
         },
         {
             name: "IDX_FECHA_Sol",
