@@ -19,13 +19,14 @@ export async function getSolicitudService(query) {
         
         return [solicitudFound, null];
 
+
     } catch (error) {
         console.error("Error obtener la solicitud:", error);
         return [null, "Error interno del servidor"];
     }
 }
 
-export async function getSolicitudsService() {
+export async function getSolicitudesService() {
     try {
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 

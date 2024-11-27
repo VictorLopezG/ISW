@@ -1,4 +1,4 @@
-import { createPedido, deletePedido } from '@services/pedido.service.js';
+import { createPedido, updatePedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
@@ -45,7 +45,7 @@ const Pedidos = () => {
             if (response.status === 'Client error') {
                 console.log(response);
             } else {
-                console.log(response.data);
+                    console.log(response.data);
                 id_Pedido=response.data.id;
             }
         } catch (error) {
@@ -53,9 +53,19 @@ const Pedidos = () => {
         }
         const dataSolicitudes={id_Pedido,solicitudes};
         try{
-            createSolicitudes(dataSolicitudes)
+            total= await createSolicitudes(dataSolicitudes);
+            console.log(total);
         }catch(error){
-
+            console.log(error);
+        }
+        try{
+            const ped ={IDmesa,descripcion,total};
+            const response = await updatePedido(ped,id_Pedido);
+            if (response.status === 'Client error') {
+                console.log(response);
+            } 
+        }catch(error){
+            console.log(error);            
         }
     };
 
