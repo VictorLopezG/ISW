@@ -12,13 +12,7 @@ import {
 
 const router = Router();
 
-<<<<<<< HEAD
-router
-  .use(authenticateJwt)
-
-=======
 router.use(authenticateJwt)
->>>>>>> f562a39e2337b1ad71a099acacaa7c89e5228d3f
 
 router
   .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getPedidos)          //listo
