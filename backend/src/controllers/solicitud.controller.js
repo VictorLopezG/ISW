@@ -1,7 +1,7 @@
 "use strict";
 import {
     deleteSolicitudService,
-    getSolicitudsService,
+    getSolicitudesService,
     updateSolicitudService,
     createSolicitudService,
 } from "../services/solicitud.service.js";
@@ -50,7 +50,7 @@ export async function getSolicitud(req, res) {
 
 export async function getSolicitudes(req, res) {
     try {
-        const [solicitudes, errorSolicitudes] = await getSolicitudsService();
+        const [solicitudes, errorSolicitudes] = await getSolicitudesService();
 
         if (errorSolicitudes) return handleErrorClient(res, 404, errorSolicitudes);
 

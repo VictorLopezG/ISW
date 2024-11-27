@@ -25,7 +25,7 @@ export async function getSolicitudService(query) {
     }
 }
 
-export async function getSolicitudsService() {
+export async function getSolicitudesService() {
     try {
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 

@@ -27,6 +27,18 @@ export async function getProductos() {
     }
 }
 
+export async function getProducto(id) {
+    try {
+        const response = await axios.get(`/producto/${id}`);
+        console.log(response.data);
+        return response.data.data;
+    } catch (error) {
+
+        console.log(error);
+        return error.response.data;
+    }
+}
+
 export async function updateProducto(data, id) {
     try {
         const response = await axios.put(`/producto/${id}`, data);
@@ -41,7 +53,7 @@ export async function updateProducto(data, id) {
 
 export async function deleteproducto(id) {
     try {
-        const response = await axios.delete(`/producto/:id/?id=${id}`);
+        const response = await axios.delete(`/producto/eliminarProductoID/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;

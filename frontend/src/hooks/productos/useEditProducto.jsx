@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { updateProducto } from '@services/producto.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
+import { formatPostUpdateproducto } from '@helpers/formatData';
 
 
 const useEditProducto = (setProductos) => {
@@ -16,10 +17,10 @@ const useEditProducto = (setProductos) => {
     const handleUpdate = async (updatedProductoData) => {
         if (updatedProductoData) {
             try{
+            /*Recuerda dps hacer todas a minusculas*/ 
             const updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
             showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            /*Recuerda agregar la validacion */
             setProductos(prevProductos => prevProductos.map(producto =>{
                 console.log("Producto actual:",producto);
                 if(producto.id === updateProduc.id){
