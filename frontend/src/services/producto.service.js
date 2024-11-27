@@ -7,7 +7,10 @@ export async function createProducto(data) {
         const dataRegister = convertirMinusculas(data);
         const { nombre,valor,stock, categoria} = dataRegister;
         const response = await axios.post('/producto/crearProducto', {
-            nombre:nombre,valor:valor,stock:stock,categoria:categoria
+            nombre:nombre,
+            valor:valor,
+            stock:stock,
+            categoria:categoria
 
         });
         console.log(response.data);
