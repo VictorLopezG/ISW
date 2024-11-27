@@ -21,7 +21,6 @@ const Admin_local = () => {
 
     const { productos, fetchProductos, setProductos } = useProducto();
     const [filternombre, setFilternombre] = useState('');
-    const [isPopupNuevoOpen, setIsPopupNuevoOpen] = useState(false);
 
     const {
         handleClickUpdate,
