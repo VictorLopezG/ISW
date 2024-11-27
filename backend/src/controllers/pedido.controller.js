@@ -18,7 +18,7 @@ import {
 
 export async function getPedido(req, res) {
     try {
-        const { id } = req.params;   
+        const { id } = req.params;
 
         const [Pedido, errorPedido] = await getPedidoService({ id });
 

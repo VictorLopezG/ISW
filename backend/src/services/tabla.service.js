@@ -1,5 +1,4 @@
 import { AppDataSource } from "../config/configDb.js"; // Asegúrate de importar el archivo que contiene la configuración de la conexión
-import  solicitud  from "../entity/solicitud.entity.js"; // Asegúrate de importar el modelo correcto
 
 export const getTablaDatosService = async () => {
     const query = `
@@ -36,4 +35,3 @@ export const getTablaDatosService = async () => {
         throw new Error("Error al obtener los datos.");
     }
 };
-

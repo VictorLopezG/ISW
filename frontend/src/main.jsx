@@ -14,7 +14,6 @@ import Cocineria from './pages/Cocineria';
 import Pedidos from '@pages/Pedidos';
 import CajaCobro from '@pages/CajaCobro';
 import Menu from './pages/Menu';
-import GestionarPedidos from './pages/GestionarPedidos';
 
 const router = createBrowserRouter([
   {
@@ -61,10 +60,6 @@ const router = createBrowserRouter([
       {
         path: '/CajaCobro',
         element: <CajaCobro/>
-      },
-      {
-        path: '/gestionarPedidos',
-        element: <GestionarPedidos/>
       }
     ]
   },
