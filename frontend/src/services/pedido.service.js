@@ -26,12 +26,13 @@ export async function getPedidos() {
 
 export async function updatePedido(data, id) {
     try {
-        const { descripcion,IDmesa,total }=data;
+        const { descripcion,IDmesa,total,estado }=data;
         console.log(data);
         const response = await axios.put(`/ped/${id}`,{
             descripcion:descripcion,
             total:total,
-            mesaID:IDmesa
+            mesaID:IDmesa,
+            estado:estado
         });
         console.log(response.data);
         return response.data.data;

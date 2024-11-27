@@ -87,7 +87,7 @@ export async function updateSolicitud(data, id) {
 
 export async function deleteSolicitud(id) {
     try {
-        const response = await axios.delete(`/sol/:id/?id=${id}`);
+        const response = await axios.delete(`/sol/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;
