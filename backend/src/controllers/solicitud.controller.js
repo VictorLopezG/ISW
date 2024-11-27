@@ -22,7 +22,6 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getSolicitud(req, res) {
     try {
-
         const { id } = req.params; 
         console.log("ID recibido:", id);
 
