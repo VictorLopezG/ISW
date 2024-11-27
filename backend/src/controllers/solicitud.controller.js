@@ -2,7 +2,7 @@
 import {
     deleteSolicitudService,
     getSolicitudService,
-    getSolicitudsService,
+    getSolicitudesService,
     updateSolicitudService,
     createSolicitudService,
 } from "../services/solicitud.service.js";
@@ -18,8 +18,7 @@ import {
 
 export async function getSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto } = req.params;
-
+        const { id_Pedido, id_Producto } = req.query;
         const { error } = solicitudQueryValidation.validate({ id_Pedido, id_Producto });
 
         if (error) return handleErrorClient(res, 400, error.message);
@@ -36,7 +35,7 @@ export async function getSolicitud(req, res) {
 
 export async function getSolicitudes(req, res) {
     try {
-        const [solicitudes, errorSolicitudes] = await getSolicitudsService();
+        const [solicitudes, errorSolicitudes] = await getSolicitudesService();
 
         if (errorSolicitudes) return handleErrorClient(res, 404, errorSolicitudes);
 
