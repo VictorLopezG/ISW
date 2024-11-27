@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin, isCocinero } from "../middlewares/authorization.middleware.js";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   createSolicitud,
@@ -14,8 +14,7 @@ const router = Router();
 
 router
   .use(authenticateJwt)
-  .use(isAdmin)
-  .use(isCocinero);
+  .use(isAdmin);
 
 router
   .get("/all", getSolicitudes)          //listo
