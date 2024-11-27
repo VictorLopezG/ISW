@@ -3,10 +3,11 @@ import { useCallback, useState } from 'react';
 import Table from '../components/Table';
 import Search from '../components/Search';
 import Popupproducto from '../components/PopupProducto';
+import PopupNuevoProducto from '../components/PopupNuevoProducto';
 /*hooks */
 import useEditProducto from '@hooks/productos/useEditProducto.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
-import useCreateProducto from '../hooks/productos/useCreateProducto';
+import { createProducto } from '../services/producto.service';
 import useDeleteProducto from '../hooks/productos/useDeleteProducto';
 /*Assets*/
 
@@ -20,6 +21,7 @@ const Admin_local = () => {
 
     const { productos, fetchProductos, setProductos } = useProducto();
     const [filternombre, setFilternombre] = useState('');
+    const [isPopupNuevoOpen, setIsPopupNuevoOpen] = useState(false);
 
     const {
         handleClickUpdate,
@@ -29,7 +31,6 @@ const Admin_local = () => {
         dataProducto,
         setDataProducto
     } = useEditProducto(setProductos);
-
 
     const {
 
@@ -84,6 +85,7 @@ const Admin_local = () => {
                                 <button
                                     // Llama a togglePopup para mostrar el pop-up
                                     className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
+
                                 >
                                     <img src={check} alt="add" />
                                     <span>Agregar Producto</span>
