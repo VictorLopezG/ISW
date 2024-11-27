@@ -13,7 +13,8 @@ const usePedidos = () => {
                 descripcion: pedido.descripcion,
                 total: pedido.total,
                 mesaID: pedido.mesaID,
-                createdAt: pedido.createdAt
+                createdAt: pedido.createdAt,
+                estado: pedido.estado
             }));
   
             setPedidos(formattedData);

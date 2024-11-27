@@ -54,6 +54,15 @@ export const pedidoBodyValidation = Joi.object({
             "number.base": "El total debe ser de tipo integer.",
             "number.positive": "El total debe ser minimo 1.",
         }),
+    estado: Joi.string()
+        .min(1)
+        .max(50)
+        .messages({
+            "string.empty": "El estado no puede estar vacío.",
+            "string.base": "El estado debe ser de tipo string.",
+            "string.min": "El estado debe tener como mínimo 1 caracterer.",
+            "string.max": "El estado debe tener como máximo 50 caracteres.",
+        }),
     mesaID: Joi.number()
         .positive()
         .integer()

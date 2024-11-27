@@ -30,8 +30,14 @@ const PedidoSchema = new EntitySchema({
             nullable: false,
         },
         total: {
+            
             type: "int",
             nullable: false,
+        },
+        estado: {
+            type: "varchar",
+            length: 50,
+            nullable: true,
         },
         createdAt: {
             type: "timestamp with time zone",

@@ -57,6 +57,7 @@ const Cocineria = () => {
 
 
 
+
   const [filterId, setFilterId] = useState('');
   const handleIdFilterChange = (e) => {
     setFilterId(e.target.value);
@@ -95,6 +96,16 @@ const Cocineria = () => {
 
 
 
+
+
+              <button   className="focus:outline-none bg-[#212121] px-10 py-2 rounded-lg">
+                <img src={DeleteIcon} alt="delete" />
+              </button>
+
+
+
+
+
           
               
             </div>  
@@ -107,6 +118,7 @@ const Cocineria = () => {
             filter={filterId}
             dataToFilter="id"
             initialSortName="id"
+         
 
           />
         </div>

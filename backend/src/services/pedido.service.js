@@ -54,6 +54,7 @@ export async function updatePedidoService(query, body) {
             total: body.total,
             descripcion: body.descripcion,
             updatedAt: new Date(),
+            estado: body.estado,
         };
 
 
@@ -117,14 +118,17 @@ export async function deletePedidoService(query) {
 }
 
 export async function createPedidoService(pedido) {
+    
     try {
       const pedidoRepository = AppDataSource.getRepository(Pedido);
+      const estado="pendiente";
     
       const { mesaID, total, descripcion } = pedido;
   
       const newPedido = pedidoRepository.create({
-        mesaID, total, descripcion
+        mesaID, total, descripcion, estado
       });
+      console.log(newPedido);
   
       await pedidoRepository.save(newPedido);
   

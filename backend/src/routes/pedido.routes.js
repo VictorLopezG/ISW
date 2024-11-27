@@ -14,7 +14,7 @@ const router = Router();
 
 router
   .use(authenticateJwt)
-  .use(isAdmin);
+
 
 router
   .get("/all", getPedidos)          //listo
