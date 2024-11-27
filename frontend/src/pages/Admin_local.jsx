@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import Table from '../components/Table';
 import Search from '../components/Search';
-import Popup from '../components/Popup';
+import Popupproducto from '../components/PopupProducto';
 /*hooks */
 import useEditProducto from '@hooks/productos/useEditProducto.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
@@ -148,7 +148,7 @@ const Admin_local = () => {
                     </div>
                 </div>
             </div>
-            <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataProducto} action={handleUpdate} />
+            <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataProducto} action={handleUpdate} />
         </main>
     );
 };

@@ -4,13 +4,13 @@ import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 
 export default function PopupProducto({ show, setShow, data, action }) {
-    const userData = data && data.length > 0 ? data[0] : {};
+    const productData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formData) => {
+        console.log(formData)
         action(formData);
     };
 
-    const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/);
     return (
         <div>
             { show && (
@@ -20,80 +20,55 @@ export default function PopupProducto({ show, setShow, data, action }) {
                         <img src={CloseIcon} />
                     </button>
                     <Form
-                        title="Editar usuario"
+                        title="Editar Producto"
                         fields={[
                             {
-                                label: "Nombre completo",
-                                name: "nombreCompleto",
-                                defaultValue: userData.nombreCompleto || "",
-                                placeholder: 'Nombre completo',
+                                label: "Nombre producto",
+                                name: "nombre",
+                                defaultValue: productData.nombre || "",
+                                placeholder: 'Nombre producto',
                                 fieldType: 'input',
                                 type: "text",
                                 required: true,
-                                minLength: 15,
                                 maxLength: 50,
                                 pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
                                 patternMessage: "Debe contener solo letras y espacios",
                             },
                             {
-                                label: "Correo electrónico",
-                                name: "email",
-                                defaultValue: userData.email || "",
-                                placeholder: 'example@gmail.cl',
+                                label: "Valor producto",
+                                name: "valor",
+                                defaultValue: productData.valor || "",
+                                placeholder: 0,
                                 fieldType: 'input',
-                                type: "email",
+                                type: "number",
                                 required: true,
-                                minLength: 15,
-                                maxLength: 30,
+                                max: 100000,
                             },
                             {
-                                label: "Rut",
-                                name: "rut",
-                                defaultValue: userData.rut || "",
-                                placeholder: 'xxx.xxx.xxx-x',
+                                label: "Stock",
+                                name: "stock",
+                                defaultValue: productData.stock || "",
+                                placeholder: 0,
                                 fieldType: 'input',
-                                type: "text",
-                                minLength: 9,
-                                maxLength: 12,
-                                pattern: patternRut,
+                                type: "number",
+                                max: 1000,
                                 patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
                                 required: true,
                             },
                             {
-                                label: "Rol",
-                                name: "rol",
+                                label: "Categoria",
+                                name: "categoria",
                                 fieldType: 'select',
                                 options: [
-                                    { value: 'administrador', label: 'Administrador' },
-                                    { value: 'usuario', label: 'Usuario' },
-                                    { value: 'Admin Local', label: 'Administrador Local' },
-                                    { value: 'mesero', label: 'Mesero' },
-                                    { value: 'cocinero', label: 'Cocinero' },
-                                    { value: 'cajero', label: 'Cajero' },
+                                    { value: 'entrada', label: 'entrada' },
+                                    { value: 'bebestible', label: 'bebestible' },
+                                    { value: 'postre', label: 'postre' },
+                                    { value: 'ensalada', label: 'ensalada' },
+                                    { value: 'plato de fondo', label: 'plato de fondo' },
                                 ],
                                 required: true,
-                                defaultValue: userData.rol || "",
+                                defaultValue: productData.rol || "",
                             },
-                            {
-                                label: (
-                                    <span>
-                                        Nueva contraseña
-                                        <span className='tooltip-icon'>
-                                            <img src={QuestionIcon} />
-                                            <span className='tooltip-text'>Este campo es opcional</span>
-                                        </span>
-                                    </span>
-                                ),
-                                name: "newPassword",
-                                placeholder: "**********",
-                                fieldType: 'input',
-                                type: "password",
-                                required: false,
-                                minLength: 8,
-                                maxLength: 26,
-                                pattern: /^[a-zA-Z0-9]+$/,
-                                patternMessage: "Debe contener solo letras y números",
-                            }
                         ]}
                         onSubmit={handleSubmit}
                         buttonText="Editar usuario"

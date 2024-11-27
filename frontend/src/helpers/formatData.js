@@ -43,7 +43,7 @@ export function formatPostUpdateproducto(producto) {
         nombre: convertirMinusculas(producto.nombre),
         valor: producto.valor,
         stock: producto.stock,
-        categoria: convertirMinusculas(producto.email),
+        categoria: producto.categoria,
         createdAt: formatTempo(producto.createdAt, "DD-MM-YYYY")
     };
 }
