@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createProducto,
@@ -12,16 +12,14 @@ import {
 
 const router = Router();
 
-router
-    .use(authenticateJwt)
-    .use(isAdmin);
+router.use(authenticateJwt);
 
 
 router
-    .get("/all/",getProductos)
-    .get("/:id",getProducto) // Ids Funciona
-    .post("/crearProducto",createProducto)
-    .put("/:id",updateProducto) // Ids
-    .delete("/eliminarProductoID/:id",deleteproducto) // Id
+    .get("/all/",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"),getProductos)
+    .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"),getProducto) // Ids Funciona
+    .post("/crearProducto",authorizeRoles("administrador","cajero","cocinero"),createProducto)
+    .put("/:id",authorizeRoles("administrador","cajero", "cocinero"),updateProducto) // Ids
+    .delete("/eliminarProductoID/:id",authorizeRoles("administrador", "cocinero"),deleteproducto) // Id
 
 export default router;

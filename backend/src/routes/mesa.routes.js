@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   createMesa,
@@ -12,14 +12,12 @@ import {
 
 const router = Router();
 
-router
-  .use(authenticateJwt)
-  .use(isAdmin);
+router.use(authenticateJwt);
 
 router
-  .get("/all", getMesas) //listo
-  .get("/:id", getMesa) //listo
-  .put("/:id", updateMesa) //
-  .delete("/:id", deleteMesa) // listo
-  .post("/createM",createMesa); //listo
+  .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getMesas) //listo
+  .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getMesa) //listo
+  .put("/:id",authorizeRoles("administrador"), updateMesa) //
+  .delete("/:id",authorizeRoles("administrador"), deleteMesa) // listo
+  .post("/createM",authorizeRoles("administrador"),createMesa); //listo
 export default router;
