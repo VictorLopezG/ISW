@@ -14,8 +14,7 @@ export async function getSolicitudService(query) {
 
         if (!solicitudFound) return [null, "Solicitud no encontrada o no existe"];
 
-        const { solicitudData } = solicitudFound;
-
+        const { ...solicitudData } = solicitudFound;
         return [solicitudData, null];
     } catch (error) {
         console.error("Error obtener el pedidp:", error);
@@ -23,7 +22,7 @@ export async function getSolicitudService(query) {
     }
 }
 
-export async function getSolicitudsService() {
+export async function getSolicitudesService() {
     try {
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
