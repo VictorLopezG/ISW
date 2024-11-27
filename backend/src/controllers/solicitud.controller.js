@@ -1,7 +1,9 @@
 "use strict";
 import {
     deleteSolicitudService,
+
     getSolicitudesService,
+
     updateSolicitudService,
     createSolicitudService,
 } from "../services/solicitud.service.js";
@@ -29,6 +31,7 @@ export async function getSolicitud(req, res) {
         const solicitudFound = await solicitudRepository.findOne({
             where: { id: id },
         });
+
 
         console.log("Solicitud encontrada:", solicitudFound);
 

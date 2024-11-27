@@ -19,6 +19,7 @@ export async function getSolicitudService(query) {
         
         return [solicitudFound, null];
 
+
     } catch (error) {
         console.error("Error obtener la solicitud:", error);
         return [null, "Error interno del servidor"];
