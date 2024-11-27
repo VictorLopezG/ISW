@@ -39,7 +39,7 @@ const Login = () => {
                         fieldType: 'input',
                         type: "email",
                         required: true,
-                        minLength: 25,
+                        minLength: 10,
                         maxLength: 30,
                         errorMessageData: errorEmail,
                         validate: {

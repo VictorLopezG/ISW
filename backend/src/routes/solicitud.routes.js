@@ -1,6 +1,6 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   deleteSolicitud,
@@ -12,14 +12,13 @@ import {
 
 const router = Router();
 
-router
-  .use(authenticateJwt)
-  .use(isAdmin);
+router.use(authenticateJwt)
+
 
 router
-  .get("/all", getSolicitudes)          //listo
-  .get("/:id", getSolicitud)           //listo
-  .put("/:id", updateSolicitud)        //listo
-  .delete("/:id", deleteSolicitud)     //listo
-  .post("/create",createSolicitud);  //listo
+  .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitudes)          //listo
+  .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitud)           //listo
+  .put("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), updateSolicitud)        //listo
+  .delete("/:id",authorizeRoles("administrador", "mesero","cajero","cocinero"), deleteSolicitud)     //listo
+  .post("/create",authorizeRoles("administrador", "mesero","cajero","cocinero"),createSolicitud);  //listo
 export default router;
