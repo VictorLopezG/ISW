@@ -2,12 +2,13 @@ import { useCallback, useState } from 'react';
 
 import Table from '../components/Table';
 import Search from '../components/Search';
+import PopopNuevoProducto from '../components/PopupNuevoProducto.jsx';
 import Popupproducto from '../components/PopupProducto';
 /*hooks */
 import useEditProducto from '@hooks/productos/useEditProducto.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
-import useCreateProducto from '../hooks/productos/useCreateProducto';
 import useDeleteProducto from '../hooks/productos/useDeleteProducto';
+import { createProducto } from '@services/producto.service.js';
 /*Assets*/
 
 import check from '../assets/check.svg';
@@ -30,6 +31,7 @@ const Admin_local = () => {
         setDataProducto
     } = useEditProducto(setProductos);
 
+    
 
     const {
 
@@ -84,6 +86,7 @@ const Admin_local = () => {
                                 <button
                                     // Llama a togglePopup para mostrar el pop-up
                                     className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
+                                    onClick={handleclickcreate}
                                 >
                                     <img src={check} alt="add" />
                                     <span>Agregar Producto</span>
@@ -147,8 +150,10 @@ const Admin_local = () => {
                         </div>
                     </div>
                 </div>
+                
             </div>
             <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataProducto} action={handleUpdate} />
+            <PopopNuevoProducto show={isPopupOpencreate} setShow={setIsPopupOpencreate} data={dataProducto} action={handlecreate}/>
         </main>
     );
 };

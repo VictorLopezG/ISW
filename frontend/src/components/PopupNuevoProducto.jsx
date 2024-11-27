@@ -20,7 +20,7 @@ export default function PopupProducto({ show, setShow, data, action }) {
                         <img src={CloseIcon} />
                     </button>
                     <Form
-                        title="Editar Producto"
+                        title="Producto Nuevo"
                         fields={[
                             {
                                 label: "Nombre producto",
@@ -71,7 +71,7 @@ export default function PopupProducto({ show, setShow, data, action }) {
                             },
                         ]}
                         onSubmit={handleSubmit}
-                        buttonText="Actualizar Producto"
+                        buttonText="Crear Producto"
                         backgroundColor={'#fff'}
                     />
                 </div>
