@@ -44,6 +44,7 @@ const SolicitudSchema = new EntitySchema({
             target: "productos",
             type: "many-to-one",
             joinColumn: { name: "id_Producto", referencedColumnName: "id" },
+            onDelete: "CASCADE"
         }
     },
     indices: [
