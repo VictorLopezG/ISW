@@ -3,11 +3,11 @@ import { Router } from "express";
 import { authorizeRoles } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
+  createSolicitud,
   deleteSolicitud,
   getSolicitud,
   getSolicitudes,
   updateSolicitud,
-  createSolicitud,
 } from "../controllers/solicitud.controller.js";
 
 const router = Router();

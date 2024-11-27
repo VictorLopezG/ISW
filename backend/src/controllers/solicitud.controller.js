@@ -1,8 +1,9 @@
 "use strict";
 import {
     deleteSolicitudService,
-    getSolicitudService,
+
     getSolicitudesService,
+
     updateSolicitudService,
     createSolicitudService,
 } from "../services/solicitud.service.js";
@@ -15,23 +16,40 @@ import {
     handleErrorServer,
     handleSuccess,
 } from "../handlers/responseHandlers.js";
+import Solicitud from "../entity/solicitud.entity.js"; 
+import { AppDataSource } from "../config/configDb.js"; 
+
 
 export async function getSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto } = req.query;
-        const { error } = solicitudQueryValidation.validate({ id_Pedido, id_Producto });
+        const { id } = req.params; 
+        console.log("ID recibido:", id);
 
-        if (error) return handleErrorClient(res, 400, error.message);
+ 
+        const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
-        const [Solicitud, errorSolicitud] = await getSolicitudService({ id_Pedido, id_Producto });
+        const solicitudFound = await solicitudRepository.findOne({
+            where: { id: id },
+        });
 
-        if (errorSolicitud) return handleErrorClient(res, 404, errorSolicitud);
 
-        handleSuccess(res, 200, "Solicitud encontrada", Solicitud);
+        console.log("Solicitud encontrada:", solicitudFound);
+
+
+        if (!solicitudFound) {
+            return handleErrorClient(res, 404, "Solicitud no encontrada o no existe");
+        }
+
+
+        handleSuccess(res, 200, "Solicitud encontrada", solicitudFound);
     } catch (error) {
-        handleErrorServer(res, 500, error.message);
+
+        console.error("Error al obtener la solicitud:", error);
+        handleErrorServer(res, 500, "Error interno del servidor");
     }
 }
+
+
 
 export async function getSolicitudes(req, res) {
     try {
@@ -53,11 +71,11 @@ export async function getSolicitudes(req, res) {
 
 export async function updateSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto } = req.query;
+        const { id_Pedido, id_Producto,cantidad, estado } = req.query;
         const { body } = req;
 
         const { error: queryError } = solicitudQueryValidation.validate({
-            id_Pedido, id_Producto, cantidad
+            id_Pedido, id_Producto, cantidad, estado
         });
 
         if (queryError) {
@@ -79,7 +97,7 @@ export async function updateSolicitud(req, res) {
                 bodyError.message,
             );
 
-        const [solicitud, solicitudError] = await updateSolicitudService({ id_Pedido, id_Producto, cantidad }, body);
+        const [solicitud, solicitudError] = await updateSolicitudService({ id_Pedido, id_Producto, cantidad, estado }, body);
 
         if (solicitudError) return handleErrorClient(res, 400, "Error modificando la solicitud", solicitudError);
 

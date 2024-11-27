@@ -3,6 +3,7 @@ import {deleteDataAlert, showErrorAlert, showSuccessAlert} from '@helpers/sweetA
 
 const useDeleteProducto = (fetchProductos, setDataProductos) => {
     const handleDelete = async (dataProducto) => {
+        console.log(dataProducto[0].id);
         if (dataProducto.length > 0){
             try {
                 const result = await deleteDataAlert();
@@ -11,7 +12,7 @@ const useDeleteProducto = (fetchProductos, setDataProductos) => {
                     if(response.status === 'client error'){
                         return showErrorAlert('Error',response.details);
                     }
-                    showSuccessAlert('¡Eliminado!','El productos ha sido eliniado con exito');
+                    showSuccessAlert('¡Eliminado!','El productos ha sido eliminado con exito');
                     await fetchProductos();
                     setDataProductos([]);
                 } else{
@@ -19,7 +20,7 @@ const useDeleteProducto = (fetchProductos, setDataProductos) => {
                 }
 
             } catch (error) {
-                console.log("Error al eleminar el producto",error);
+                console.log("Error al eliminar el producto",error);
                 showErrorAlert("Cancelado","Ocurrio un error al eliminar el producto");
             }
         }

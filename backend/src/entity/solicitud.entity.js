@@ -5,13 +5,18 @@ const SolicitudSchema = new EntitySchema({
     name: "Solicitud",
     tableName: "solicitudes",
     columns: {
-        id_Pedido: {
+        id: {
             type: "int",
             primary: true,
+            generated: true,
+        },
+        id_Pedido: {
+            type: "int",
+            
         },
         id_Producto: {
             type: "int",
-            primary: true,
+            
         },
         estado: {
             type: "varchar",
@@ -39,9 +44,15 @@ const SolicitudSchema = new EntitySchema({
             target: "productos",
             type: "many-to-one",
             joinColumn: { name: "id_Producto", referencedColumnName: "id" },
+            onDelete: "CASCADE"
         }
     },
     indices: [
+        {
+            name: "IDX_SOLICITUD",
+            columns: ["id"],
+            unique: true,
+        },
         {
             name: "IDX_ID_PEDIDO",
             columns: ["id_Pedido"],

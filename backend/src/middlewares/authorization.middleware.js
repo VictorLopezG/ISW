@@ -38,7 +38,6 @@ try {
     );
 }
 }
-
 async function checkRole(req, res, next, rolesToCheck) {
     try {
         const userRepository = AppDataSource.getRepository(User);

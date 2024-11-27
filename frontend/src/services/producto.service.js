@@ -7,7 +7,10 @@ export async function createProducto(data) {
         const dataRegister = convertirMinusculas(data);
         const { nombre,valor,stock, categoria} = dataRegister;
         const response = await axios.post('/producto/crearProducto', {
-            nombre:nombre,valor:valor,stock:stock,categoria:categoria
+            nombre:nombre,
+            valor:valor,
+            stock:stock,
+            categoria:categoria
 
         });
         console.log(response.data);
@@ -53,7 +56,7 @@ export async function updateProducto(data, id) {
 
 export async function deleteproducto(id) {
     try {
-        const response = await axios.delete(`/producto/:id/?id=${id}`);
+        const response = await axios.delete(`/producto/eliminarProductoID/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;
