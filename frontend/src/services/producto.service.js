@@ -53,7 +53,7 @@ export async function updateProducto(data, id) {
 
 export async function deleteproducto(id) {
     try {
-        const response = await axios.delete(`/producto/:id/?id=${id}`);
+        const response = await axios.delete(`/producto/eliminarProductoID/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;
