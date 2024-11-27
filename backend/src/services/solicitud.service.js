@@ -4,21 +4,23 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getSolicitudService(query) {
     try {
-        const { id_Pedido, id_Producto } = query;
 
+        const { id } = query;
+        console.log("id", id);
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }],
+            where: { id: id },
         });
+        console.log("solicitudFound", solicitudFound);
+
 
         if (!solicitudFound) return [null, "Solicitud no encontrada o no existe"];
+        
+        return [solicitudFound, null];
 
-        const { solicitudData } = solicitudFound;
-
-        return [solicitudData, null];
     } catch (error) {
-        console.error("Error obtener el pedidp:", error);
+        console.error("Error obtener la solicitud:", error);
         return [null, "Error interno del servidor"];
     }
 }
@@ -42,27 +44,27 @@ export async function getSolicitudsService() {
 
 export async function updateSolicitudService(query, body) {
     try {
-        const { id_Pedido, id_Producto, cantidad } = query;
+        const { id_Pedido, id_Producto, cantidad, estado } = query;
 
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }],
+            where: [{ id_Pedido: id_Pedido }, { id_Producto: id_Producto }, { cantidad: cantidad }, { estado: estado }],
         });
 
         if (!solicitudFound) return [null, "Solicitud no encontrada"];
 
         const datasolicitudUpdate = {
-            id_Pedido:body.id_Pedido,
-            id_Producto:body.id_Producto,
+            id_Pedido: body.id_Pedido,
+            id_Producto: body.id_Producto,
             estado: body.estado,
-            cantidad:body.cantidad,
+            cantidad: body.cantidad,
         };
 
-        await solicitudRepository.update({ id_Pedido:solicitudFound.id_Pedido,id_Producto:solicitudFound.id_Producto }, datasolicitudUpdate);
+        await solicitudRepository.update({ id_Pedido: solicitudFound.id_Pedido, id_Producto: solicitudFound.id_Producto }, datasolicitudUpdate);
 
         const solicitudData = await solicitudRepository.findOne({
-            where: { id_Pedido:body.id_Pedido,id_Producto:body.id_Producto },
+            where: { id_Pedido: body.id_Pedido, id_Producto: body.id_Producto, cantidad: body.cantidad, estado: body.estado },
         });
 
         if (!solicitudData) {
@@ -103,22 +105,21 @@ export async function deleteSolicitudService(query) {
 
 export async function createSolicitudService(solicitud) {
     try {
-      const solicitudRepository = AppDataSource.getRepository(Solicitud);
-  
-      const { id_Pedido, id_Producto, cantidad, estado } = solicitud;
-  
-      const newSolicitud = solicitudRepository.create({
-        id_Pedido:id_Pedido, id_Producto:id_Producto, cantidad:cantidad, estado:estado
-      });
-  
-      await solicitudRepository.save(newSolicitud);
-  
-      const { ...dataSolicitud } = newSolicitud;
-  
-      return [dataSolicitud, null];
+        const solicitudRepository = AppDataSource.getRepository(Solicitud);
+
+        const { id_Pedido, id_Producto, cantidad, estado } = solicitud;
+
+        const newSolicitud = solicitudRepository.create({
+            id_Pedido: id_Pedido, id_Producto: id_Producto, cantidad: cantidad, estado: estado
+        });
+
+        await solicitudRepository.save(newSolicitud);
+
+        const { ...dataSolicitud } = newSolicitud;
+
+        return [dataSolicitud, null];
     } catch (error) {
-      console.error("Error al crear la solicitud", error);
-      return [null, "Error interno del servidor"];
+        console.error("Error al crear la solicitud", error);
+        return [null, "Error interno del servidor"];
     }
-  }
-  
+}

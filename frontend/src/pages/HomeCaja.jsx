@@ -22,6 +22,14 @@ const Homecaja = () => {
       >
         Ir a Caja de Cobro
       </button>
+
+      <button
+        onClick={() => navigate('/gestionarPedidos')}
+        className="bg-[#212121] text-white font-bold py-5 px-7 rounded-3xl hover:bg-[#FF5722] 
+                   hover:text-black text-5xl "
+      >
+        Eliminar pedidos
+      </button>
     </div>
     
   );
