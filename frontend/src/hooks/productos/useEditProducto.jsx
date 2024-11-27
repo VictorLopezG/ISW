@@ -17,16 +17,16 @@ const useEditProducto = (setProductos) => {
     const handleUpdate = async (updatedProductoData) => {
         if (updatedProductoData) {
             try{
+            /*Recuerda dps hacer todas a minusculas*/ 
             const updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
             showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            const formattedProducto = formatPostUpdateproducto(updateProduc)
             setProductos(prevProductos => prevProductos.map(producto =>{
                 console.log("Producto actual:",producto);
-                if(producto.id === formattedProducto.id){
-                    console.log("Reemplazando con:",formattedProducto);
+                if(producto.id === updateProduc.id){
+                    console.log("Reemplazando con:",updateProduc);
                 }
-                return producto.id === formattedProducto.id ? formattedProducto : producto;
+                return producto.id === updateProduc.id ? updateProduc : producto;
             })
             );
             setDataProducto([]);
