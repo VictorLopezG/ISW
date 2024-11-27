@@ -38,4 +38,14 @@ export function convertirMinusculas(obj) {
     return obj;
 }
 
+export function formatPostUpdateproducto(producto) {
+    return {
+        nombre: convertirMinusculas(producto.nombre),
+        valor: producto.valor,
+        stock: producto.stock,
+        categoria: convertirMinusculas(producto.email),
+        createdAt: formatTempo(producto.createdAt, "DD-MM-YYYY")
+    };
+}
+
 

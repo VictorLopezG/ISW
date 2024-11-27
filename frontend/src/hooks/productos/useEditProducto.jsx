@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { updateProducto } from '@services/producto.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
+import { formatPostUpdateproducto } from '@helpers/formatData';
 
 
 const useEditProducto = (setProductos) => {
@@ -19,13 +20,13 @@ const useEditProducto = (setProductos) => {
             const updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
             showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
             setIsPopupOpen(false);
-            /*Recuerda agregar la validacion */
+            const formattedProducto = formatPostUpdateproducto(updateProduc)
             setProductos(prevProductos => prevProductos.map(producto =>{
                 console.log("Producto actual:",producto);
-                if(producto.id === updateProduc.id){
-                    console.log("Reemplazando con:",updateProduc);
+                if(producto.id === formattedProducto.id){
+                    console.log("Reemplazando con:",formattedProducto);
                 }
-                return producto.id === updateProduc.id ? updateProduc : producto;
+                return producto.id === formattedProducto.id ? formattedProducto : producto;
             })
             );
             setDataProducto([]);

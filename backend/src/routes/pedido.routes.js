@@ -1,20 +1,21 @@
 "use strict";
 import { Router } from "express";
-import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { isCajero, isMesero } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
+  createPedido,
   deletePedido,
   getPedido,
   getPedidos,
   updatePedido,
-  createPedido,
 } from "../controllers/pedido.controller.js";
 
 const router = Router();
 
 router
   .use(authenticateJwt)
-  .use(isAdmin);
+  .use(isCajero)
+  .use(isMesero);
 
 router
   .get("/all", getPedidos)          //listo
