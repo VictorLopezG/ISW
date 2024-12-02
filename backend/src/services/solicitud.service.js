@@ -5,12 +5,12 @@ import { AppDataSource } from "../config/configDb.js";
 export async function getSolicitudService(query) {
     try {
 
-        const { id } = query;
-        console.log("id", id);
+        const { id_Pedido,id_Producto } = query;
+        console.log(id_Pedido,id_Producto);
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
-            where: { id: id },
+            where: { id_Pedido:id_Pedido, id_Producto:id_Producto },
         });
         console.log("solicitudFound", solicitudFound);
 
@@ -95,9 +95,7 @@ export async function deleteSolicitudService(query) {
 
         const solicitudDeleted = await solicitudRepository.remove(solicitudFound);
 
-        const { dataSolicitud } = solicitudDeleted;
-
-        return [...dataSolicitud, null];
+        return [solicitudDeleted, null];
     } catch (error) {
         console.error("Error al eliminar la solicitud:", error);
         return [null, "Error interno del servidor"];
