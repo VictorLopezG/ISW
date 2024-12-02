@@ -14,7 +14,6 @@ const useCocinas = async () => {
 
                 const formattedData = response.map(cocina => ({
 
-
                     idpedido: cocina.idpedido,
                     fechacreacion: cocina.fechacreacion,
                     descripcion: cocina.descripcion,

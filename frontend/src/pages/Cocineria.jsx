@@ -4,11 +4,10 @@ import Table from "../components/Table";
 
 import Search from '../components/Search';
 
-import usePedido from '@hooks/pedidos/useGetPedido.jsx';
-import useEditPedido from '@hooks/pedidos/useEditPedido.jsx';
-import useDeletePedido from '@hooks/pedidos/useDeletePedido.jsx';
 
-import useCocinas from '../hooks/tablaCocina/useGetCocina';
+
+import useCocinas from '../hooks/solicitud/useGetCocina';
+import useEditSolicitud from '../hooks/tablaCocina/useEditSolicitud';
 
 
 import DeleteIcon from '../assets/deleteIcon.svg';
@@ -23,7 +22,8 @@ import { getCocinas } from '@services/cocinaConsulta.service.js';
 const Cocineria = () => {
 
 
-  const [cocinas, setCocinas] = useState([]);
+
+  const [solicitudes, setSolicitudes] = useState([]);
   useEffect(() => {
 
     const fetchCocinas = async () => {
@@ -42,7 +42,7 @@ const Cocineria = () => {
         }));
         console.log("formattedData", formattedData);
 
-        setCocinas(formattedData);
+        setSolicitudes(formattedData);
 
       } catch (error) {
         console.log("error en useCocina");
@@ -50,14 +50,28 @@ const Cocineria = () => {
       }
     }
     fetchCocinas();
-
   }, []);
 
 
+  const {
+    handleClickUpdate,
+    handleUpdate,
+    handleUpdateStatus,
+    DataSolicitud,
+    setDataSolicitud
+  } = useEditSolicitud(setSolicitudes);
 
 
 
 
+
+
+  const handleSelectionChange = useCallback((selectedSolcitud) => {
+    setDataPedido(selectedSolcitud);
+  }, [setDataSolicitud]);
+
+
+  //BUSCAR SOLICITUDES
   const [filterId, setFilterId] = useState('');
   const handleIdFilterChange = (e) => {
     setFilterId(e.target.value);
@@ -74,7 +88,7 @@ const Cocineria = () => {
 
   ];
 
-  //const { pedidosPendientes } = pedidos.filter(pedido => pedido.estado === "Pendiente");
+
 
 
 
@@ -92,13 +106,15 @@ const Cocineria = () => {
             <div className="flex space-x-4 items-center">
               <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
 
+              <button className="focus:outline-none bg-[#FFC107] px-10 py-2 rounded-lg">
+                <img src={gorritoChef} alt="delete" />
+              </button>
 
 
 
 
-
-
-              <button   className="focus:outline-none bg-[#212121] px-10 py-2 rounded-lg">
+              <button className="focus:outline-none bg-[#212121] px-10 py-2 rounded-lg"
+              >
                 <img src={DeleteIcon} alt="delete" />
               </button>
 
@@ -106,19 +122,20 @@ const Cocineria = () => {
 
 
 
-          
-              
-            </div>  
+
+
+
+            </div>
           </div>
           <Table
-            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
 
-            data={cocinas}
+            data={solicitudes}
             columns={columns}
             filter={filterId}
             dataToFilter="id"
             initialSortName="id"
-         
+            onSelectionChange={handleSelectionChange}
+
 
           />
         </div>

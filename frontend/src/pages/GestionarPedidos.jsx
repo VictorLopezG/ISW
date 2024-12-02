@@ -51,6 +51,7 @@ const Cocineria = () => {
     { title: "Descripción", field: "descripcion", width: 250, responsive: 1 },
     { title: "MesaID", field: "mesaID", width: 100, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
+    {title: "total", field: "total", width: 100, responsive: 4}
 
   ];
 

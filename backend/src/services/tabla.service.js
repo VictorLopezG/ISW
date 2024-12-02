@@ -1,5 +1,5 @@
-import { AppDataSource } from "../config/configDb.js"; // Asegúrate de importar el archivo que contiene la configuración de la conexión
-import  solicitud  from "../entity/solicitud.entity.js"; // Asegúrate de importar el modelo correcto
+import { AppDataSource } from "../config/configDb.js"; 
+import  solicitud  from "../entity/solicitud.entity.js"; 
 
 export const getTablaDatosService = async () => {
     const query = `
@@ -12,21 +12,22 @@ export const getTablaDatosService = async () => {
         s.cantidad AS cantidad,
         s.estado AS estado
     FROM pedidos p
-    JOIN mesas m ON p."mesaID" = m.id  -- Asegúrate de usar el nombre correcto de la columna
+    JOIN mesas m ON p."mesaID" = m.id  
     JOIN solicitudes s ON s."id_Pedido" = p.id
-    JOIN productos pr ON s."id_Producto" = pr.id;
+    JOIN productos pr ON s."id_Producto" = pr.id
+    WHERE s.estado = 'pendiente';
 
     `;
 
     try {
         console.log("Iniciando consulta...");
 
-        // Asegúrate de que la conexión esté inicializada
+     
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
         }
 
-        // Ejecuta la consulta con AppDataSource.query()
+       
         const result = await AppDataSource.query(query);
         console.log("Consulta exitosa:", result);
 

@@ -49,6 +49,7 @@ const SolicitudSchema = new EntitySchema({
     },
     indices: [
         {
+            //quitar y evaluar si es necesario
             name: "IDX_SOLICITUD",
             columns: ["id"],
             unique: true,
