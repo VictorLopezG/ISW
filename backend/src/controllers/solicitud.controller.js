@@ -6,6 +6,7 @@ import {
 
     updateSolicitudService,
     createSolicitudService,
+    getSolicitudService,
 } from "../services/solicitud.service.js";
 import {
     solicitudBodyValidation,
@@ -22,16 +23,9 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getSolicitud(req, res) {
     try {
-        const { id } = req.params; 
-        console.log("ID recibido:", id);
+        const { id_Pedido,id_Producto } = req.query; 
 
- 
-        const solicitudRepository = AppDataSource.getRepository(Solicitud);
-
-        const solicitudFound = await solicitudRepository.findOne({
-            where: { id: id },
-        });
-
+        const [solicitudFound,error ]= await getSolicitudService({ id_Pedido,id_Producto});
 
         console.log("Solicitud encontrada:", solicitudFound);
 

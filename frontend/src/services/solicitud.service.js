@@ -64,6 +64,17 @@ export async function createSolicitudes(data){
     }
 }
 
+export async function getSolicitud(data) {
+    const {id_Pedido,id_Producto}=data;
+    try {
+        const response = await axios.get(
+            `/sol/:id?&id_Pedido=${id_Pedido}&id_Producto=${id_Producto}`);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
 export async function getSolicitudes() {
     try {
         const { data } = await axios.get('/sol/all');
@@ -85,9 +96,11 @@ export async function updateSolicitud(data, id) {
     }
 }
 
-export async function deleteSolicitud(id) {
+export async function deleteSolicitud(data) {
+    const {id_Pedido,id_Producto}=data;
     try {
-        const response = await axios.delete(`/sol/${id}`);
+        const response = await axios.delete(
+            `/sol/:id?&id_Pedido=${id_Pedido}&id_Producto=${id_Producto}`);
         return response.data;
     } catch (error) {
         return error.response.data;
