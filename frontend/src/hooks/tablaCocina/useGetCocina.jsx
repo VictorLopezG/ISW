@@ -1,43 +1,32 @@
 import { useState, useEffect } from 'react';
-import { getCocinas } from '@services/cocinaConsulta.service.js';
+import { getSolicitudes } from '@services/cocinaConsulta.service.js';
 
-const useCocinas = async () => {
-    const [cocinas, setCocinas] = useState([]);
-    useEffect(() => {
-
-        const fetchCocinas = async () => {
+const useSolicitudes = () => {
+    const [solicitudes, setSolicitudes] = useState([]);
+    
+        const fetchSolicitudes = async () => {
             try {
-
-                const response = await getCocinas();
-                
-
-
-                const formattedData = response.map(cocina => ({
-
-                    idpedido: cocina.idpedido,
-                    fechacreacion: cocina.fechacreacion,
-                    descripcion: cocina.descripcion,
-                    mesa: cocina.mesa,
-                    producto: cocina.producto,
-                    cantidad: cocina.cantidad,
-                    estado: cocina.estado
-
+                const response = await getSolicitudes();
+                const formattedData = response.map(solicitud => ({
+                    id_Pedido: solicitud.id_Pedido,
+                    id_Producto: solicitud.id_Producto,
+                    fechacreacion: solicitud.fechacreacion,
+                    descripcion: solicitud.descripcion,
+                    mesa: solicitud.mesa,
+                    producto: solicitud.producto,
+                    cantidad: solicitud.cantidad,
+                    estado: solicitud.estado
                 }));
-                console.log("formattedData", formattedData);
-
-                setCocinas(formattedData);
-
+                setSolicitudes(formattedData);
             } catch (error) {
-                console.log("error en useCocina");
-                console.error("Error: ", error);
+                console.error("Error al obtener cocinas: ", error);
+                setError(error);
             }
-        }
-        fetchCocinas();
+        };
 
-    }, []);
+            
 
-
-    return { cocinas, setCocinas };
-
+    return { solicitudes, setSolicitudes, fetchSolicitudes };
 };
-export default useCocinas;
+
+export default useSolicitudes;

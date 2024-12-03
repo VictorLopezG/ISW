@@ -47,6 +47,10 @@ export async function updateSolicitudService(query, body) {
     try {
         const { id_Pedido, id_Producto, cantidad, estado } = query;
 
+        console.log("id_Pedido bk:::", body);
+
+        
+
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
@@ -56,16 +60,14 @@ export async function updateSolicitudService(query, body) {
         if (!solicitudFound) return [null, "Solicitud no encontrada"];
 
         const datasolicitudUpdate = {
-            id_Pedido: body.id_Pedido,
-            id_Producto: body.id_Producto,
             estado: body.estado,
             cantidad: body.cantidad,
         };
 
-        await solicitudRepository.update({ id_Pedido: solicitudFound.id_Pedido, id_Producto: solicitudFound.id_Producto }, datasolicitudUpdate);
+        await solicitudRepository.update({ id_Pedido: id_Pedido, id_Producto: id_Producto }, datasolicitudUpdate);
 
         const solicitudData = await solicitudRepository.findOne({
-            where: { id_Pedido: body.id_Pedido, id_Producto: body.id_Producto, cantidad: body.cantidad, estado: body.estado },
+            where: { id_Pedido: id_Pedido, id_Producto: id_Producto, cantidad: body.cantidad, estado: body.estado },
         });
 
         if (!solicitudData) {

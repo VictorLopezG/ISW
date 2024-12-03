@@ -28,6 +28,8 @@ const Cocineria = () => {
 
 
   const { handleDelete } = useDeletePedido(fetchPedidos, setDataPedido);
+
+  
   //revisar
   useEffect(() => {
     fetchPedidos();
@@ -54,8 +56,6 @@ const Cocineria = () => {
     {title: "total", field: "total", width: 100, responsive: 4}
 
   ];
-
-  const { pedidosPendientes } = pedidos.filter(pedido => pedido.estado === "Pendiente");
 
 
 

@@ -2,14 +2,6 @@
 import Joi from "joi";
 
 export const solicitudQueryValidation = Joi.object({
-    id: Joi.number()
-        .integer()
-        .positive()
-        .messages({
-            "number.base": "El id de la solicitud debe ser un número.",
-            "number.integer": "El id de la solicitud debe ser un número entero.",
-            "number.positive": "El id de la solicitud debe ser un número positivo.",
-        }),
     id_Producto: Joi.number()
         .integer()
         .positive()
@@ -27,7 +19,7 @@ export const solicitudQueryValidation = Joi.object({
             "number.positive": "El id de pedido debe ser un número positivo.",
         })
 })
-    .or("id, id_Producto", "id_Pedido")
+    .or("id_Producto", "id_Pedido")
     .unknown(false)
     .messages({
         "object.unknown": "No se permiten propiedades adicionales.",

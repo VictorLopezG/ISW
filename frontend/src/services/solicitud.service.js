@@ -84,10 +84,21 @@ export async function getSolicitudes() {
     }
 }
 
-export async function updateSolicitud(data, id) {
+export async function updateSolicitud(data) {
+
+    const {id_Pedido, id_Producto,cantidad,estado}=data;
+
     try {
-        const response = await axios.put(`/sol/${id}`, data);
-        console.log(response.data);
+        console.log("entro a update");
+        console.log(id_Pedido, id_Producto,cantidad,estado);
+        
+        const response = await axios.patch( `/sol/:id?&id_Pedido=${id_Pedido}&id_Producto=${id_Producto}`,
+            {
+                cantidad: cantidad,
+                estado: estado
+            }
+        );
+      
         return response.data.data;
     } catch (error) {
 
@@ -95,6 +106,10 @@ export async function updateSolicitud(data, id) {
         return error.response.data;
     }
 }
+
+
+
+
 
 export async function deleteSolicitud(data) {
     const {id_Pedido,id_Producto}=data;
