@@ -1,18 +1,66 @@
+import { useCallback, useEffect, useState } from 'react';
+import Table from "../components/Table";
+import Search from '../components/Search';
+import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
+
+
 const CajaCobro = () => {
+  //filtrar id
+  const [filterId, setFilterId] = useState('');
+  const handleIdFilterChange = (e) => {
+    setFilterId(e.target.value);
+  };
+
+  //getall
+  const { pedidosListos, fetchPedidosListos, setPedidosListos } = useGetPedidoL();
+
+  useEffect(() => {
+    fetchPedidosListos();
+  }, []);
+
+
+
+  const columns = [
+    { title: "ID", field: "id", width: 100, responsive: 3 },
+    { title: "estado", field: "estado", width: 100, responsive: 2, },
+
+    { title: "MesaID", field: "mesaID", width: 100, responsive: 0 },
+    { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
+    { title: "total", field: "total", width: 200, responsive: 1 }
+
+  ];
   return (
     <main>
-      <div className="h-screen w-full bg-gradient-to-r from-rose-100 to-[#FF5722] flex justify-center items-center p-10">
-        <div className="flex flex-row items-center space-y-4">
-          <div className="bg-[#212121] p-10 rounded-3xl flex flex-col items-center space-y-2">
+      <div className="h-screen w-full bg-[#FFC107] flex items-center justify-center p-10 space-y-8">
 
-          </div>
-          <div className="bg-[#fcecee] p-10 rounded-3xl flex flex-col items-center space-y-2">
 
+        <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-3  ">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-[#212121]">Pedidos</h1>
+            <div className="flex space-x-4 items-center">
+              <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
+
+
+
+            </div>
           </div>
+          <Table
+            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
+            data={pedidosListos}
+            columns={columns}
+            filter={filterId}
+            dataToFilter="id"
+            initialSortName="id"
+
+          />
         </div>
+
+        {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+
+
       </div>
     </main>
   );
-}
+};
 
 export default CajaCobro;

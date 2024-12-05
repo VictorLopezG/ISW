@@ -18,7 +18,7 @@ router.use(authenticateJwt)
 router
   .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitudes)          //listo
   .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitud)           //listo
-  .put("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), updateSolicitud)        //listo
+  .patch("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), updateSolicitud)        //listo
   .delete("/:id",authorizeRoles("administrador", "mesero","cajero","cocinero"), deleteSolicitud)     //listo
   .post("/create",authorizeRoles("administrador", "mesero","cajero","cocinero"),createSolicitud);  //listo
 export default router;

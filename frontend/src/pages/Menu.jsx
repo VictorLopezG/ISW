@@ -3,8 +3,8 @@ import useProducto from '@hooks/productos/useGetProductos.jsx';
 
 const Menu = () => {
     const columns = [
-        { title: "Nombre", field: "nombre", width: 100, responsive: 3 },
-        { title: "Valor", field: "valor", width: 100, responsive: 2 },
+        { title: "Nombre", field: "nombre", width: 400, responsive: 3 },
+        { title: "Valor", field: "valor", width: 200, responsive: 2 },
         { title: "Stock", field: "stock", width: 100, responsive: 2 }
     ];
     const { productos } = useProducto();

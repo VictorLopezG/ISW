@@ -15,7 +15,10 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 
 const Cocineria = () => {
   const { pedidos, fetchPedidos, setPedidos } = usePedido();
+  
   const [filterId, setFilterId] = useState('');
+
+
 
   const {
     handleClickUpdate,
@@ -28,6 +31,8 @@ const Cocineria = () => {
 
 
   const { handleDelete } = useDeletePedido(fetchPedidos, setDataPedido);
+
+  
   //revisar
   useEffect(() => {
     fetchPedidos();
@@ -51,22 +56,18 @@ const Cocineria = () => {
     { title: "Descripción", field: "descripcion", width: 250, responsive: 1 },
     { title: "MesaID", field: "mesaID", width: 100, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
+    {title: "total", field: "total", width: 100, responsive: 4}
 
   ];
-
-  const { pedidosPendientes } = pedidos.filter(pedido => pedido.estado === "Pendiente");
 
 
 
   return (
     <main>
-      <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#FFC107] flex flex-col items-center p-10 space-y-8">
-        <div className="bg-[#212121] p-12 rounded-3xl text-center text-rose-100 flex flex-col items-center space-y-4 my-11">
-          <h1 className="text-3xl font-bold text-[#FFC107]">COCINA</h1>
-          <h2 className="text-1xl font-light">Preparación de productos</h2>
-        </div>
+      <div className="h-screen w-full bg-[#FFC107] flex items-center justify-center p-10 space-y-8">
+        
 
-        <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-6">
+        <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-3  ">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-[#212121]">Pedidos</h1>
             <div className="flex space-x-4 items-center">
