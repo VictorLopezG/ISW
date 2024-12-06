@@ -20,7 +20,7 @@ const useEditPedido = (setPedidos) => {
                 const updatedPedido = await updatePedido(updatedPedidoData, dataPedido[0].id);
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
-                /*recuerda borrar esta validacion o cambiarla*/ 
+
                 const formattedPedido = formatPedidoData(updatedPedido);
 
                 setPedidos(prevPedidos => prevPedidos.map(pedido => {
@@ -51,7 +51,9 @@ const useEditPedido = (setPedidos) => {
                 const {createdAt,id, ...updatedPedidoData2}= updatedPedidoData;
                 
                 const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id);
+                
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
+                
                 const formattedPedido = formatPedidoData(updatedPedido);
                 setPedidos(prevPedidos =>
                     prevPedidos.map(pedido => 

@@ -6,6 +6,7 @@ import {
 
     updateSolicitudService,
     createSolicitudService,
+    getSolicitudService,
 } from "../services/solicitud.service.js";
 import {
     solicitudBodyValidation,
@@ -20,18 +21,11 @@ import Solicitud from "../entity/solicitud.entity.js";
 import { AppDataSource } from "../config/configDb.js"; 
 
 
-export async function getSolicitud(req, res) {
+export async function getSolicitud(req, res) {  
     try {
-        const { id } = req.params; 
-        console.log("ID recibido:", id);
+        const { id_Pedido,id_Producto } = req.query; 
 
- 
-        const solicitudRepository = AppDataSource.getRepository(Solicitud);
-
-        const solicitudFound = await solicitudRepository.findOne({
-            where: { id: id },
-        });
-
+        const [solicitudFound,error ]= await getSolicitudService({ id_Pedido,id_Producto});
 
         console.log("Solicitud encontrada:", solicitudFound);
 
@@ -71,18 +65,25 @@ export async function getSolicitudes(req, res) {
 
 export async function updateSolicitud(req, res) {
     try {
-        const { id_Pedido, id_Producto,cantidad, estado } = req.query;
-        const { body } = req;
+        const { id_Pedido, id_Producto } = req.query;
+        const { cantidad,estado } = req.body;
 
+        console.log("id_Pedido bk",id_Pedido);
+        console.log("id_Producto",id_Producto);
+        console.log("cantidad",cantidad);
+        console.log("estado",estado);
+
+        const { body } = req;
+        
         const { error: queryError } = solicitudQueryValidation.validate({
-            id_Pedido, id_Producto, cantidad, estado
+            id_Pedido, id_Producto
         });
 
         if (queryError) {
             return handleErrorClient(
                 res,
                 400,
-                "Error de validación en la consulta",
+                "Error de validación en la consulta EN QUERY",
                 queryError.message,
             );
         }
@@ -93,9 +94,11 @@ export async function updateSolicitud(req, res) {
             return handleErrorClient(
                 res,
                 400,
-                "Error de validación en los datos enviados",
+                "Error de validación en los datos enviados EN BODY",
                 bodyError.message,
             );
+
+            
 
         const [solicitud, solicitudError] = await updateSolicitudService({ id_Pedido, id_Producto, cantidad, estado }, body);
 

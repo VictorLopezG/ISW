@@ -8,13 +8,10 @@ import {
   getPedido,
   getPedidos,
   updatePedido,
+
 } from "../controllers/pedido.controller.js";
 
 const router = Router();
-
-
-router
-  .use(authenticateJwt)
 
 
 router.use(authenticateJwt)
@@ -25,5 +22,6 @@ router
   .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getPedido)           //listo
   .put("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), updatePedido)        //listo
   .delete("/:id",authorizeRoles("administrador","cajero","cocinero"), deletePedido)     //listo
-  .post("/:createP",authorizeRoles("administrador", "mesero","cajero","cocinero"),createPedido);  //listo
+  .post("/:createP",authorizeRoles("administrador", "mesero","cajero","cocinero"),createPedido) //listo
+
 export default router;
