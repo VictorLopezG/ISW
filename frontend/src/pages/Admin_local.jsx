@@ -17,10 +17,14 @@ import update_icon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 
+/*Cambiar la categoria a un dato definido*/ 
+/*Revisar bien las validaciones o mensajes que devuelven en crear producto y actualizar*/ 
+
 const Admin_local = () => {
 
     const { productos, fetchProductos, setProductos } = useProducto();
     const [filternombre, setFilternombre] = useState('');
+    const [iscreatePopupopen,setIscreatePopupopen] = useState(false);
 
     const {
         handleClickUpdate,
@@ -30,6 +34,10 @@ const Admin_local = () => {
         dataProducto,
         setDataProducto
     } = useEditProducto(setProductos);
+
+    const handlecreateclick = () =>{
+        setIscreatePopupopen(true);
+    }
 
     const {
 
@@ -84,7 +92,7 @@ const Admin_local = () => {
                                 <button
                                     // Llama a togglePopup para mostrar el pop-up
                                     className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
-
+                                    onClick={handlecreateclick}
                                 >
                                     <img src={check} alt="add" />
                                     <span>Agregar Producto</span>
@@ -150,6 +158,7 @@ const Admin_local = () => {
                 </div>
             </div>
             <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataProducto} action={handleUpdate} />
+            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchProductos}/>
         </main>
     );
 };

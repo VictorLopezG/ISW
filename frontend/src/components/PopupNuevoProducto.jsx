@@ -2,13 +2,24 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
+import { createProducto } from '../services/producto.service';
+import { act } from 'react';
 
 export default function PopupProducto({ show, setShow, data, action }) {
     const productData = data && data.length > 0 ? data[0] : {};
 
-    const handleSubmit = (formData) => {
-        console.log(formData)
-        action(formData);
+    const handleSubmit = async (formData) => {
+    try{
+        await createProducto(formData);
+        showSuccessAlert("Producto creado","El producto ha sido creado correctamente.");
+        action(formData)
+    }catch (error){
+        showErrorAlert("Error","Ocurrio un error al crear el producto.");
+        console.error("Error al crear el producto: ",error);
+        
+    }
+
     };
 
     return (
