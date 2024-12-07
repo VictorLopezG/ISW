@@ -13,7 +13,9 @@ import {
 
 const router = Router();
 
+
 router.use(authenticateJwt)
+
 
 router
   .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getPedidos)          //listo
