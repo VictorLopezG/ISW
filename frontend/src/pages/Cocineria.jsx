@@ -61,7 +61,7 @@ const Cocineria = () => {
   } = useEditSolicitud(setSolicitudes, fetchSolicitudes);
 
   //ELIMINAR SOLICITUDES
-  const {handleDelete} = useDeleteSolicitud(setSolicitudes, fetchSolicitudes);
+  const {handleDelete} = useDeleteSolicitud(fetchSolicitudes, );
 
 
 
