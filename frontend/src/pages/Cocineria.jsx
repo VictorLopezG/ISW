@@ -7,13 +7,15 @@ import Search from '../components/Search';
 
 import useSolicitud from '../hooks/tablaCocina/useGetCocina';
 import useEditSolicitud from '../hooks/solicitud/useEditSolicitud';
-
+import useDeleteSolicitud from '../hooks/solicitud/useDeleteSolicitud.jsx';
 
 import DeleteIcon from '../assets/deleteIcon.svg';
 import gorritoChefAmarillo from '../assets/chefHatIconAmarillo.svg';
 import gorritoChef from '../assets/chefHatIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
+
 import { getSolicitudes } from '@services/cocinaConsulta.service.js';
+
 
 
 //import { getCocinas } from '@services/cocinaConsulta.service.js';
@@ -48,37 +50,7 @@ const Cocineria = () => {
 
 
 
-/*
-  const [solicitudes, setSolicitudes] = useState([]);
-  useEffect(() => {
-
-    const fetchCocinas = async () => {
-      try {
-
-        const response = await getCocinas();
-        const formattedData = response.map(cocina => ({
-          id_Pedido: cocina.id_Pedido,
-          id_Producto: cocina.id_Producto,
-          fechacreacion: cocina.fechacreacion,
-          descripcion: cocina.descripcion,
-          mesa: cocina.mesa,
-          producto: cocina.producto,
-          cantidad: cocina.cantidad,
-          estado: cocina.estado
-
-        }));
-        console.log("formattedData", formattedData);
-
-        setSolicitudes(formattedData);
-
-      } catch (error) {
-        console.log("error en useCocina");
-        console.error("Error: ", error);
-      }
-    }
-    fetchCocinas();
-  }, []);
-*/
+  //EDITAR SOLICITUDES
 
   const {
     handleClickUpdate,
@@ -88,6 +60,8 @@ const Cocineria = () => {
     setDataSolicitud
   } = useEditSolicitud(setSolicitudes, fetchSolicitudes);
 
+  //ELIMINAR SOLICITUDES
+  const {handleDelete} = useDeleteSolicitud(setSolicitudes, fetchSolicitudes);
 
 
 
@@ -134,15 +108,18 @@ const Cocineria = () => {
                     <div className="flex space-x-4 items-center">
                         <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
                         <button onClick={handleUpdateStatus} className="focus:outline-none bg-[#FFC107] px-10 py-2 rounded-lg">
-                            <img src={gorritoChef} alt="edit" />
+                            <img src={gorritoChef} alt="edit" /> 
+
+
                         </button>
-                        <button className="focus:outline-none bg-[#212121] px-10 py-2 rounded-lg">
+                        <button className="focus:outline-none bg-[#212121] px-10 py-2 rounded-lg"
+                        onClick={() => handleDelete(handleSelectionChange)} >
                             <img src={DeleteIcon} alt="delete" />
                         </button>
                     </div>
                 </div>
                 <Table
-                    // Esto fuerza el re-render cuando `solicitudes` cambia
+                    
                     data={solicitudes}
                     columns={columns}
                     filter={filterId}

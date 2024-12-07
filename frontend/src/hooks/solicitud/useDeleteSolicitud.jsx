@@ -1,14 +1,14 @@
-import deletesolicitud from '@services/solicitud.services.js';
+import {deleteSolicitud} from '@services/solicitud.service.js';
 import {deleteDataAlert, showErrorAlert, showSuccessAlert} from '@helpers/sweetAlert.js';
 
 const useDeletesolicitud = (fetchSolicitud, setDataSolicitud) => {
     const handleDelete = async (dataSolicitud) => {
-        console.log(dataSolicitud[0].id);
+        console.log(dataSolicitud);
         if (dataSolicitud.length > 0){
             try {
                 const result = await deleteDataAlert();
                 if(result.isConfirmed){
-                    const response = await deletesolicitud(dataSolicitud[0].id);
+                    const response = await deleteSolicitud(dataSolicitud[0].id);
                     if(response.status === 'client error'){
                         return showErrorAlert('Error',response.details);
                     }
