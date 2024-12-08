@@ -16,6 +16,7 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 const Cocineria = () => {
   const { pedidos, fetchPedidos, setPedidos } = usePedido();
   
+
   const [filterId, setFilterId] = useState('');
 
 
@@ -42,7 +43,7 @@ const Cocineria = () => {
   const handleIdFilterChange = (e) => {
     setFilterId(e.target.value);
   };
-  //
+
   const handleSelectionChange = useCallback((selectedPedidos) => {
     setDataPedido(selectedPedidos);
   }, [setDataPedido]);
@@ -74,7 +75,7 @@ const Cocineria = () => {
               <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
 
 
-              <button onClick={handleUpdateStatus} // Cambia el estado a "listo"
+              <button onClick={handleUpdateStatus} 
                 disabled={dataPedido.length === 0}
                 className="focus:outline-none px-10 py-2 bg-[#212121] text-[#FFC107] font-bold rounded-lg hover:bg-[#FFC107] hover:text-[#212121] transition-all duration-300 ease-in-out"
 
@@ -101,7 +102,7 @@ const Cocineria = () => {
           />
         </div>
 
-        {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+
 
 
       </div>

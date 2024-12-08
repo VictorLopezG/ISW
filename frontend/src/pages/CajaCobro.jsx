@@ -17,15 +17,14 @@ const CajaCobro = () => {
   //getall
   const { pedidosListos, fetchPedidosListos, setPedidosListos } = useGetPedidoL();
 
-
-
-
-
-
-  
   useEffect(() => {
     fetchPedidosListos();
   }, []);
+
+
+
+
+
 
 
 
@@ -62,7 +61,7 @@ const CajaCobro = () => {
             </div>
           </div>
           <Table
-            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
+         
             data={pedidosListos}
             columns={columns}
             filter={filterId}
@@ -75,7 +74,7 @@ const CajaCobro = () => {
           />
         </div>
 
-        {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+  
 
 
       </div>
