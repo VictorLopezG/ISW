@@ -3,6 +3,9 @@ import Table from "../components/Table";
 import Search from '../components/Search';
 import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
 
+import UpdateIconDisable from '../assets/updateIconDisabled.svg';
+import update_icon from '../assets/ViewIcon.svg';
+
 
 const CajaCobro = () => {
   //filtrar id
@@ -17,6 +20,11 @@ const CajaCobro = () => {
   useEffect(() => {
     fetchPedidosListos();
   }, []);
+
+
+
+
+
 
 
 
@@ -40,22 +48,33 @@ const CajaCobro = () => {
             <div className="flex space-x-4 items-center">
               <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
 
+              <button className="flex flex-auto rounded-full items-center px-2 py-2 bg-gray-600 text-white space-x-4 mr-2"
+                onClick={() => { }}
+
+              >
+
+                <img src={update_icon} alt="edit" />
+                <span>Descripción</span>
+              </button>
 
 
             </div>
           </div>
           <Table
-            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
+         
             data={pedidosListos}
             columns={columns}
             filter={filterId}
             dataToFilter="id"
             initialSortName="id"
+            onSelectionChange={(data) => {
+              console.log(data);
+            }}
 
           />
         </div>
 
-        {/* <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} /> */}
+  
 
 
       </div>

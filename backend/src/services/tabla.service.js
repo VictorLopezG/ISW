@@ -63,3 +63,34 @@ export const getPedidoListoService = async () => {
         throw new Error("Error al obtener los datos.");
     }
 }
+
+export const getconsumoService = async (id_pedido) => {
+    const query = `
+    SELECT 
+        s."id_Pedido",
+        s."id_Producto",
+        pr.nombre AS producto,
+        s.cantidad AS cantidad
+    FROM pedidos p
+    JOIN mesas m ON p."mesaID" = m.id
+    JOIN solicitudes s ON s."id_Pedido" = p.id
+    JOIN productos pr ON s."id_Producto" = pr.id
+    WHERE s."id_Pedido" = 33;
+    `;
+
+    try {
+        console.log("Iniciando consulta...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:");
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
