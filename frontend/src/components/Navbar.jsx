@@ -110,7 +110,7 @@ const Navbar = () => {
                     {userRole === 'administrador' && 'Administrador_local' && (
                         <li>
                             <NavLink
-                                to="/admin_local"
+                                to="/home_admin"
                                 onClick={() => {
                                     setMenuOpen(false);
                                     addActiveClass();

@@ -9,8 +9,8 @@ const useMesas = () => {
             const response = await getMesas();
             //console.log(response.data); 
             const formattedData = response.data.map(mesa => ({
-                descripcion: mesa.descripcion,
                 id: mesa.id,
+                descripcion: mesa.descripcion,
                 capacidad: mesa.capacidad,
                 //createdAt: mesa.createdAt
             }));
