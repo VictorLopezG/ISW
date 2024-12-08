@@ -91,7 +91,7 @@ const Cocineria = () => {
             </div>
           </div>
           <Table
-            //para filtrar usar "pedidosFiltrados" en lugar de "pedidos", pero esto me da un error al intentar actualizar el estado de un pedido
+       
             data={pedidos}
             columns={columns}
             filter={filterId}

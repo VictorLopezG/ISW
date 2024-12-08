@@ -22,11 +22,6 @@ const CajaCobro = () => {
 
 
 
-
-
-
-
-
   
   useEffect(() => {
     fetchPedidosListos();

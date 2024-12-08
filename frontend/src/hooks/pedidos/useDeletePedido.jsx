@@ -2,7 +2,9 @@ import {deletePedido} from '@services/pedido.service.js';
 import {deleteDataAlert, showErrorAlert, showSuccessAlert} from '@helpers/sweetAlert.js';
 
 const useDeletePedido = (fetchPedidos, setDataPedido) => {
+
     const handleDelete = async (dataPedido) => {
+        console.log("dataPedido ",dataPedido);
         if (dataPedido.length > 0) {
             try {
                 const result = await deleteDataAlert();
