@@ -21,7 +21,7 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 
 const Admin_mesas = () => {
 
-    const { Mesas, fetchMesas, setMesas } = useMesas();
+    const { mesas, fetchMesas, setMesas } = useMesas();
     const [filternombre, setFilternombre] = useState('');
     const [iscreatePopupopen,setIscreatePopupopen] = useState(false);
 
@@ -126,7 +126,7 @@ const Admin_mesas = () => {
                                 </button>
                             </div>
                             <Table
-                                data={Mesas}
+                                data={mesas}
                                 columns={columns}
                                 filter={filternombre}
                                 dataToFilter="descripcion"
