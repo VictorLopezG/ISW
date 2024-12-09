@@ -1,29 +1,51 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Table from '../components/Table';
 import Search from '../components/Search';
 import Popupproducto from '../components/PopupProducto';
 import PopupNuevoProducto from '../components/PopupNuevoProducto';
-/*hooks */
+
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useEditmesas from '@hooks/mesas/useEditMesas.jsx';
 import useDeleteProducto from '../hooks/productos/useDeleteProducto';
-/*Assets*/
+
 
 import check from '../assets/check.svg';
 import delete_icon from '../assets/deleteIcon.svg';
 import update_icon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-
-/*Cambiar la categoria a un dato definido*/ 
-/*Revisar bien las validaciones o mensajes que devuelven en crear producto y actualizar*/ 
+import { getMesas } from '@services/mesa.service.js';
 
 const Admin_mesas = () => {
+    const[Mesas, setMesas] = useState([]);
 
-    const { Mesas, fetchMesas, setMesas } = useMesas();
+    const fetchMesas = async () => {
+        try {
+            const response = await getMesas();
+            const formattedData = response.data.map(mesa => ({
+                id: mesa.id,
+                descripcion: mesa.descripcion,
+                capacidad: mesa.capacidad,
+                //createdAt: mesa.createdAt
+                
+            }));
+            console.log(formattedData);
+            setMesas(formattedData);
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMesas(); 
+    }, []);
+
+
+
+
     const [filternombre, setFilternombre] = useState('');
-    const [iscreatePopupopen,setIscreatePopupopen] = useState(false);
+    const [iscreatePopupopen, setIscreatePopupopen] = useState(false);
 
     const {
         handleClickUpdate,
@@ -34,7 +56,7 @@ const Admin_mesas = () => {
         setDataMesas
     } = useEditmesas(setMesas);
 
-    const handlecreateclick = () =>{
+    const handlecreateclick = () => {
         setIscreatePopupopen(true);
     }
 
@@ -114,7 +136,7 @@ const Admin_mesas = () => {
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
                                     onClick={handleClickUpdate} disabled={dataMesas.length === 0}
-                                >   
+                                >
                                     {dataMesas.length === 0 ? (
                                         <img src={UpdateIconDisable} alt="edit-disabled" />
                                     ) : (
@@ -138,7 +160,7 @@ const Admin_mesas = () => {
                 </div>
             </div>
             <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataMesas} action={handleUpdate} />
-            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchMesas}/>
+            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchMesas} />
         </main>
     );
 };

@@ -36,14 +36,7 @@ const useEditSolicitud = (fetchSolicitudes) => {
                 await fetchSolicitudes();
 
                 setDataSolicitud([]); // Limpia la selección
-
-
-
-                console.log("handleClickUpdate: ", handleClickUpdate);
-                console.log("handleUpdateStatuus: ", handleUpdateStatus);
-                console.log("dataSolicitud: ", dataSolicitud);
-                console.log("setDataSolicitud: ", setDataSolicitud);
-
+             
             } catch (error) {
                 console.error('Error al actualizar la solicitud:', error);
                 showErrorAlert('Cancelado', 'Ocurrió un error al actualizar la solicitud.');
