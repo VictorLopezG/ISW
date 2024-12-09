@@ -3,12 +3,84 @@ import Form from '@components/Form';
 import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
-import { createSolicitudes } from '../services/solicitud.service';
+import { createSolicitud, getSolicitudesByPedido } from '../services/solicitud.service';
+import useEditSolicitud from '../hooks/solicitud/useEditSolicitud';
+import { useState, useEffect, useCallback } from 'react';
+import Table from '../components/Table';
 
 const Pedidos = () => {
+    let id_Pedido = -1;
+    const { productos, fetchProductos, setProductos } = useProducto();
 
-    function filtrarCategoria(lista,categoria){
-        return Array.prototype.filter.call(lista,(producto) => producto.categoria.includes(categoria));
+    const [solicitudes, setSolicitudes] = useState([]);
+
+    const fetchSolicitudes = async () => {
+        try {
+            const response = await getSolicitudesByPedido(id_Pedido);
+            const formattedData = response.map(cocina => ({
+                id_Pedido: cocina.id_Pedido,
+                id_Producto: cocina.id_Producto,
+                producto: cocina.producto,
+                cantidad: cocina.cantidad,
+            }));
+            console.log(formattedData)
+            setSolicitudes(formattedData);
+        } catch (error) {
+            console.log("Error en fetchSolicitudes:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchSolicitudes(); // Cargar datos inicialmente
+    }, []);
+
+    const {
+        handleClickUpdate,
+        handleUpdate,
+        handleUpdateStatus,
+        DataSolicitud,
+        setDataSolicitud
+    } = useEditSolicitud(setSolicitudes, fetchSolicitudes);
+
+    //BUSCAR SOLICITUDES
+    const [filterId, setFilterId] = useState('');
+    const handleIdFilterChange = (e) => {
+        setFilterId(e.target.value);
+    };
+
+    const handleSelectionChange = useCallback((selectedSolcitud) => {
+        setDataSolicitud(selectedSolcitud);
+    }, [setDataSolicitud]);
+
+    const columns = [
+        { title: "Cantidad", field: "cantidad", width: 100, responsive: 1 },
+        { title: "producto", field: "id_Producto", width: 200, responsive: 0 },
+    ];
+
+
+    const handlecreateclick = async (data) => {
+        //console.log(data);
+        const { IDmesa, descripcion, id_Producto, cantidad } = data;
+        if (id_Pedido === -1) {
+            const pedido = { IDmesa, descripcion };
+            try {
+                const response = await createPedido(pedido);
+                if (response.status === 'Client error') {
+                    //console.log(response);
+                } else {
+                    //console.log(response.data.id);
+                    id_Pedido = response.data.id;
+                }
+            } catch (error) {
+                //console.log(error);
+            }
+        }
+        try {
+            const resp = await createSolicitud({ id_Pedido, id_Producto, cantidad, estado: 'pendiente' });
+            //console.log(resp);
+        } catch (error) {
+
+        }
     }
 
     const { mesas } = useMesas();
@@ -18,60 +90,24 @@ const Pedidos = () => {
         label: mesa.descripcion
     }));
 
-    const { productos} = useProducto();
-
     const opcionesP = productos.map(producto => ({
         value: producto.id,
         label: producto.nombre,
         categoria: producto.categoria,
-        valor:producto.valor,
-        stock:producto.stock,
+        valor: producto.valor,
+        stock: producto.stock,
     }));
 
-    const platosFondo = filtrarCategoria(opcionesP,'plato de fondo');
-    const postres= filtrarCategoria(opcionesP,"postre");
-    const bebestibles = filtrarCategoria(opcionesP,"bebestible");
-    const entradas = filtrarCategoria(opcionesP,"entrada");
-    const ensaladas = filtrarCategoria(opcionesP,"ensalada");
-    
-    let total=0;
-
-    const submitPedido = async (data) => {
-        const { IDmesa, descripcion, ...solicitudes} = data;
-        const pedido = { IDmesa, descripcion };
-        let id_Pedido;
-        try {
-            const response = await createPedido(pedido);
-            if (response.status === 'Client error') {
-                console.log(response);
-            } else {
-                    console.log(response.data);
-                id_Pedido=response.data.id;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        const dataSolicitudes={id_Pedido,solicitudes};
-        try{
-            total= await createSolicitudes(dataSolicitudes);
-            console.log(total);
-        }catch(error){
-            console.log(error);
-        }
-        try{
-            const ped ={IDmesa,descripcion,total};
-            const response = await updatePedido(ped,id_Pedido);
-            if (response.status === 'Client error') {
-                console.log(response);
-            } 
-        }catch(error){
-            console.log(error);            
-        }
+    let total = 0;
+    let categoria = opcionesP;
+    const submitPedido = async () => {
+        const soli = await getSolicitudesByPedido(id_Pedido)
+        console.log(soli);
     };
 
     return (
         <div>
-            <main className="container h-auto">
+            <main className="container">
                 <Form
                     title="Crear un pedido"
                     fields={[
@@ -97,95 +133,40 @@ const Pedidos = () => {
 
                         },
                         {
-                            label: "Plato de fondo",
-                            name: "pF",
+                            label: 'Seleccionar producto',
                             fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options: platosFondo
+                            options: opcionesP,
+                            name: 'id_Producto'
                         },
                         {
                             label: "Cantidad",
-                            name: "c_pF",
+                            name: "cantidad",
+                            min: 1,
+                            placeholder: 1,
+                            fieldType: 'input',
                             type: "number",
-                            min:0,
-                            fieldType: "input",
-                            required: true
-                        },
-                        {
-                            label: "Entrada",
-                            name: "entrada",
-                            fieldType: 'select',
-                            type: "input",
                             required: true,
-                            options: entradas
-                        },
-                        {
-                            label: "Cantidad",
-                            name: "c_Ent",
-                            type: "number",
-                            fieldType: "input",
-                            required: true
-                        },
-                        {
-                            label: "Bebida",
-                            name: "bebida",
-                            fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options: bebestibles
-                        },
-                        {
-                            label: "Cantidad",
-                            name: "c_Beb",
-                            type: "number",
-                            min:0,
-                            fieldType: "input",
-                            required: true
-                        },
-                        {
-                            label: "Ensalada",
-                            name: "ensalada",
-                            fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options: ensaladas
-                        },
-                        {
-                            label: "Cantidad",
-                            name: "c_Ens",
-                            type: "number",
-                            min:0,
-                            fieldType: "input",
-                            required: true
-                        },
-                        {
-                            label: "Postre",
-                            name: "postre",
-                            fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options:postres
-                        },
-                        {
-                            label: "Cantidad",
-                            name: "c_Pos",
-                            type: "number",
-                            min:0,
-                            fieldType: "input",
-                            required: true
-                        },
-                        {   
-                            label: `Total $ ${total}`,
-                            name: "total",
+                            max: 10
                         }
                     ]}
-                    buttonText="Crear Pedido"
-                    onSubmit={submitPedido}
-                    
+                    buttonText="Agregar producto"
+                    onSubmit={handlecreateclick}
+                    altButton='Finalizar'
+                    buttonAction={submitPedido}
                 />
-             </main>
-            </div>
+                <div>
+                    <Table
+                        // Esto fuerza el re-render cuando `solicitudes` cambia
+                        data={solicitudes}
+                        columns={columns}
+                        filter={filterId}
+                        dataToFilter="id"
+                        initialSortName="id"
+                        onSelectionChange={handleSelectionChange}
+                    />
+                </div>
+            </main>
+        </div>
     );
 };
 

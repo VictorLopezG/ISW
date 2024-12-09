@@ -23,7 +23,6 @@ const useMesas = () => {
     useEffect(() => {
         fetchMesas();
     }, []);
-
     return { mesas, fetchMesas, setMesas };
 };
 

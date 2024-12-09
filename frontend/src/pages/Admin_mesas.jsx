@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Table from '../components/Table';
 import Search from '../components/Search';
-import Popupproducto from '../components/PopupProducto';
-import PopupNuevoProducto from '../components/PopupNuevoProducto';
 
+import PopupMesa from '../components/PopupMesa.jsx';
+import PopupNuevaMesa from '../components/PopupNuevaMesa';
+/*hooks */
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useEditmesas from '@hooks/mesas/useEditMesas.jsx';
-import useDeleteProducto from '../hooks/productos/useDeleteProducto';
+import useDeletemesa from '../hooks/mesas/useDeleteMesa.jsx';
+/*Assets*/
 
 
 import check from '../assets/check.svg';
@@ -44,6 +46,9 @@ const Admin_mesas = () => {
 
 
 
+
+    const { mesas, fetchMesas, setMesas } = useMesas();
+
     const [filternombre, setFilternombre] = useState('');
     const [iscreatePopupopen, setIscreatePopupopen] = useState(false);
 
@@ -64,7 +69,7 @@ const Admin_mesas = () => {
 
         handleDelete
 
-    } = useDeleteProducto(fetchMesas, setDataMesas);
+    } = useDeletemesa(fetchMesas, setDataMesas);
 
     const handleIdFilterChange = (e) => {
         setFilternombre(e.target.value);
@@ -115,7 +120,7 @@ const Admin_mesas = () => {
                                     onClick={handlecreateclick}
                                 >
                                     <img src={check} alt="add" />
-                                    <span>Agregar Producto</span>
+                                    <span>Agregar Mesa</span>
                                 </button>
 
                                 {/*Boton para agregar eliminar prodcutos */}
@@ -129,7 +134,7 @@ const Admin_mesas = () => {
                                         <img src={delete_icon} alt="edit" />
                                     )}
 
-                                    <span>Eliminar Producto</span>
+                                    <span>Eliminar Mesa</span>
                                 </button>
 
                                 {/*boton para actualizar un producto*/}
@@ -144,11 +149,11 @@ const Admin_mesas = () => {
                                     )}
 
 
-                                    <span>Actualizar Producto</span>
+                                    <span>Actualizar Mesa</span>
                                 </button>
                             </div>
                             <Table
-                                data={Mesas}
+                                data={mesas}
                                 columns={columns}
                                 filter={filternombre}
                                 dataToFilter="descripcion"
@@ -159,8 +164,10 @@ const Admin_mesas = () => {
                     </div>
                 </div>
             </div>
-            <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataMesas} action={handleUpdate} />
-            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchMesas} />
+
+            <PopupMesa show={isPopupOpen} setShow={setIsPopupOpen} data={dataMesas} action={handleUpdate} />
+            <PopupNuevaMesa  show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchMesas}/>
+
         </main>
     );
 };

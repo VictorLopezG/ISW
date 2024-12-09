@@ -119,8 +119,6 @@ const Cocineria = () => {
                             >
                                 <img src={DeleteIcon} alt="delete" />
                             </button>
-
-
                         </div>
                     </div>
                     <Table
