@@ -8,6 +8,7 @@ import {
   getSolicitud,
   getSolicitudes,
   updateSolicitud,
+  getSolicitudesByPedido
 } from "../controllers/solicitud.controller.js";
 
 const router = Router();
@@ -17,7 +18,8 @@ router.use(authenticateJwt)
 
 router
   .get("/all",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitudes)          //listo
-  .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitud)           //listo
+  .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitud)
+  .get("/",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), getSolicitudesByPedido)           //listo
   .patch("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"), updateSolicitud)        //listo
   .delete("/:id",authorizeRoles("administrador", "mesero","cajero","cocinero"), deleteSolicitud)     //listo
   .post("/create",authorizeRoles("administrador", "mesero","cajero","cocinero"),createSolicitud);  //listo

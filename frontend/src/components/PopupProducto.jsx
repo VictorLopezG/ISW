@@ -1,7 +1,6 @@
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
-import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 
 export default function PopupProducto({ show, setShow, data, action }) {
     const productData = data && data.length > 0 ? data[0] : {};
