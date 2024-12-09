@@ -22,7 +22,7 @@ export async function getconsumo(id_pedido){
 
     } catch (error) {
         console.log("Error en cocinaConsulta.service.js");
-        console.log(error);
+      
         return error.response.data;
 
     }

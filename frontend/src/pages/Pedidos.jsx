@@ -8,7 +8,6 @@ import Table from '../components/Table';
 import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
 var id_Pedido = -1;
 let total=0;
-let soli;
 const Pedidos = () => {
     
     const { productos, fetchProductos, setProductos } = useProducto();
@@ -21,6 +20,7 @@ const Pedidos = () => {
             const response = await getSolicitudesByPedido(id_Pedido);
             //console.log(response);
             const formattedData = response.data.map(solicitudes => ({
+
                 id_Pedido: solicitudes.id_Pedido,
                 id_Producto: solicitudes.id_Producto,
                 cantidad: solicitudes.cantidad,
@@ -62,7 +62,7 @@ const Pedidos = () => {
 
 
     const handlecreateclick = async (data) => {
-        //console.log(data);
+        console.log(data);
         const { IDmesa, descripcion, id_Producto, cantidad } = data;
         if (id_Pedido === -1) {
             const pedido = { IDmesa, descripcion };
@@ -101,7 +101,6 @@ const Pedidos = () => {
         valor: producto.valor,
         stock: producto.stock,
     }));
-
     
     function filtrarDisponibles(lista) {
         return Array.prototype.filter.call(lista, (producto) => producto.stock>0);

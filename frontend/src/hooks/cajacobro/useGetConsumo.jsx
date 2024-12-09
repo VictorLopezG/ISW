@@ -3,7 +3,6 @@ import { getconsumo } from "@services/cocinaConsulta.service.js";
 
 const useGetConsumo = (id_Pedido) => {
     const [consumo, setConsumo] = useState([]);
-
     const fetchConsumo = async () => {
         try {
             const response = await getconsumo(id_Pedido);
@@ -25,7 +24,5 @@ const useGetConsumo = (id_Pedido) => {
         fetchConsumo,
         setConsumo
     };
-
-
 }
 export default useGetConsumo;
