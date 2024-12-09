@@ -7,9 +7,9 @@ import { createSolicitud, getSolicitudesByPedido } from '../services/solicitud.s
 import useEditSolicitud from '../hooks/solicitud/useEditSolicitud';
 import { useState, useEffect, useCallback } from 'react';
 import Table from '../components/Table';
-
+var id_Pedido = -1;
 const Pedidos = () => {
-    let id_Pedido = -1;
+    
     const { productos, fetchProductos, setProductos } = useProducto();
 
     const [solicitudes, setSolicitudes] = useState([]);
@@ -81,6 +81,7 @@ const Pedidos = () => {
         } catch (error) {
 
         }
+        await fetchProductos();
     }
 
     const { mesas } = useMesas();
@@ -101,8 +102,10 @@ const Pedidos = () => {
     let total = 0;
     let categoria = opcionesP;
     const submitPedido = async () => {
-        const soli = await getSolicitudesByPedido(id_Pedido)
+        console.log(id_Pedido);
+        const soli = await getSolicitudesByPedido(id_Pedido);
         console.log(soli);
+        await fetchProductos();
     };
 
     return (
