@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Table from "../components/Table";
 import Search from '../components/Search';
 import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
 
+import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
+
 import PopupConsumo from '../components/PopupConsumo';
 
 import update_icon from '../assets/ViewIcon.svg';
+import { use } from 'react';
 
 const CajaCobro = () => {
   // Filtrar ID
@@ -35,15 +38,38 @@ const CajaCobro = () => {
     { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
     { title: "Total", field: "total", width: 200, responsive: 1 },
   ];
-/*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-const columnsconsumo = [
-  { title: "ID", field: "id", width: 100, responsive: 3 },
-  { title: "Estado", field: "estado", width: 100, responsive: 2 },
-  { title: "MesaID", field: "mesaID", width: 100, responsive: 0 },
-  { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
-  { title: "Total", field: "total", width: 200, responsive: 1 },
-];
+  const [pedido, setDataPedido] = useState();
+
+  const handleselectionChange = useCallback((selectedPedido) => {
+    // console.log("Pedido seleccionado:", selectedPedido);}
+    
+    setDataPedido(selectedPedido[0].id);
+   
+  }, [setDataPedido]);
+
+  /*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+  const {
+    consumo, fetchConsumo } = useGetConsumo(32);
+
+  useEffect(() => {
+    if (pedido?.id) {
+      console.log(pedido.id)
+      fetchConsumo(); 
+    }
+  }, [pedido, fetchConsumo]);
+    
+
+
+
+
+
+  const columnsconsumo = [
+    { title: "producto", field: "producto", width: 100, responsive: 3 },
+    { title: "cantidad", field: "cantidad", width: 100, responsive: 2 },
+
+  ];
 
 
   return (
@@ -70,8 +96,10 @@ const columnsconsumo = [
             dataToFilter="id"
             initialSortName="id"
             onSelectionChange={(data) => {
-              console.log(data);
-            }}
+              // console.log(data);
+              handleselectionChange(data);
+            }
+            }
           />
         </div>
 
@@ -81,7 +109,18 @@ const columnsconsumo = [
             <div className="bg-white p-8 rounded-lg shadow-lg w-1/3">
               <h2 className="text-xl font-bold mb-4">Descripción</h2>
               <p>Super descripcion, hola jp </p>
-      
+
+              <Table
+                data={consumo}
+                columns={columnsconsumo}
+                filter={filterId}
+                dataToFilter="id"
+                initialSortName="id"
+                // onSelectionChange={(data) => {
+                //   console.log(data);
+                // }}
+              />
+
 
               <button
                 className="mt-4 px-4 py-2 bg-red-600 text-white rounded"
