@@ -5,8 +5,8 @@ import Search from '../components/Search';
 import Popupproducto from '../components/PopupProducto';
 import PopupNuevoProducto from '../components/PopupNuevoProducto';
 /*hooks */
-import useEditProducto from '@hooks/productos/useEditProducto.jsx';
-import useProducto from '@hooks/productos/useGetProductos.jsx';
+import useMesas from '@hooks/mesas/useGetMesas.jsx';
+import useEditmesas from '@hooks/mesas/useEditMesas.jsx';
 import useDeleteProducto from '../hooks/productos/useDeleteProducto';
 /*Assets*/
 
@@ -19,22 +19,20 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 /*Cambiar la categoria a un dato definido*/ 
 /*Revisar bien las validaciones o mensajes que devuelven en crear producto y actualizar*/ 
 
-const Admin_local = () => {
+const Admin_mesas = () => {
 
-    const { productos, fetchProductos, setProductos } = useProducto();
+    const { Mesas, fetchMesas, setMesas } = useMesas();
     const [filternombre, setFilternombre] = useState('');
     const [iscreatePopupopen,setIscreatePopupopen] = useState(false);
-
-    
 
     const {
         handleClickUpdate,
         handleUpdate,
         isPopupOpen,
         setIsPopupOpen,
-        dataProducto,
-        setDataProducto
-    } = useEditProducto(setProductos);
+        dataMesas,
+        setDataMesas
+    } = useEditmesas(setMesas);
 
     const handlecreateclick = () =>{
         setIscreatePopupopen(true);
@@ -44,22 +42,21 @@ const Admin_local = () => {
 
         handleDelete
 
-    } = useDeleteProducto(fetchProductos, setDataProducto);
+    } = useDeleteProducto(fetchMesas, setDataMesas);
 
     const handleIdFilterChange = (e) => {
         setFilternombre(e.target.value);
     };
 
-    const handleSelectionChange = useCallback((selectedProductos) => {
-        setDataProducto(selectedProductos);
-    }, [setDataProducto]);
+    const handleSelectionChange = useCallback((selectedMesas) => {
+        setDataMesas(selectedMesas);
+    }, [setDataMesas]);
 
     const columns = [
         { title: "ID", field: "id", width: 100, responsive: 0 },
-        { title: "Nombre", field: "nombre", width: 200, responsive: 0 },
-        { title: "Valor", field: "valor", width: 120, responsive: 0 },
-        { title: "Stock", field: "stock", width: 120, responsive: 0 },
-        { title: "Categoria", field: "categoria", width: 200, responsive: 0 }
+        { title: "Descripcion", field: "descripcion", width: 200, responsive: 0 },
+        { title: "Capacidad", field: "capacidad", width: 120, responsive: 0 },
+
     ];
 
     return (
@@ -67,7 +64,7 @@ const Admin_local = () => {
             <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#212121] flex flex-col items-center p-10">
                 <div className="bg-[#eef7ff] p-10 rounded-3xl flex flex-col items-center space-y-4 mb-10">
                     <h1 className="text-5xl font-bold text-[#212121]">
-                        Administracion de Productos
+                        Administracion de Mesas
                     </h1>
                     <h2 className="text-2xl font-light text-[#212121]">
                         Elija una opcion
@@ -80,7 +77,7 @@ const Admin_local = () => {
 
                         <div className="flex flex-col items-end justify-between ">
                             <div className="flex space-x-4 items-center">
-                                <Search value={filternombre} onChange={handleIdFilterChange} placeholder={"Filtrar por Nombre"} />
+                                <Search value={filternombre} onChange={handleIdFilterChange} placeholder={"Filtrar por Descripcion"} />
 
                             </div>
                         </div>
@@ -102,9 +99,9 @@ const Admin_local = () => {
                                 {/*Boton para agregar eliminar prodcutos */}
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
-                                    onClick={() => handleDelete(dataProducto)} disabled={dataProducto.length === 0}
+                                    onClick={() => handleDelete(dataMesas)} disabled={dataMesas.length === 0}
                                 >
-                                    {dataProducto.length === 0 ? (
+                                    {dataMesas.length === 0 ? (
                                         <img src={DeleteIconDisable} alt="edit-disabled" />
                                     ) : (
                                         <img src={delete_icon} alt="edit" />
@@ -116,9 +113,9 @@ const Admin_local = () => {
                                 {/*boton para actualizar un producto*/}
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
-                                    onClick={handleClickUpdate} disabled={dataProducto.length === 0}
+                                    onClick={handleClickUpdate} disabled={dataMesas.length === 0}
                                 >   
-                                    {dataProducto.length === 0 ? (
+                                    {dataMesas.length === 0 ? (
                                         <img src={UpdateIconDisable} alt="edit-disabled" />
                                     ) : (
                                         <img src={update_icon} alt="edit" />
@@ -127,41 +124,23 @@ const Admin_local = () => {
 
                                     <span>Actualizar Producto</span>
                                 </button>
-
-                                {/*Boton para agregar el menu basicamente quedar disponible y actualizar los precios*/}
-
-                                {/*boton para generar informes*/}
-
-                                <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
-                                    onClick={handleClickUpdate} disabled={dataProducto.length === 0}
-                                >
-                                    {dataProducto.length === 0 ? (
-                                        <img src={UpdateIconDisable} alt="edit-disabled" />
-                                    ) : (
-                                        <img src={update_icon} alt="edit" />
-                                    )}
-
-                                    <span>Generar Informe</span>
-                                </button>
-
                             </div>
                             <Table
-                                data={productos}
+                                data={Mesas}
                                 columns={columns}
                                 filter={filternombre}
-                                dataToFilter="nombre"
+                                dataToFilter="descripcion"
                                 initialSortName="id"
                                 onSelectionChange={handleSelectionChange}
                             />
-
                         </div>
                     </div>
                 </div>
             </div>
-            <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataProducto} action={handleUpdate} />
-            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchProductos}/>
+            <Popupproducto show={isPopupOpen} setShow={setIsPopupOpen} data={dataMesas} action={handleUpdate} />
+            <PopupNuevoProducto show={iscreatePopupopen} setShow={setIscreatePopupopen} action={fetchMesas}/>
         </main>
     );
 };
 
-export default Admin_local;
+export default Admin_mesas;

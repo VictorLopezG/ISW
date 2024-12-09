@@ -75,7 +75,8 @@ export async function updateSolicitud(data) {
 
 
 export async function deleteSolicitud(data) {
-    const {id_Pedido,id_Producto}=data;
+    console.log("dataSolicitud en services",data);
+    const {id_Pedido,id_Producto}=data[0];
     try {
         const response = await axios.delete(
             `/sol/:id?&id_Pedido=${id_Pedido}&id_Producto=${id_Producto}`);

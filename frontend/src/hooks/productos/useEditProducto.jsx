@@ -21,7 +21,6 @@ const useEditProducto = (setProductos) => {
             showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
             setIsPopupOpen(false);
             setProductos(prevProductos => prevProductos.map(producto =>{
-                console.log("Producto actual:",producto);
                 if(producto.id === updateProduc.id){
                     console.log("Reemplazando con:",updateProduc);
                 }
