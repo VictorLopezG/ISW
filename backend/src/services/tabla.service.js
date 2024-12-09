@@ -75,7 +75,7 @@ export const getconsumoService = async (id_pedido) => {
     JOIN mesas m ON p."mesaID" = m.id
     JOIN solicitudes s ON s."id_Pedido" = p.id
     JOIN productos pr ON s."id_Producto" = pr.id
-    WHERE s."id_Pedido" = 33;
+    WHERE s."id_Pedido" = ${id_pedido};
     `;
 
     try {

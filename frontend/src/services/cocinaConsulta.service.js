@@ -15,14 +15,14 @@ export async function getSolicitudes() {
     }
 }
 
-export async function getconsumo(id_pedido  ){
+export async function getconsumo(id_pedido){
     try {
         const response = await axios.get(`/tabla/consumo/${id_pedido}`);
         return response.data;
 
     } catch (error) {
         console.log("Error en cocinaConsulta.service.js");
-        console.log(error);
+      
         return error.response.data;
 
     }
