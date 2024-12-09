@@ -20,31 +20,6 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { getMesas } from '@services/mesa.service.js';
 
 const Admin_mesas = () => {
-    const[Mesas, setMesas] = useState([]);
-
-    const fetchMesas = async () => {
-        try {
-            const response = await getMesas();
-            const formattedData = response.data.map(mesa => ({
-                id: mesa.id,
-                descripcion: mesa.descripcion,
-                capacidad: mesa.capacidad,
-                //createdAt: mesa.createdAt
-                
-            }));
-            console.log(formattedData);
-            setMesas(formattedData);
-        } catch (error) {
-            console.error("Error: ", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchMesas(); 
-    }, []);
-
-
-
 
 
     const { mesas, fetchMesas, setMesas } = useMesas();
