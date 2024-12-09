@@ -1,9 +1,8 @@
 "use strict";
 import {
     deleteSolicitudService,
-
+    getSolicitudesByPedidoService,
     getSolicitudesService,
-
     updateSolicitudService,
     createSolicitudService,
     getSolicitudService,
@@ -43,7 +42,22 @@ export async function getSolicitud(req, res) {
     }
 }
 
+export async function getSolicitudesByPedido(req ,res){
+    console.log('hola')
+    try {
+        const { id_Pedido} = req.query; 
+        const [solicitudesData,error ]= await getSolicitudesByPedidoService({id_Pedido});
+        console.log("Solicitud encontrada:", solicitudesData);
+        if (!solicitudesData) {
+            return handleErrorClient(res, 404, "Solicitud no encontrada o no existe");
+        }
 
+        handleSuccess(res, 200, "Solicitud encontrada", solicitudesData);
+    } catch (error) {
+        console.error("Error al obtener la solicitud:", error);
+        handleErrorServer(res, 500, "Error interno del servidor");
+    }
+}
 
 export async function getSolicitudes(req, res) {
     try {
@@ -67,12 +81,6 @@ export async function updateSolicitud(req, res) {
     try {
         const { id_Pedido, id_Producto } = req.query;
         const { cantidad,estado } = req.body;
-
-        console.log("id_Pedido bk",id_Pedido);
-        console.log("id_Producto",id_Producto);
-        console.log("cantidad",cantidad);
-        console.log("estado",estado);
-
         const { body } = req;
         
         const { error: queryError } = solicitudQueryValidation.validate({

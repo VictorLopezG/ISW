@@ -3,13 +3,11 @@ import { convertirMinusculas } from '@helpers/formatData.js';
 
 export async function crearMesa(datamesa) {
     try {
-        const estado=convertirMinusculas(estado);
-        const descripcion=convertirMinusculas(descripcion);
+        const dataRegister = convertirMinusculas(datamesa);
+        const { descripcion , capacidad} = dataRegister;
         const response = await axios.post('/mesa/createM', {
-            numero: datamesa.numero,
-            capacidad: datamesa.capacidad,
-            estado: datamesa.estado,
-            descripcion: datamesa.descripcion
+            descripcion: descripcion,
+            capacidad: capacidad,
         })
         return response.data;
     }
@@ -29,7 +27,7 @@ export async function getMesas() {
 
 export async function updateMesa(data, id) {
     try {
-        const response = await axios.put(`/mesa/:id/?id=${id}`, data);
+        const response = await axios.put(`/mesa/${id}`, data);
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -40,7 +38,7 @@ export async function updateMesa(data, id) {
 
 export async function deleteMesa(id) {
     try {
-        const response = await axios.delete(`/mesa/:id/?id=${id}`);
+        const response = await axios.delete(`/mesa/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;
