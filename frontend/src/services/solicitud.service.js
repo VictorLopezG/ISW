@@ -21,7 +21,7 @@ export async function getSolicitudesByPedido(id_Pedido){
     try {
         const response = await axios.get(
             `/sol/?&id_Pedido=${id_Pedido}`);
-        console.log(response);
+        //console.log(response);
         return response.data;
     } catch (error) {
         return error.response.data;

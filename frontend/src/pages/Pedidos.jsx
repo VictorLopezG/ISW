@@ -8,6 +8,7 @@ import useEditSolicitud from '../hooks/solicitud/useEditSolicitud';
 import { useState, useEffect, useCallback } from 'react';
 import Table from '../components/Table';
 var id_Pedido = -1;
+let total=0;
 const Pedidos = () => {
     
     const { productos, fetchProductos, setProductos } = useProducto();
@@ -17,13 +18,13 @@ const Pedidos = () => {
     const fetchSolicitudes = async () => {
         try {
             const response = await getSolicitudesByPedido(id_Pedido);
-            const formattedData = response.map(cocina => ({
-                id_Pedido: cocina.id_Pedido,
-                id_Producto: cocina.id_Producto,
-                producto: cocina.producto,
-                cantidad: cocina.cantidad,
+            //console.log(response);
+            const formattedData = response.map(solicitudes => ({
+                id_Pedido: solicitudes.id_Pedido,
+                id_Producto: solicitudes.id_Producto,
+                cantidad: solicitudes.cantidad,
             }));
-            console.log(formattedData)
+            //console.log(formattedData);
             setSolicitudes(formattedData);
         } catch (error) {
             console.log("Error en fetchSolicitudes:", error);
@@ -59,7 +60,7 @@ const Pedidos = () => {
 
 
     const handlecreateclick = async (data) => {
-        //console.log(data);
+        console.log(data);
         const { IDmesa, descripcion, id_Producto, cantidad } = data;
         if (id_Pedido === -1) {
             const pedido = { IDmesa, descripcion };
@@ -99,10 +100,8 @@ const Pedidos = () => {
         stock: producto.stock,
     }));
 
-    let total = 0;
-    let categoria = opcionesP;
     const submitPedido = async () => {
-        console.log(id_Pedido);
+        //console.log(id_Pedido);
         const soli = await getSolicitudesByPedido(id_Pedido);
         console.log(soli);
         await fetchProductos();
@@ -123,19 +122,6 @@ const Pedidos = () => {
                             options: opcionesM,
                         },
                         {
-                            label: "Descripcion",
-                            name: "descripcion",
-                            placeholder: "Inserte descripcion del pedido",
-                            fieldType: 'input',
-                            type: "string",
-                            required: true,
-                            minLength: 0,
-                            maxLength: 255,
-                            pattern: /^[a-zA-Z0-9 ]+$/,
-                            patternMessage: "Debe contener solo letras y números",
-
-                        },
-                        {
                             label: 'Seleccionar producto',
                             fieldType: 'select',
                             options: opcionesP,
@@ -150,7 +136,20 @@ const Pedidos = () => {
                             type: "number",
                             required: true,
                             max: 10
-                        }
+                        },
+                        {
+                            label: "Descripcion",
+                            name: "descripcion",
+                            placeholder: "Inserte descripcion del pedido",
+                            fieldType: 'textarea',
+                            type: "string",
+                            required: false,
+                            minLength: 0,
+                            maxLength: 255,
+                            pattern: /^[a-zA-Z0-9 ]+$/,
+                            patternMessage: "Debe contener solo letras y números",
+
+                        },
                     ]}
                     buttonText="Agregar producto"
                     onSubmit={handlecreateclick}
@@ -167,6 +166,7 @@ const Pedidos = () => {
                         initialSortName="id"
                         onSelectionChange={handleSelectionChange}
                     />
+                    <h1>    Total: ${total} </h1>
                 </div>
             </main>
         </div>

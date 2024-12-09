@@ -104,15 +104,12 @@ export async function deletePedido(req, res) {
 
 export async function createPedido(req, res) {
     try {
-
         const { body } = req;
     
-
         const { error } = pedidoBodyValidation.validate(body);
         
-        
-        if (error)
-            return handleErrorClient(res, 400, "Error de validación", error.message);
+        if (error)            
+        return handleErrorClient(res, 400, "Error de validación", error.message);    
 
         const [newPedido, errorNewpedido] = await createPedidoService(body);
 
@@ -129,11 +126,9 @@ export async function getPedidosCocina(req, res) {
     try {
         const { body } = req;
         
-        
     } catch (error) {
         handleErrorServer(res, 500, error.message);
-        console.log(error)
-        
+        console.log(error)   
     }
 
 

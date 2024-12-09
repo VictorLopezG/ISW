@@ -27,7 +27,7 @@ const PedidoSchema = new EntitySchema({
         descripcion: {
             type: "varchar",
             length: 255,
-            nullable: false,
+            nullable: true,
         },
         total: {
             
@@ -37,7 +37,7 @@ const PedidoSchema = new EntitySchema({
         estado: {
             type: "varchar",
             length: 50,
-            nullable: true,
+            nullable: false,
         },
         createdAt: {
             type: "timestamp with time zone",

@@ -39,10 +39,9 @@ export const pedidoQueryValidation = Joi.object({
 
 export const pedidoBodyValidation = Joi.object({
     descripcion: Joi.string()
-        .min(1)
+        .min(0)
         .max(50)
         .messages({
-            "string.empty": "La descripcion no puede estar vacía.",
             "string.base": "La descripcion debe ser de tipo string.",
             "string.min": "La descripcion debe tener como mínimo 1 caracterer.",
             "string.max": "La descripcion debe tener como máximo 50 caracteres.",

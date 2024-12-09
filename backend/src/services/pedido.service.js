@@ -117,14 +117,11 @@ export async function deletePedidoService(query) {
     }
 }
 
-export async function createPedidoService(pedido) {
-    
+export async function createPedidoService(pedido) { 
     try {
       const pedidoRepository = AppDataSource.getRepository(Pedido);
       const estado="pendiente";
-    
       const { mesaID, total, descripcion } = pedido;
-  
       const newPedido = pedidoRepository.create({
         mesaID, total, descripcion, estado
       });
