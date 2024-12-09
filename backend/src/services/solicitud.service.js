@@ -6,7 +6,6 @@ export async function getSolicitudService(query) {
     try {
 
         const { id_Pedido,id_Producto } = query;
-        console.log(id_Pedido,id_Producto);
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({
@@ -22,6 +21,27 @@ export async function getSolicitudService(query) {
 
     } catch (error) {
         console.error("Error obtener la solicitud:", error);
+        return [null, "Error interno del servidor"];
+    }
+}
+
+export async function getSolicitudesByPedidoService(query) {
+    try {
+        const { id_Pedido} = query;
+        const solicitudRepository = AppDataSource.getRepository(Solicitud);
+        const solicitudes = await solicitudRepository.find({
+            where: {id_Pedido:id_Pedido} 
+        });
+        console.log("solicitudFound", solicitudes);
+
+        if (!solicitudes || solicitudes.length === 0) return [null, "No hay solicitudes"];
+
+        const solicitudesData = solicitudes.map(({...solicitud }) => solicitud);
+
+        return [solicitudesData, null];
+
+    } catch (error) {
+        console.error("Error obtener las solicitudes:", error);
         return [null, "Error interno del servidor"];
     }
 }
@@ -46,11 +66,7 @@ export async function getSolicitudesService() {
 export async function updateSolicitudService(query, body) {
     try {
         const { id_Pedido, id_Producto, cantidad, estado } = query;
-
-        console.log("id_Pedido bk:::", body);
-
         
-
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
 
         const solicitudFound = await solicitudRepository.findOne({

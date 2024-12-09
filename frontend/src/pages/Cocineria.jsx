@@ -125,7 +125,7 @@ const Cocineria = () => {
 
   return (
     <main>
-        <div className="h-full w-full bg-[#FFC107] flex flex-col  justify-center items-center p-20">
+        <div className="container"> 
             
 
             <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-6">

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { updateProducto } from '@services/producto.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdateproducto } from '@helpers/formatData';
 
 
 const useEditProducto = (setProductos) => {
