@@ -1,30 +1,26 @@
 import { useState } from "react";
-import { getPedidos } from "@services/pedido.service.js";
+import { getconsumo } from "@services/cocinaConsulta.service.js";
 
 const useGetConsumo = (id_Pedido) => {
     const [consumo, setConsumo] = useState([]);
-    const { ispopupOpen, setIsPopupOpen } = useState(false);
-
-    const handleClickDescripcion = () => {
-        if (consumo.length > 0) {
-            setIsPopupOpen(true);
-        }
-    };
-
 
     const fetchConsumo = async () => {
         try {
-            const response = await getPedidos(id_Pedido);
-            setIsPopupOpen(true);
-            setConsumo(response.data);
+            const response = await getconsumo(id_Pedido);
+            console.log(response.data);
+            const datos=response.map(solicitudes=>({
+                id_Pedido: solicitudes.id_Pedido,
+                id_Producto: solicitudes.id_Producto,
+                cantidad: solicitudes.cantidad,
+                nombre: solicitudes.producto
+            }))
+            setConsumo(datos);
         } catch (error) {
             console.error("Error: ", error);
         }
     };
 
     return {
-        handleClickDescripcion,
-        ispopupOpen,
         consumo,
         fetchConsumo,
         setConsumo
@@ -32,3 +28,4 @@ const useGetConsumo = (id_Pedido) => {
 
 
 }
+export default useGetConsumo;
