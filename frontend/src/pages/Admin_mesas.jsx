@@ -20,8 +20,6 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { getMesas } from '@services/mesa.service.js';
 
 const Admin_mesas = () => {
-
-
     const { mesas, fetchMesas, setMesas } = useMesas();
 
     const [filternombre, setFilternombre] = useState('');
