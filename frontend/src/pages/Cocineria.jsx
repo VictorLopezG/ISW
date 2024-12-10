@@ -83,8 +83,8 @@ const Cocineria = () => {
 
 
     const columns = [
-        { title: "ID pedido", field: "id_Pedido", width: 100, responsive: 0 },
-        { title: "ID Producto", field: "id_Producto", width: 100, responsive: 0 },
+      
+  
         { title: "Cantidad", field: "cantidad", width: 100, responsive: 1 },
 
 
@@ -93,22 +93,22 @@ const Cocineria = () => {
         { title: "Descripción", field: "descripcion", width: 250, responsive: 1 },
 
         { title: "Mesa", field: "mesa", width: 100, responsive: 2 },
-        { title: "Creado", field: "fechacreacion", width: 100, responsive: 3 },
+
 
     ];
 
 
     return (
         <main>
-            <div className="h-full w-full bg-[#FFC107] flex flex-col  justify-center items-center p-20">
+            <div className="h-screen w-full bg-[#efefef] flex flex-col  justify-center items-center p-20">
 
 
-                <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-6">
+                <div className="w-full max-w-5xl bg-[#ffffff] p-8 rounded-xl shadow-lg space-y-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-bold text-[#212121]">Preparación</h1>
                         <div className="flex space-x-4 items-center">
                             <Search value={filterId} onChange={handleIdFilterChange} placeholder="Filtrar por ID" />
-                            <button onClick={handleUpdateStatus} className="focus:outline-none bg-[#FFC107] px-10 py-2 rounded-lg">
+                            <button onClick={handleUpdateStatus} className="focus:outline-none bg-[#ffcc33] px-10 py-2 rounded-lg">
                                 <img src={gorritoChef} alt="edit" />
 
 

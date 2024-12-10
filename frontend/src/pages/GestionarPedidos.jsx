@@ -27,7 +27,7 @@ const Cocineria = () => {
     handleUpdateStatus,
     dataPedido,
     setDataPedido
-  } = useEditPedido(setPedidos);
+  } = useEditPedido(setPedidos,"listo");
 
 
 

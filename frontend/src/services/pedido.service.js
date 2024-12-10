@@ -24,6 +24,17 @@ export async function getPedidos() {
     }
 }
 
+export async function getPedido(id) {
+    try {
+        const { data } = await axios.get(`/ped/${id}`);
+        return data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+
+
 export async function updatePedido(data, id) {
     try {
         const { descripcion,IDmesa,total,estado }=data;
