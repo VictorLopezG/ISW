@@ -100,7 +100,7 @@ const Cocineria = () => {
 
     return (
         <main>
-            <div className="h-full w-full bg-[#efefef] flex flex-col  justify-center items-center p-20">
+            <div className="h-screen w-full bg-[#efefef] flex flex-col  justify-center items-center p-20">
 
 
                 <div className="w-full max-w-5xl bg-[#ffffff] p-8 rounded-xl shadow-lg space-y-6">
