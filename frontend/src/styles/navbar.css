@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center; /* Centro horizontal */
     align-items: center; /* Centro vertical */
-    background: linear-gradient(90deg,  #212121,#101010); /* Gradiente lineal */
+    background: #FFDDA1; 
     padding: 10px 20px;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -26,7 +26,7 @@
 }
 
 .navbar ul li a {
-    color: #FFEBEE; /* Lavender blush */
+    color: #212121; /* Lavender blush */
     font-size: 1em;
     text-decoration: none;
     padding: 8px 15px;
@@ -36,8 +36,8 @@
 
 .navbar ul li a:hover,
 .navbar ul li a.active {
-    background-color: #ffd107; /* Giants orange */
-    color: #212121; /* Muy oscuro */
+    background-color: #212121; /* Giants orange */
+    color: #DBAB25; /* Muy oscuro */
 }
 
 .hamburger {

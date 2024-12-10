@@ -56,8 +56,9 @@ const Pedidos = () => {
     */
    
     const columns = [
-        { title: "Cantidad", field: "cantidad", width: 100, responsive: 0 },
-        { title: "producto", field: "nombre", width: 200, responsive: 0 },
+        { title: "producto", field: "nombre", width: 300, responsive: 0 },
+        { title: "Cantidad", field: "cantidad", width: 228, responsive:0  },
+        
     ];
 
 
@@ -116,7 +117,7 @@ const Pedidos = () => {
 
     return (
         <div>
-            <main className="container">
+            <main className="container space-x-8">
                 <Form
                     title="Crear un pedido"
                     fields={[
@@ -163,9 +164,9 @@ const Pedidos = () => {
                     altButton='Finalizar'
                     buttonAction={submitPedido}
                 />
-                <div>
+                <div   className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto overflow-auto">
                     <h2>Pedido</h2>
-                    <Table
+                    <Table 
                         // Esto fuerza el re-render cuando `solicitudes` cambia
                         data={consumo}
                         columns={columns}
