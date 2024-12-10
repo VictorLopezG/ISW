@@ -27,7 +27,7 @@
 }
 
 .navbar ul li a {
-    color: #212121; /* Lavender blush */
+    color: #212121; 
     font-size: 1em;
     text-decoration: none;
     padding: 8px 15px;
@@ -37,8 +37,8 @@
 
 .navbar ul li a:hover,
 .navbar ul li a.active {
-    background-color: #212121; /* Giants orange */
-    color: #DBAB25; /* Muy oscuro */
+    background-color: #212121; 
+    color: #DBAB25; 
 }
 
 .hamburger {
@@ -50,7 +50,7 @@
 .hamburger .bar {
     width: 25px;
     height: 3px;
-    background-color: #FFEBEE; /* Lavender blush */
+    background-color: #FFEBEE; 
     margin: 4px 0;
     transition: all 0.3s ease;
 }
@@ -58,7 +58,7 @@
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        align-items: center; /* Centro vertical */
+        align-items: center; 
     }
 
     .hamburger {
@@ -78,7 +78,7 @@
     .navbar ul {
         flex-direction: column;
         width: 100%;
-        background-color: #795548; /* Parte del gradiente */
+        background-color: #795548; 
         padding: 10px 0;
     }
 
