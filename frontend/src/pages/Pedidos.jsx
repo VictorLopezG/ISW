@@ -13,51 +13,10 @@ const Pedidos = () => {
     const { productos, fetchProductos, setProductos } = useProducto();
     const {consumo,fetchConsumo,setConsumo}=useGetConsumo(id_Pedido);
     
-    /*const [solicitudes, setSolicitudes] = useState([]);
-
-    const fetchSolicitudes = async () => {
-        try {
-            const response = await getSolicitudesByPedido(id_Pedido);
-            //console.log(response);
-            const formattedData = response.data.map(solicitudes => ({
-
-                id_Pedido: solicitudes.id_Pedido,
-                id_Producto: solicitudes.id_Producto,
-                cantidad: solicitudes.cantidad,
-            }));
-            //console.log(formattedData);|
-            setSolicitudes(formattedData);
-        } catch (error) {
-            console.log("Error en fetchSolicitudes:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchSolicitudes(); // Cargar datos inicialmente
-    }, []);
-
-    const {
-        handleClickUpdate,
-        handleUpdate,
-        handleUpdateStatus,
-        DataSolicitud,
-        setDataSolicitud
-    } = useEditSolicitud(setSolicitudes, fetchSolicitudes);
-
-    //BUSCAR SOLICITUDES
-    const [filterId, setFilterId] = useState('');
-    const handleIdFilterChange = (e) => {
-        setFilterId(e.target.value);
-    };
-
-    const handleSelectionChange = useCallback((selectedSolcitud) => {
-        setDataSolicitud(selectedSolcitud);
-    }, [setDataSolicitud]);
-    */
-   
     const columns = [
         { title: "Cantidad", field: "cantidad", width: 100, responsive: 0 },
         { title: "producto", field: "nombre", width: 200, responsive: 0 },
+        { title: "Valor Unit.", field: "precio", width: 200, responsive: 0 },
     ];
 
 
@@ -85,6 +44,8 @@ const Pedidos = () => {
             console.error(error);
         }
         await fetchConsumo();
+        total=0;
+       
     }
 
     const { mesas } = useMesas();
@@ -108,10 +69,20 @@ const Pedidos = () => {
 
     const disponibles= filtrarDisponibles(opcionesP);
 
-    const submitPedido = async () => {
+    const submitPedido = async (data) => {
+        const { IDmesa, descripcion } = data;
         //console.log(id_Pedido);
         //soli = await getSolicitudesByPedido(id_Pedido);
         console.log(consumo);
+        consumo.map(a=>{total+=a.cantidad*a.precio});
+        console.log(total);
+        try{
+            const res=await updatePedido(
+                {IDmesa,descripcion,total,estado:'pendiente'},id_Pedido);
+            console.log(res);
+        }catch(error){
+            console.error(error);
+        }
     };
 
     return (
