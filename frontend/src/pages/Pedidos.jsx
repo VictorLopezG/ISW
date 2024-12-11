@@ -164,10 +164,10 @@ const Pedidos = () => {
                     altButton='Finalizar'
                     buttonAction={submitPedido}
                 />
-                <div   className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto overflow-auto">
+                <div   className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto ">
                     <h2>Pedido</h2>
                     <Table 
-                        // Esto fuerza el re-render cuando `solicitudes` cambia
+                        
                         data={consumo}
                         columns={columns}
                     />
