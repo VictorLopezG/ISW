@@ -3,6 +3,8 @@ import Table from "../components/Table";
 import Search from '../components/Search';
 import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
 
+import useEditPedido from '@hooks/pedidos/useEditPedido.jsx';
+
 import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
 
 import PopupConsumo from '../components/PopupConsumo';
@@ -22,21 +24,27 @@ const CajaCobro = () => {
   }, []);
 
   // Hook para consumo
-  const { consumo, fetchConsumo } = useGetConsumo(pedido?.id); // Hook depende del ID del pedido seleccionado
+  const { consumo, fetchConsumo } = useGetConsumo(pedido?.id); 
 
   const handleselectionChange = useCallback((selectedPedido) => {
     console.log("Pedido seleccionado:", selectedPedido[0]);
-    setPedido(selectedPedido[0]); // Almacena el pedido seleccionado
+    setPedido(selectedPedido[0]); 
   }, []);
 
   // Función para abrir/cerrar el popup
   const togglePopup = async () => {
     if (!isPopupOpen && pedido) {
       console.log("Fetching consumo para pedido:", pedido.id);
-      await fetchConsumo(); // Realiza la solicitud cuando se abre el popup
+      await fetchConsumo();
+      
     }
+  
     setIsPopupOpen((prev) => !prev);
   };
+
+  const { handleUpdateStatus2 } = useEditPedido(setPedido, "Pagado", pedido?.id, fetchPedidosListos);
+
+
 
   const columns = [
     { title: "ID", field: "id", width: 100, responsive: 3 },
@@ -47,8 +55,8 @@ const CajaCobro = () => {
   ];
 
   const columnsconsumo = [
-    { title: "Producto", field: "nombre", width: 100, responsive: 3 },
-    { title: "Cantidad", field: "cantidad", width: 100, responsive: 2 },
+    { title: "Producto", field: "nombre", width: 200, responsive: 3 },
+    { title: "Cantidad", field: "cantidad", width: 150, responsive: 2 },
   ];
 
   return (
@@ -67,6 +75,7 @@ const CajaCobro = () => {
                 <img src={update_icon} alt="edit" className="mr-2" />
                 <span>Descripción</span>
               </button>
+
             </div>
           </div>
           <Table
@@ -87,19 +96,26 @@ const CajaCobro = () => {
               <Table
                 data={consumo}
                 columns={columnsconsumo}
-                filter={filterId}
-                dataToFilter="id"
-                initialSortName="id"
+
               />
               <button
+                className="flex items-center px-4 py-2 bg-lime-500 text-white rounded-full  "
+                onClick={handleUpdateStatus2}  //cambiar 
+                disabled={!pedido} >
+                <img src={update_icon} alt="edit" className="mr-2" />
+                <span>Pagar</span>
+              </button>
+
+              <button
                 className="mt-4 px-4 py-2 bg-red-600 text-white rounded"
-                onClick={togglePopup}
-              >
+                onClick={togglePopup}>
                 Cerrar
               </button>
             </div>
           </div>
         )}
+
+
       </div>
     </main>
   );
