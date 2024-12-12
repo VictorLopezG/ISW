@@ -30,6 +30,7 @@
     "react-router-dom": "^6.26.1",
     "react-tabulator": "^0.21.0",
     "rut.js": "^2.1.0",
+    "socket.io-client": "^4.8.1",
     "sonner": "^1.7.1",
     "sweetalert2": "^11.6.13",
     "tailwind-merge": "^2.5.5",

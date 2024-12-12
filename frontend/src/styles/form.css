@@ -221,8 +221,12 @@
 
 .container {
 	height: 100vh;
-	background:  #efefef;
-	/*Color principal para login (gradiente)*/
+	background-color: #242424;
+	background-image: url('../assets/Fondo1.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;;
+	
 	display: flex;
 	justify-content: center;
 	align-items: center;
