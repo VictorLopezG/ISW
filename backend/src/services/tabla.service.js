@@ -69,6 +69,7 @@ export const getconsumoService = async (id_pedido) => {
     SELECT 
         s."id_Pedido",
         s."id_Producto",
+        pr."valor",
         pr.nombre AS producto,
         s.cantidad AS cantidad
     FROM pedidos p
@@ -87,7 +88,7 @@ export const getconsumoService = async (id_pedido) => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:");
+        console.log("Consulta exitosa:",result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);

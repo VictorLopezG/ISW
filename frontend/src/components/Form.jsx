@@ -102,13 +102,10 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                     </div>
                 </div>
             ))}
+            {altButton && <button type='button' onClick={buttonAction}>{altButton}</button>}
             {buttonText && <button type="submit">{buttonText}</button>}
             {footerContent && <div className="footerContent">{footerContent}</div>}
-            {   
-               altButton && <button onClick={buttonAction} type='button'>
-                    {altButton}
-                </button>
-            }
+            
         </form>
     );
 };

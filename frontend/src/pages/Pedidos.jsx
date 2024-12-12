@@ -1,91 +1,59 @@
 import { createPedido, updatePedido } from '@services/pedido.service.js';
 import Form from '@components/Form';
-import '@styles/form.css';
 import useMesas from '@hooks/mesas/useGetMesas.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
-import { createSolicitud, getSolicitudesByPedido } from '../services/solicitud.service';
+import { createSolicitud } from '../services/solicitud.service';
 import Table from '../components/Table';
-import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
-var id_Pedido = -1;
-let total=0;
+import { getconsumo } from '../services/cocinaConsulta.service'
+import { useState } from 'react';
+
+let id_Pedido = -1;
+let total = 0;
+let consumo;
+
 const Pedidos = () => {
-    
-    const { productos, fetchProductos, setProductos } = useProducto();
-    const {consumo,fetchConsumo,setConsumo}=useGetConsumo(id_Pedido);
-    
-    /*const [solicitudes, setSolicitudes] = useState([]);
+    let [solicitudes, setSolicitudes] = useState([]);
+    const { productos } = useProducto();
 
-    const fetchSolicitudes = async () => {
-        try {
-            const response = await getSolicitudesByPedido(id_Pedido);
-            //console.log(response);
-            const formattedData = response.data.map(solicitudes => ({
+    const opcionesP = productos.map(producto => ({
+        value: producto.id,
+        label: producto.nombre,
+        categoria: producto.categoria,
+        valor: producto.valor,
+        stock: producto.stock,
+    }));
 
-                id_Pedido: solicitudes.id_Pedido,
-                id_Producto: solicitudes.id_Producto,
-                cantidad: solicitudes.cantidad,
-            }));
-            //console.log(formattedData);|
-            setSolicitudes(formattedData);
-        } catch (error) {
-            console.log("Error en fetchSolicitudes:", error);
-        }
-    };
+    function filtrarDisponibles(lista) {
+        return Array.prototype.filter.call(lista, (producto) => producto.stock > 0);
+    }
 
-    useEffect(() => {
-        fetchSolicitudes(); // Cargar datos inicialmente
-    }, []);
+    const disponibles = filtrarDisponibles(opcionesP);
 
-    const {
-        handleClickUpdate,
-        handleUpdate,
-        handleUpdateStatus,
-        DataSolicitud,
-        setDataSolicitud
-    } = useEditSolicitud(setSolicitudes, fetchSolicitudes);
-
-    //BUSCAR SOLICITUDES
-    const [filterId, setFilterId] = useState('');
-    const handleIdFilterChange = (e) => {
-        setFilterId(e.target.value);
-    };
-
-    const handleSelectionChange = useCallback((selectedSolcitud) => {
-        setDataSolicitud(selectedSolcitud);
-    }, [setDataSolicitud]);
-    */
-   
     const columns = [
-        { title: "producto", field: "nombre", width: 300, responsive: 0 },
-        { title: "Cantidad", field: "cantidad", width: 228, responsive:0  },
-        
+        { title: "Cantidad", field: "cantidad", width: 100, responsive: 0 },
+        { title: "producto", field: "nombre", width: 200, responsive: 0 },
+        { title: "Valor Unit.", field: "precio", width: 200, responsive: 0 },
     ];
 
+    const handlecreateclick = (data) => {
+        const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad };
+        // Verificar si el producto ya existe en solicitudes
+        const updatedSolicitudes = solicitudes.map((solicitud) => {
 
-    const handlecreateclick = async (data) => {
-        console.log(data);
-        const { IDmesa, descripcion, id_Producto, cantidad } = data;
-        if (id_Pedido === -1) {
-            const pedido = { IDmesa, descripcion };
-            try {
-                const response = await createPedido(pedido);
-                if (response.status === 'Client error') {
-                    //console.log(response);
-                } else {
-                    //console.log(response.data.id);
-                    //setSolicitudes((a)=>[response]);
-                    id_Pedido = response.data.id;
+            if (solicitud.id_Producto === sol.id_Producto) {
+                if (sol.cantidad > 0) {
+                    return { ...solicitud, cantidad: sol.cantidad, precio: productos.valor, nombre: productos.nombre }; // Actualizar cantidad
                 }
-            } catch (error) {
-                //console.log(error);
+                return null; // Marcar para eliminar
             }
+            return solicitud; // No modificar si no coincide
+        }).filter(solicitud => solicitud !== null); // Eliminar los marcados como null
+
+        if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto) && sol.cantidad > 0 && sol.id_Producto) {
+            updatedSolicitudes.push(sol); // Agregar si no existía y la cantidad es > 0
         }
-        try {
-            await createSolicitud({ id_Pedido, id_Producto, cantidad, estado: 'pendiente' });
-        } catch (error) {
-            console.error(error);
-        }
-        await fetchConsumo();
+        setSolicitudes(updatedSolicitudes);
+        console.log(updatedSolicitudes);
     }
 
     const { mesas } = useMesas();
@@ -95,24 +63,43 @@ const Pedidos = () => {
         label: mesa.descripcion
     }));
 
-    const opcionesP = productos.map(producto => ({
-        value: producto.id,
-        label: producto.nombre,
-        categoria: producto.categoria,
-        valor: producto.valor,
-        stock: producto.stock,
-    }));
-    
-    function filtrarDisponibles(lista) {
-        return Array.prototype.filter.call(lista, (producto) => producto.stock>0);
-    }
-
-    const disponibles= filtrarDisponibles(opcionesP);
-
-    const submitPedido = async () => {
-        //console.log(id_Pedido);
-        //soli = await getSolicitudesByPedido(id_Pedido);
+    const submitPedido = async (data) => {
+        const { IDmesa, descripcion } = data;
+        if (id_Pedido === -1) {
+            const pedido = { IDmesa, descripcion };
+            console.log(data);
+            try {
+                const response = await createPedido(pedido);
+                if (response.status === 'Client error') {
+                    console.error(response);
+                } else {
+                    id_Pedido = response.data.id;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        for (let i = 0; i < solicitudes.length; i++) {
+            const { id_Producto, cantidad } = solicitudes.at(i);
+            try {
+                await createSolicitud({ id_Pedido, id_Producto, cantidad, estado: 'pendiente' });
+                console.log({ id_Pedido, id_Producto, cantidad });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        consumo = await getconsumo(id_Pedido);
         console.log(consumo);
+        consumo.map(a => { total += a.valor * a.cantidad });
+        console.log(total);
+        try {
+            const res = await updatePedido({ IDmesa, descripcion, total, estado: 'pendiente' }, id_Pedido);
+            if (res.status === 'Client error') console.error(res);
+        } catch (error) {
+            console.error(error);
+        }
+        id_Pedido = -1;
+        solicitudes = [];
     };
 
     return (
@@ -122,14 +109,6 @@ const Pedidos = () => {
                     title="Crear un pedido"
                     fields={[
                         {
-                            label: "Mesa del pedido",
-                            name: "IDmesa",
-                            fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options: opcionesM,
-                        },
-                        {
                             label: 'Seleccionar producto',
                             fieldType: 'select',
                             options: disponibles,
@@ -138,12 +117,35 @@ const Pedidos = () => {
                         {
                             label: "Cantidad",
                             name: "cantidad",
-                            min: 1,
-                            placeholder: 1,
+                            min: 0,
+                            defaultValue: 1,
                             fieldType: 'input',
                             type: "number",
                             required: true,
                             max: 10
+                        },
+                    ]}
+                    buttonText="Agregar al pedido"
+                    onSubmit={handlecreateclick}
+                />
+                <div className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto ">
+                    <h2>Pedido</h2>
+                    <Table
+
+                        data={solicitudes}
+                        columns={columns}
+                    />
+                    <h1>    Total: ${total} </h1>
+                </div>
+                <Form title=""
+                    fields={[
+                        {
+                            label: "Mesa del pedido",
+                            name: "IDmesa",
+                            fieldType: 'select',
+                            type: "input",
+                            required: true,
+                            options: opcionesM,
                         },
                         {
                             label: "Descripcion",
@@ -159,20 +161,9 @@ const Pedidos = () => {
 
                         },
                     ]}
-                    buttonText="Agregar producto"
-                    onSubmit={handlecreateclick}
-                    altButton='Finalizar'
-                    buttonAction={submitPedido}
+                    buttonText="Finalizar"
+                    onSubmit={submitPedido}
                 />
-                <div   className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto ">
-                    <h2>Pedido</h2>
-                    <Table 
-                        
-                        data={consumo}
-                        columns={columns}
-                    />
-                    <h1>    Total: ${total} </h1>
-                </div>
             </main>
         </div>
     );
