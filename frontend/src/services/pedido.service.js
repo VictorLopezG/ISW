@@ -8,7 +8,7 @@ export async function createPedido(data) {
             total:1,
             mesaID:IDmesa
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     } catch (error) {
         return error.response.data;
@@ -23,6 +23,17 @@ export async function getPedidos() {
         return error.response.data;
     }
 }
+
+export async function getPedido(id) {
+    try {
+        const { data } = await axios.get(`/ped/${id}`);
+        return data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+
 
 export async function updatePedido(data, id) {
     try {
