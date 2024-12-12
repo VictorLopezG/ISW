@@ -228,10 +228,10 @@
 	align-items: center;
 
 }
-
+/*
 input[type='email'] {
 	background-image: url('../assets/MentionIcon.svg');
-}
+}*/
 
 input[name='rut'] {
 	background-image: url('../assets/IdentityCardIcon.svg');

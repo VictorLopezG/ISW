@@ -8,8 +8,6 @@ import { getPedido } from '@services/pedido.service.js';
 
 
 const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
-    console.log("Estado:", estadoA);
-    console.log("ID:", id);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataPedido, setDataPedido] = useState([]);
@@ -74,10 +72,7 @@ const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
 
 
     const handleUpdateStatus2 = async () => {
-        if (!id) {
-            console.error("No se puede actualizar: ID de pedido no válido.");
-            return;
-        }
+        
         try {
 
             const response = await getPedido(id); 
@@ -94,7 +89,7 @@ const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
 
             setPedidos(prevPedidos => {
                 if (!Array.isArray(prevPedidos)) {
-                    console.error("prevPedidos no es un arreglo:", prevPedidos);
+                    console.log("prevPedidos no es un arreglo:", prevPedidos);
                     return []; 
                 }
                 return prevPedidos.map(pedido =>
