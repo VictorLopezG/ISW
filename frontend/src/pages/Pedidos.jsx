@@ -35,27 +35,29 @@ const Pedidos = () => {
         { title: "Valor Unit.", field: "precio", width: 100, responsive: 0 },
     ];
 
-    const handlecreateclick = (data) => {
-        const {valor,label} = disponibles.find(prod => prod.value == data.id_Producto);
-        const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad };
+    const handlecreateclick = async (data) => {
+        const {valor,label} = await disponibles.find(prod => prod.value == data.id_Producto);
+        const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad ,precio:valor,nombre:label};
         // Verificar si el producto ya existe en solicitudes
         const updatedSolicitudes = solicitudes.map((solicitud) => {
 
             if (solicitud.id_Producto === sol.id_Producto) {
                 if (sol.cantidad > 0) {
-                    return { ...solicitud, cantidad: sol.cantidad, precio: valor, nombre:label }; // Actualizar cantidad
+                    return { ...solicitud, cantidad: sol.cantidad}; // Actualizar cantidad
                 }
                 return null; // Marcar para eliminar
             }
             return solicitud; // No modificar si no coincide
         }).filter(solicitud => solicitud !== null); // Eliminar los marcados como null
-
+        console.log(updatedSolicitudes);
         if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto) 
             && sol.cantidad > 0 && sol.id_Producto) {
             updatedSolicitudes.push(sol); // Agregar si no existía y la cantidad es > 0
         }
         setSolicitudes(updatedSolicitudes);
-        console.log(updatedSolicitudes);
+        total=0;
+        updatedSolicitudes.map(a => { total += a.precio * a.cantidad });
+        //console.log(updatedSolicitudes);
     }
 
     const { mesas } = useMesas();
