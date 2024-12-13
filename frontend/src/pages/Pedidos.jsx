@@ -30,30 +30,34 @@ const Pedidos = () => {
     const disponibles = filtrarDisponibles(opcionesP);
 
     const columns = [
-        { title: "Cantidad", field: "cantidad", width: 100, responsive: 0 },
-        { title: "producto", field: "nombre", width: 200, responsive: 0 },
-        { title: "Valor Unit.", field: "precio", width: 200, responsive: 0 },
+        { title: "Cantidad", field: "cantidad", width: 75, responsive: 0 },
+        { title: "Producto", field: "nombre", width: 200, responsive: 0 },
+        { title: "Valor Unit.", field: "precio", width: 100, responsive: 0 },
     ];
 
-    const handlecreateclick = (data) => {
-        const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad };
+    const handlecreateclick = async (data) => {
+        const {valor,label} = await disponibles.find(prod => prod.value == data.id_Producto);
+        const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad ,precio:valor,nombre:label};
         // Verificar si el producto ya existe en solicitudes
         const updatedSolicitudes = solicitudes.map((solicitud) => {
 
             if (solicitud.id_Producto === sol.id_Producto) {
                 if (sol.cantidad > 0) {
-                    return { ...solicitud, cantidad: sol.cantidad, precio: productos.valor, nombre: productos.nombre }; // Actualizar cantidad
+                    return { ...solicitud, cantidad: sol.cantidad}; // Actualizar cantidad
                 }
                 return null; // Marcar para eliminar
             }
             return solicitud; // No modificar si no coincide
         }).filter(solicitud => solicitud !== null); // Eliminar los marcados como null
-
-        if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto) && sol.cantidad > 0 && sol.id_Producto) {
+        console.log(updatedSolicitudes);
+        if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto) 
+            && sol.cantidad > 0 && sol.id_Producto) {
             updatedSolicitudes.push(sol); // Agregar si no existía y la cantidad es > 0
         }
         setSolicitudes(updatedSolicitudes);
-        console.log(updatedSolicitudes);
+        total=0;
+        updatedSolicitudes.map(a => { total += a.precio * a.cantidad });
+        //console.log(updatedSolicitudes);
     }
 
     const { mesas } = useMesas();
@@ -130,8 +134,8 @@ const Pedidos = () => {
                 />
                 <div className="bg-[#ffff] p-10 rounded-3xl justify-end items-center space-y-2  w-2/5 h-auto ">
                     <h2>Pedido</h2>
+                    <h1>*NOTA: para quitar un producto de la lista seleccionelo con cantidad 0</h1>
                     <Table
-
                         data={solicitudes}
                         columns={columns}
                     />
