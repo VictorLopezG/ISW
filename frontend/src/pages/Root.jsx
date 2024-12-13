@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 
 function Root()  {
 return (
+    
     <AuthProvider>
         <PageRoot/>
     </AuthProvider>

@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from './root.service.js';
 
 export async function enviarMail(email, subject, message) {
       
     try {
-        const data = await axios.post('http://localhost:3000/api/email/send', {
+        const data = await axios.post('/email/send', {
             email,
             subject,
             message
