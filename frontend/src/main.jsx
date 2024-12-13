@@ -21,81 +21,85 @@ import GestionarPedidos from './pages/GestionarPedidos';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root/>,
-    errorElement: <Error404/>,
+    element: <Root />,
+    errorElement: <Error404 />,
     children: [
       {
         path: '/home',
-        element: <Home/>
+        element: <Home />
       },
       {
         path: '/cocineria',
-        element: <Cocineria/>
+        element: <Cocineria />
       },
       {
         path: '/menu',
-        element: <Menu/>
+        element: <Menu />
       },
       {
         path: '/pedidos',
-        element: <Pedidos/>
+        element: <Pedidos />
       },
       {
         path: '/homecaja',
-        element: <Homecaja/>
+        element: <Homecaja />
       },
       {
         path: '/users',
         element: (
-        <ProtectedRoute allowedRoles={['administrador']}>
-          <Users />
-        </ProtectedRoute>
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Users />
+          </ProtectedRoute>
         ),
       },
       {
         path: '/admin_local',
         element: (
-        <ProtectedRoute allowedRoles={['administrador','administrador_local']}>
-          <Admin_local/>
-        </ProtectedRoute>
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <Admin_local />
+          </ProtectedRoute>
         ),
       },
       {
         path: '/home_admin',
         element: (
-        <ProtectedRoute allowedRoles={['administrador','administrador_local']}>
-          <Home_admin/>
-        </ProtectedRoute>
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <Home_admin />
+          </ProtectedRoute>
         ),
       },
       {
         path: '/admin_mesas',
         element: (
-        <ProtectedRoute allowedRoles={['administrador','administrador_local']}>
-          <Admin_mesas/>
-        </ProtectedRoute>
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <Admin_mesas />
+          </ProtectedRoute>
         ),
       },
       {
         path: '/CajaCobro',
-        element: <CajaCobro/>
+        element: <CajaCobro />
       },
       {
         path: '/gestionarPedidos',
-        element: <GestionarPedidos/>
+        element: <GestionarPedidos />
+      },
+      {
+
+        path: '/register',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <Register />
+          </ProtectedRoute>)
       }
     ]
   },
   {
     path: '/auth',
-    element: <Login/>
+    element: <Login />
   },
-  {
-    path: '/register',
-    element: <Register/>
-  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 )

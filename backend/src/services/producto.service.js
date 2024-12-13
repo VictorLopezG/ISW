@@ -49,7 +49,7 @@ export async function getProductosService() {
 //creo que aca deberia estar la validacion para el rol no estoy seguro
 export async function updateProductoService(query, body) {
     try {
-        const { id , nombre , stock, categoria } = query;
+        const { id } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
