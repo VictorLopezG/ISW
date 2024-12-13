@@ -20,7 +20,7 @@ const Register = () => {
             if (response.status === 'Success') {
                 showSuccessAlert('¡Registrado!', 'Usuario registrado exitosamente.');
                 setTimeout(() => {
-                    navigate('/auth');
+                    navigate('/users');
                 }, 3000)
             } else if (response.status === 'Client error') {
                 errorData(response.details);
@@ -36,7 +36,7 @@ const Register = () => {
     return (
         <main className="container">
             <Form
-                title="Crea tu cuenta"
+                title="Registrar nuevo usuario"
                 fields={[
                     {
                         label: "Nombre completo",
@@ -92,13 +92,8 @@ const Register = () => {
                         patternMessage: "Debe contener solo letras y números",
                     },
                 ]}
-                buttonText="Registrarse"
+                buttonText="Registrar"
                 onSubmit={registerSubmit}
-                footerContent={
-                    <p>
-                        ¿Ya tienes cuenta?, <a href="/auth">¡Inicia sesión aquí!</a>
-                    </p>
-                }
             />
         </main>
     );
