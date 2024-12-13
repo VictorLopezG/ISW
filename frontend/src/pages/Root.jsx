@@ -15,7 +15,8 @@ return (
 function PageRoot() {
 return (
     <>
-        <Navbar />
+    <div> <Navbar /></div>
+       
         <Outlet />
         <Toaster />
     </>

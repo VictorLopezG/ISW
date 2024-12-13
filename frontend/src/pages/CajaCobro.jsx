@@ -22,15 +22,16 @@ import { enviarMail } from '@/services/email.service';
 const CajaCobro = () => {
   const [filterId, setFilterId] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [pedido, setPedido] = useState(null); // Estado para el pedido seleccionado
+  const [pedido, setPedido] = useState(null); 
+  const [emailError, setEmailError] = useState('');
 
-  // Obtener pedidos
+
   const { pedidosListos, fetchPedidosListos } = useGetPedidoL();
   useEffect(() => {
     fetchPedidosListos();
   }, []);
 
-  // Hook para consumo
+
   const { consumo, fetchConsumo } = useGetConsumo(pedido?.id);
 
   const handleselectionChange = useCallback((selectedPedido) => {
@@ -38,7 +39,6 @@ const CajaCobro = () => {
     setPedido(selectedPedido[0]);
   }, []);
 
-  // Función para abrir/cerrar el popup
   const togglePopup = async () => {
     if (!isPopupOpen && pedido) {
 
@@ -47,6 +47,7 @@ const CajaCobro = () => {
     }
 
     setIsPopupOpen((prev) => !prev);
+    setInputValue(''); // Vaciar el input después de cerrar el popup
   };
 
 
@@ -67,37 +68,56 @@ const CajaCobro = () => {
   /*------------------------------------logica para enviar correito y actualizar estado a pagado------------------------------------------------------------- */
 
   const [inputValue, setInputValue] = useState("")
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+
+    if (value === '' || validateEmail(value)) {
+      setEmailError('');
+    } else {
+      setEmailError('Por favor, ingrese un correo electrónico válido.');
+    }
   };
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const { handleUpdateStatus2 } = useEditPedido(setPedido, "Pagado", pedido?.id, fetchPedidosListos);
 
   const handleSubmit = async () => {
     if (!pedido) return;
 
+    if (inputValue !== '' && !validateEmail(inputValue)) {
+      setEmailError('Por favor, ingrese un correo electrónico válido.');
+      return;
+    }
 
     try {
       if (inputValue.length > 0) {
-        const consumoFormateado = consumo
-          .map(item => `${item.cantidad} ${item.nombre.charAt(0).toUpperCase() + item.nombre.slice(1)}`)
-          .join('\n');
+        const consumoFormateado = JSON.stringify(consumo.map(item => ({
+          producto: item.nombre.charAt(0).toUpperCase() + item.nombre.slice(1),
+          cantidad: item.cantidad,
+          valor: item.precio
+        })));
 
-
-        await enviarMail(inputValue, "Ticket de consumo", consumoFormateado + `\n\nTotal: $${pedido.total}`);
+        await enviarMail(inputValue, "Ticket de consumo", consumoFormateado + `Total: $${pedido.total}`);
       }
 
       await handleUpdateStatus2("Pagado", pedido.id);
-
       alert("Correo enviado y pedido actualizado con éxito.");
+      togglePopup();
+      setInputValue('');
     } catch (error) {
       console.error("Error al procesar el pago:", error);
-
     }
   };
 
   /**------------------------------------------------------------------------------------------------------------- */
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Puedes ajustar la cantidad de ítems por página
+  const [itemsPerPage] = useState(5); 
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -208,7 +228,9 @@ const CajaCobro = () => {
                 value={inputValue}
                 onChange={handleInputChange}
                 className="w-full"
+                  
               />
+              {emailError && <p className="text-red-500">{emailError}</p>}
 
 
 
