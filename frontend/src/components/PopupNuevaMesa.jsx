@@ -39,11 +39,9 @@ export default function PopupProducto({ show, setShow, data, action }) {
                                 defaultValue: mesaData.descripcion || "",
                                 placeholder: 'Descripcion de la mesa',
                                 fieldType: 'input',
-                                type: "text",
+                                type: "number",
                                 required: true,
-                                maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                patternMessage: "Debe contener solo letras y espacios",
+                                max: 100000,
                             },
                             {
                                 label: "Capacidad mesa",
