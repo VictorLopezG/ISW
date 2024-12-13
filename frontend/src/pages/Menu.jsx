@@ -7,11 +7,6 @@ import { Button } from "@/components/ui/button"
 
 
 const Menu = () => {
-    const columns = [
-        { title: "Nombre", field: "label", width: 200, responsive: 0 },
-        { title: "Valor", field: "valor", width: 200, responsive: 0 },
-        { title: "Stock", field: "stock", width: 100, responsive: 0 }
-    ];
     const { productos } = useProducto();
     console.log(productos);
     const opcionesP = productos.map(producto => ({
