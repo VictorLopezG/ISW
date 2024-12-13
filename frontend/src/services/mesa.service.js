@@ -28,10 +28,10 @@ export async function getMesas() {
 export async function updateMesa(data, id) {
     try {
         const response = await axios.put(`/mesa/${id}`, data);
-        console.log(response);
+        //console.log(response);
         return response.data.data;
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error.response.data;
     }
 }

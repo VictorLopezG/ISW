@@ -45,26 +45,19 @@ export async function updatePedido(data, id) {
             mesaID:IDmesa,
             estado:estado
         });
-      
         return response.data.data;
     } catch (error) {
-
-        console.log(error);
+        console.error(error);
         return error.response.data;
     }
 }
 
 export async function deletePedido(id) {
     try {
-       
-
-
         const response = await axios.delete(`/ped/${id}`);
-
         return response.data;
     } catch (error) {
-
-        console.log(error);
+        console.error(error);
         return error.response.data;
     }
 }

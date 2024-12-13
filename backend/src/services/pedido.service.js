@@ -4,7 +4,7 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getPedidoService(query) {
     try {
-        const { id} = query;
+        const { id } = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
 
@@ -31,7 +31,7 @@ export async function getPedidosService() {
 
         if (!pedidos || pedidos.length === 0) return [null, "No hay pedidos"];
 
-        const pedidosData = pedidos.map(({  ...pedido }) => pedido);
+        const pedidosData = pedidos.map(({ ...pedido }) => pedido);
 
         return [pedidosData, null];
     } catch (error) {
@@ -43,10 +43,9 @@ export async function getPedidosService() {
 export async function updatePedidoService(query, body) {
     try {
 
-        const { id} = query;
+        const { id } = query;
 
         const pedidoRepository = AppDataSource.getRepository(Pedido);
-
 
         const datapedidoUpdate = {
             id: id,
@@ -57,8 +56,7 @@ export async function updatePedidoService(query, body) {
             estado: body.estado,
         };
 
-
-        await pedidoRepository.update({ id:id }, datapedidoUpdate);
+        await pedidoRepository.update({ id: id }, datapedidoUpdate);
 
         const pedidoData = await pedidoRepository.findOne({
             where: { id: id },
@@ -80,33 +78,30 @@ export async function updatePedidoService(query, body) {
 export async function deletePedidoService(query) {
 
     try {
-        console.log("entro a service")
-        console.log(query)
-        
+        //console.log("entro a service")
+        //console.log(query)
+
         const { id } = query;
-        console.log(id)
-        
+        //console.log(id)
+
         const pedidoRepository = AppDataSource.getRepository(Pedido);
 
-        console.log("antes de error")
+        //console.log("antes de error")
 
         const pedidoFound = await pedidoRepository.findOne({
             where: [{ id: id }],
         });
-   
 
         if (!pedidoFound) return [null, "Pedido no encontrado"];
 
         if (pedidoFound.estado === "pagado") {
             return [null, "No se puede eliminar un pedido una vez pagado"];
         }
-      
-//errrorrrrr
-            
-        
+        //errrorrrrr
+
         const pedidoDeleted = await pedidoRepository.remove(pedidoFound);
 
-        console.log("despues de error")
+        //console.log("despues de error")
 
         const { ...dataPedido } = pedidoDeleted;
 
@@ -117,24 +112,23 @@ export async function deletePedidoService(query) {
     }
 }
 
-export async function createPedidoService(pedido) { 
+export async function createPedidoService(pedido) {
     try {
-      const pedidoRepository = AppDataSource.getRepository(Pedido);
-      const estado="pendiente";
-      const { mesaID, total, descripcion } = pedido;
-      const newPedido = pedidoRepository.create({
-        mesaID, total, descripcion, estado
-      });
-      console.log(newPedido);
-  
-      await pedidoRepository.save(newPedido);
-  
-      const { ...dataPedido } = newPedido;
-  
-      return [dataPedido, null];
+        const pedidoRepository = AppDataSource.getRepository(Pedido);
+        const estado = "pendiente";
+        const { mesaID, total, descripcion } = pedido;
+        const newPedido = pedidoRepository.create({
+            mesaID, total, descripcion, estado
+        });
+        //console.log(newPedido);
+
+        await pedidoRepository.save(newPedido);
+
+        const { ...dataPedido } = newPedido;
+
+        return [dataPedido, null];
     } catch (error) {
-      console.error("Error al crear el pedido", error);
-      return [null, "Error interno del servidor"];
+        console.error("Error al crear el pedido", error);
+        return [null, "Error interno del servidor"];
     }
-  }
-  
+}
