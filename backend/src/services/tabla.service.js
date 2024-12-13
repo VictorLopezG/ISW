@@ -88,7 +88,7 @@ export const getconsumoService = async (id_pedido) => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:",result);
+        
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);

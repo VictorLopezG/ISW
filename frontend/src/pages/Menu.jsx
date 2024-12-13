@@ -76,12 +76,6 @@ const Menu = () => {
                                 </TableRow>
                             ))}
                         </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TableCell colSpan={3}>Total</TableCell>
-                                <TableCell className="text-right">4888</TableCell>
-                            </TableRow>
-                        </TableFooter>
                     </Table>
 
                     <div className="flex justify-between items-center mt-4">
