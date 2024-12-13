@@ -65,7 +65,7 @@ const Cocineria = () => {
 
   return (
     <main>
-      <div className="h-screen w-full bg-[#FFC107] flex items-center justify-center p-10 space-y-8">
+      <div className="h-screen w-full flex items-center justify-center p-10 space-y-8">
         
 
         <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg space-y-3  ">
