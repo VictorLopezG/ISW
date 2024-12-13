@@ -4,7 +4,11 @@ import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPostUpdate } from '@helpers/formatData.js';
 import { formatPedidoData } from '../../helpers/formatData';
 
-const useEditPedido = (setPedidos) => {
+import { getPedido } from '@services/pedido.service.js';
+
+
+const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataPedido, setDataPedido] = useState([]);
 
@@ -37,7 +41,6 @@ const useEditPedido = (setPedidos) => {
                 showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el pedido.');
 
 
-
             }
         }
     };
@@ -47,11 +50,9 @@ const useEditPedido = (setPedidos) => {
             try {
                 
                 const pedidoToUpdate = dataPedido[0];
-                const updatedPedidoData = { ...pedidoToUpdate, estado: "listo" };
-                const {createdAt,id, ...updatedPedidoData2}= updatedPedidoData;
-                
-                const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id);
-                
+                const updatedPedidoData = { ...pedidoToUpdate, estado: estadoA };
+                const {createdAt,id, ...updatedPedidoData2}= updatedPedidoData;             
+                const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id); 
                 showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
                 
                 const formattedPedido = formatPedidoData(updatedPedido);
@@ -67,6 +68,42 @@ const useEditPedido = (setPedidos) => {
             }
         }
     };
+
+
+
+    const handleUpdateStatus2 = async () => {
+        
+        try {
+
+            const response = await getPedido(id); 
+            const pedido = response.data; 
+            const updatedPedidoData = { ...pedido, estado: estadoA }; 
+            const { createdAt, ...filteredData } = updatedPedidoData; 
+            const updatedPedido = await updatePedido(filteredData, id);
+      
+            showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
+
+            if (onSuccess) {
+                await onSuccess();
+              }
+
+            setPedidos(prevPedidos => {
+                if (!Array.isArray(prevPedidos)) {
+                    console.log("prevPedidos no es un arreglo:", prevPedidos);
+                    return []; 
+                }
+                return prevPedidos.map(pedido =>
+                    pedido.id === updatedPedido.id ? updatedPedido : pedido
+                );
+            });
+
+        } catch (error) {
+            console.error('Error al actualizar el estado del pedido:', error);
+            showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el pedido.');
+        }
+    };
+    
+    
     
 
     return {
@@ -76,7 +113,9 @@ const useEditPedido = (setPedidos) => {
         isPopupOpen,
         setIsPopupOpen,
         dataPedido,
-        setDataPedido
+        setDataPedido,
+        handleUpdateStatus2
+        
     };
 };
 

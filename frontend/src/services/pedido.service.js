@@ -8,7 +8,7 @@ export async function createPedido(data) {
             total:1,
             mesaID:IDmesa
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     } catch (error) {
         return error.response.data;
@@ -23,6 +23,17 @@ export async function getPedidos() {
         return error.response.data;
     }
 }
+
+export async function getPedido(id) {
+    try {
+        const { data } = await axios.get(`/ped/${id}`);
+        return data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+
 
 export async function updatePedido(data, id) {
     try {
@@ -46,15 +57,13 @@ export async function updatePedido(data, id) {
 export async function deletePedido(id) {
     try {
        
-        console.log("entro a service front");
 
-        console.log(id);
 
         const response = await axios.delete(`/ped/${id}`);
-        console.log("paso el sercixe front");
+
         return response.data;
     } catch (error) {
-        console.log("fallooo en pedido service");
+
         console.log(error);
         return error.response.data;
     }

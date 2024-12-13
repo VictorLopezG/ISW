@@ -38,7 +38,7 @@
 
 
 .form {
-	background-color: #FFEBEE;
+	background-color: #FFFFFF;
 	/*Color del formulario*/;
 	padding: 7vh;
 	display: flex;
@@ -85,7 +85,7 @@
 		padding: 8px 5px;
 		background-repeat: no-repeat;
 		margin-bottom: 0.8vh;
-		background-color: #FFEBEE;
+		background-color: #efefef;
 		font-weight: regular;
 		font-size: 16px;
 		color: #212121;
@@ -192,7 +192,7 @@
 	width: 100%;
 	background-color: #212121;
 	/*Color del boton del formulario*/
-	color: #FFEBEE;
+	color: #efefef;
 	font-weight: bold;
 	font-size: 16px;
 	border: 3px solid #daa503;
@@ -202,7 +202,7 @@
 /*cuando se pasa por encima el cursor*/
 .form button:hover {
 	border: 3px solid #212121;
-	background-color: #FFC107;
+	background-color: #efefef;
 	color: #212121;
 	transition: .3s ease-out;
 }
@@ -221,17 +221,21 @@
 
 .container {
 	height: 100vh;
-	background: linear-gradient(90deg, #FFC107, #212121);
-	/*Color principal para login (gradiente)*/
+	background-color: #242424;
+	background-image: url('../assets/Fondo1.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;;
+	
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 }
-
+/*
 input[type='email'] {
 	background-image: url('../assets/MentionIcon.svg');
-}
+}*/
 
 input[name='rut'] {
 	background-image: url('../assets/IdentityCardIcon.svg');

@@ -1,7 +1,7 @@
 import axios from './root.service.js';
 
 export async function createSolicitud(data) {
-    console.log(data);
+    //console.log(data);
     try {
         const { id_Pedido,id_Producto,cantidad, estado} = data;
         const response = await axios.post('/sol/create', {
@@ -10,7 +10,7 @@ export async function createSolicitud(data) {
             cantidad:cantidad,
             estado:estado
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     } catch (error) {
         return error.response.data;
@@ -20,7 +20,8 @@ export async function createSolicitud(data) {
 export async function getSolicitudesByPedido(id_Pedido){
     try {
         const response = await axios.get(
-            `/sol/:idp?&id_Pedido=${id_Pedido}`);
+            `/sol/?&id_Pedido=${id_Pedido}`);
+        //console.log(response);
         return response.data;
     } catch (error) {
         return error.response.data;

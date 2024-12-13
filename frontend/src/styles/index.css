@@ -9,6 +9,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 a {
   font-weight: 500;
@@ -25,6 +26,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+
+  
 }
 h1 {
   font-size: 3.2em;
@@ -60,3 +63,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+

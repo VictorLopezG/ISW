@@ -69,13 +69,14 @@ export const getconsumoService = async (id_pedido) => {
     SELECT 
         s."id_Pedido",
         s."id_Producto",
+        pr."valor",
         pr.nombre AS producto,
         s.cantidad AS cantidad
     FROM pedidos p
     JOIN mesas m ON p."mesaID" = m.id
     JOIN solicitudes s ON s."id_Pedido" = p.id
     JOIN productos pr ON s."id_Producto" = pr.id
-    WHERE s."id_Pedido" = 33;
+    WHERE s."id_Pedido" = ${id_pedido};
     `;
 
     try {
@@ -87,7 +88,7 @@ export const getconsumoService = async (id_pedido) => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:");
+        console.log("Consulta exitosa:",result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
