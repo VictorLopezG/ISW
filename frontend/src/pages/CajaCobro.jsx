@@ -1,16 +1,19 @@
 import { useEffect, useState, useCallback } from 'react';
 import Table from "../components/Table";
 import Search from '../components/Search';
-import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
 
+import useGetPedidoL from '@hooks/cajacobro/useGetPedidoL.jsx';
+import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
 import useEditPedido from '@hooks/pedidos/useEditPedido.jsx';
 
-import useGetConsumo from '@hooks/cajacobro/useGetConsumo.jsx';
 
-import PopupConsumo from '../components/PopupConsumo';
+
+import { Input } from "@/components/ui/input"
+
 
 import update_icon from '../assets/ViewIcon.svg';
-import { use } from 'react';
+import { enviarMail } from '@/services/email.service';
+
 
 const CajaCobro = () => {
   const [filterId, setFilterId] = useState('');
@@ -24,25 +27,23 @@ const CajaCobro = () => {
   }, []);
 
   // Hook para consumo
-  const { consumo, fetchConsumo } = useGetConsumo(pedido?.id); 
+  const { consumo, fetchConsumo } = useGetConsumo(pedido?.id);
 
   const handleselectionChange = useCallback((selectedPedido) => {
-    console.log("Pedido seleccionado:", selectedPedido[0]);
-    setPedido(selectedPedido[0]); 
+    
+    setPedido(selectedPedido[0]);
   }, []);
 
   // Función para abrir/cerrar el popup
   const togglePopup = async () => {
     if (!isPopupOpen && pedido) {
-      console.log("Fetching consumo para pedido:", pedido.id);
-      await fetchConsumo();
       
+      await fetchConsumo();
+
     }
-  
+
     setIsPopupOpen((prev) => !prev);
   };
-
-  const { handleUpdateStatus2 } = useEditPedido(setPedido, "Pagado", pedido?.id, fetchPedidosListos);
 
 
 
@@ -59,6 +60,40 @@ const CajaCobro = () => {
     { title: "Cantidad", field: "cantidad", width: 150, responsive: 2 },
   ];
 
+  /*------------------------------------logica para enviar correito y actualizar estado a pagado------------------------------------------------------------- */
+
+  const [inputValue, setInputValue] = useState("")
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  const { handleUpdateStatus2 } = useEditPedido(setPedido, "Pagado", pedido?.id, fetchPedidosListos);
+
+  const handleSubmit = async () => {
+    if (!pedido) return;
+  
+    
+      try {
+        if (inputValue.length > 0) {
+        const consumoFormateado = consumo
+          .map(item => `${item.cantidad} ${item.nombre.charAt(0).toUpperCase() + item.nombre.slice(1)}`)
+          .join('\n'); 
+  
+       
+        await enviarMail(inputValue, "Ticket de consumo", consumoFormateado + `\n\nTotal: $${pedido.total}`);
+        }
+  
+        await handleUpdateStatus2("Pagado", pedido.id); 
+  
+        alert("Correo enviado y pedido actualizado con éxito.");
+      } catch (error) {
+        console.error("Error al procesar el pago:", error);
+      
+    } 
+  };
+  
+  
+
+
   return (
     <main>
       <div className="h-screen w-full bg-[#FFC107] flex items-center justify-center p-10 space-y-8">
@@ -70,7 +105,7 @@ const CajaCobro = () => {
               <button
                 className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-full"
                 onClick={togglePopup}
-                disabled={!pedido} // Deshabilita el botón si no hay un pedido seleccionado
+                disabled={!pedido} 
               >
                 <img src={update_icon} alt="edit" className="mr-2" />
                 <span>Descripción</span>
@@ -90,21 +125,32 @@ const CajaCobro = () => {
 
         {isPopupOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-1/3">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-1/3 space-y-4">
               <h2 className="text-xl font-bold mb-4">Descripción</h2>
               <p>Consumo del pedido seleccionado:</p>
               <Table
                 data={consumo}
-                columns={columnsconsumo}
+                columns={columnsconsumo} />
 
+              <Input
+                type="email"
+                placeholder="Email"
+                value={inputValue} 
+                onChange={handleInputChange} 
+                className="w-full"
               />
+
+
+
               <button
                 className="flex items-center px-4 py-2 bg-lime-500 text-white rounded-full  "
-                onClick={handleUpdateStatus2}  //cambiar 
+                onClick={handleSubmit}
                 disabled={!pedido} >
                 <img src={update_icon} alt="edit" className="mr-2" />
                 <span>Pagar</span>
               </button>
+
+
 
               <button
                 className="mt-4 px-4 py-2 bg-red-600 text-white rounded"
