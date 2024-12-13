@@ -18,6 +18,7 @@ import { getSolicitudes } from '@services/cocinaConsulta.service.js';
 
 
 
+
 //import { getCocinas } from '@services/cocinaConsulta.service.js';
 
 
@@ -100,9 +101,7 @@ const Cocineria = () => {
 
     return (
         <main>
-            <div className="h-screen w-full bg-[#efefef] flex flex-col  justify-center items-center p-20">
-
-
+            <div className="h-screen w-full  flex flex-col  justify-center items-center p-20">
                 <div className="w-full max-w-5xl bg-[#ffffff] p-8 rounded-xl shadow-lg space-y-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-bold text-[#212121]">Preparación</h1>
