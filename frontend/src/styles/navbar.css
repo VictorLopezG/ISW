@@ -50,19 +50,22 @@
 .hamburger .bar {
     width: 25px;
     height: 3px;
-    background-color: #FFEBEE; 
+    background-color: #efefef; 
     margin: 4px 0;
     transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1268px) {
     .navbar {
+        width: 15%;
         flex-direction: column;
         align-items: center; 
     }
 
     .hamburger {
         display: flex;
+        
+        
     }
 
     .nav-menu {
@@ -77,14 +80,14 @@
 
     .navbar ul {
         flex-direction: column;
-        width: 100%;
-        background-color: #795548; 
+        width: max-content;
+        background-color: #EED5A4; 
         padding: 10px 0;
     }
 
     .navbar ul li {
         width: 100%;
-        margin: 5px 0;
+        margin: 2px 0;
     }
 
     .navbar ul li a {

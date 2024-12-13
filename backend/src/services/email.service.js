@@ -3,6 +3,7 @@ import { emailConfig } from '../config/configEnv.js';
 
 
 export const sendEmail = async (to, subject, text, html) => {
+    console.log("email service", subject);
 
     try {
         const transporter = nodeMailer.createTransport({
