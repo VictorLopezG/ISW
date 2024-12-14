@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Table from '../components/Table';
 import Search from '../components/Search';
@@ -17,7 +17,7 @@ import delete_icon from '../assets/deleteIcon.svg';
 import update_icon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import { getMesas } from '@services/mesa.service.js';
+
 
 const Admin_mesas = () => {
     const { mesas, fetchMesas, setMesas } = useMesas();

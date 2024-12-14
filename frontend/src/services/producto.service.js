@@ -13,10 +13,9 @@ export async function createProducto(data) {
             categoria:categoria
 
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error.response.data.message.message;
     }
 }
 
