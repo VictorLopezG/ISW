@@ -25,7 +25,7 @@ const homeAdmin = () => {
             </button>
 
             <button
-                onClick={() => navigate('/Admin_mesas')}
+                onClick={() => navigate('/ranking')}
                 className="bg-[#212121] text-white font-bold py-5 px-7 rounded-3xl hover:bg-[#FF5722] 
                         hover:text-black text-5xl "
             >

@@ -102,8 +102,8 @@ const Pedidos = () => {
     };
 
     return (
-        <div>
-            <main className="container space-x-8">
+        <div className='flex flex-columns'>
+            <main className="container space-x-8 ">
                 <Form
                     title="Crear un pedido"
                     fields={[

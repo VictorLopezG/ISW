@@ -17,6 +17,7 @@ import Pedidos from '@pages/Pedidos';
 import CajaCobro from '@pages/CajaCobro';
 import Menu from './pages/Menu';
 import GestionarPedidos from './pages/GestionarPedidos';
+import RankingPage from './pages/RankingPage';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
         path: '/home',
         element: <Home />
       },
+      {
+        path: '/ranking',
+        element: <RankingPage />
+      },
+
       {
         path: '/cocineria',
         element: <Cocineria />

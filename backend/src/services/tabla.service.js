@@ -57,7 +57,7 @@ export const getPedidoListoService = async () => {
 
         console.log("Consulta exitosa:");
         return result;
-}
+    }
     catch (error) {
         console.error("Error al ejecutar la consulta:", error);
         throw new Error("Error al obtener los datos.");
@@ -88,7 +88,67 @@ export const getconsumoService = async (id_pedido) => {
 
         const result = await AppDataSource.query(query);
 
-        
+
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
+
+export const getVentasTotalService = async () => {
+    const query = `
+    SELECT 
+        COUNT(*) AS total_pedidos,
+        SUM(total) AS total_recaudado
+    FROM 
+        pedidos
+    WHERE 
+        DATE_TRUNC('month', pedidos."createdAt") = DATE_TRUNC('month', CURRENT_DATE);
+    `;
+
+    try {
+        console.log("Iniciando consulta de ventas...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:", result);
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
+
+export const getVentasAnualService = async () => {
+    const query = `
+    SELECT 
+        TO_CHAR(DATE_TRUNC('month', "createdAt"), 'Month') AS mes,
+        COUNT(*) AS total_pedidos,
+        SUM(total) AS total_recaudado
+    FROM 
+        pedidos
+    WHERE 
+        pedidos."createdAt" >= NOW() - INTERVAL '1 year'
+    GROUP BY 
+        DATE_TRUNC('month', "createdAt")
+    ORDER BY 
+        DATE_TRUNC('month', "createdAt");
+    `;
+    try {
+        console.log("Iniciando consulta de ventas...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:", result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
