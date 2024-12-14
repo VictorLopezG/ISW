@@ -176,7 +176,7 @@ const CajaCobro = () => {
                   <TableRow>
                     <TableHead  className="py-1">Producto</TableHead>
                     <TableHead  className="py-1">Cantidad</TableHead>
-                    <TableHead  className="text-right py-1">Precio</TableHead>
+                    <TableHead  className="text-right py-1">Precio c/u</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

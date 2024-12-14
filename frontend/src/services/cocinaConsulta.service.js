@@ -23,3 +23,27 @@ export async function getconsumo(id_pedido){
     }
 
 }
+
+export async function getVentasTotal() {
+    try {
+        const response = await axios.get("/tabla/ventas");
+        return response.data;
+    } catch (error) {
+        console.log("Error en cocinaConsulta.service.js");
+        console.log(error);
+        return error.response.data;
+
+    }
+}
+
+export async function getVentasAnual() {
+    try {
+        const response = await axios.get("/tabla/anual");
+        return response.data;
+    } catch (error) {
+        console.log("Error en cocinaConsulta.service.js");
+        console.log(error);
+        return error.response.data;
+
+    }
+}
