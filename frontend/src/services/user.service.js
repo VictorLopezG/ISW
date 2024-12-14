@@ -13,14 +13,11 @@ export async function getUsers() {
 
 export async function updateUser(data, rut) {
     try {
-
- 
-    
         const response = await axios.patch(`/user/detail/?rut=${rut}`, data);
-        console.log(response);
+        //console.log(response);
         return response.data.data;
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error.response.data;
     }
 }
