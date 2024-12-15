@@ -3,7 +3,9 @@ import {
     getPedidoListoService,
     getconsumoService,
     getVentasTotalService,
-    getVentasAnualService
+    getVentasAnualService,
+    getVentasProductosService,
+    getPeriodoService
 } from "../services/tabla.service.js";
 
 export const getTablaDatos = async (req, res) => {
@@ -55,7 +57,30 @@ export const getVentasTotal = async (req, res) => {
 
 export const getVentasAnual = async (req, res) => {
     try {
-        const data = await getVentasAnualService();
+        const date = req.params.date
+        console.log(date);
+  
+        const data = await getVentasAnualService(date);
+        return res.json(data);
+    } catch (error) {
+        console.error("Error al obtener los datos", error);
+        return res.status(500).json({ message: "Error al obtener los datos" });
+    }
+}
+
+export const getVentasProductos = async (req, res) => {
+    try {
+        const data = await getVentasProductosService();
+        return res.json(data);
+    } catch (error) {
+        console.error("Error al obtener los datos", error);
+        return res.status(500).json({ message: "Error al obtener los datos" });
+    }
+}
+
+export const getPeriodo = async (req, res) => {
+    try {
+        const data = await getPeriodoService();
         return res.json(data);
     } catch (error) {
         console.error("Error al obtener los datos", error);

@@ -64,7 +64,7 @@ const Admin_local = () => {
 
     return (
         <main>
-            <div className="h-full w-full bg-gradient-to-r from-rose-100 to-[#212121] flex flex-col items-center p-10">
+            <div className="h-full w-full flex flex-col items-center p-10">
                 <div className="bg-[#eef7ff] p-10 rounded-3xl flex flex-col items-center space-y-4 mb-10">
                     <h1 className="text-5xl font-bold text-[#212121]">
                         Administracion de Productos

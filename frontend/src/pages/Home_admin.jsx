@@ -6,7 +6,7 @@ const homeAdmin = () => {
 
     return (
         <div className="flex  flex-col items-center justify-center space-y-9
-                        min-h-screen bg-gradient-to-r from-rose-100 to-[#FFC107]">
+                        min-h-screen ">
             <button
                 onClick={() => navigate('/Admin_local')}
                 className="bg-[#212121] text-white font-bold py-5 px-7 rounded-3xl hover:bg-[#FF5722] 
