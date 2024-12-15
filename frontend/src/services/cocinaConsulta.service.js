@@ -1,3 +1,4 @@
+import { get } from "lodash";
 import axios from "./root.service.js";
 
 export async function getSolicitudes() {
@@ -36,9 +37,34 @@ export async function getVentasTotal() {
     }
 }
 
-export async function getVentasAnual() {
+export async function getVentasAnual(data) {
     try {
-        const response = await axios.get("/tabla/anual");
+        const response = await axios.get(`/tabla/anual/${data}`);
+        return response.data;
+    } catch (error) {
+        console.log("Error en cocinaConsulta.service.js");
+        console.log(error);
+        return error.response.data;
+
+    }
+}
+
+export async function getVentasProductos() {
+    try {
+        const response = await axios.get("/tabla/productos");
+        return response.data;
+    } catch (error) {
+        console.log("Error en cocinaConsulta.service.js");
+        console.log(error);
+        return error.response.data;
+
+    }
+}
+
+export async function getPeriodoService() {
+    try {
+    
+        const response = await axios.get(`/tabla/periodo`);
         return response.data;
     } catch (error) {
         console.log("Error en cocinaConsulta.service.js");

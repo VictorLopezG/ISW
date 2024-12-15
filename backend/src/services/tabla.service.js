@@ -124,20 +124,97 @@ export const getVentasTotalService = async () => {
     }
 }
 
-export const getVentasAnualService = async () => {
+export const getVentasAnualService = async (añoespecifico) => {
     const query = `
     SELECT 
         TO_CHAR(DATE_TRUNC('month', "createdAt"), 'Month') AS mes,
-        COUNT(*) AS total_pedidos,
         SUM(total) AS total_recaudado
     FROM 
         pedidos
     WHERE 
-        pedidos."createdAt" >= NOW() - INTERVAL '1 year'
+        EXTRACT(YEAR FROM "createdAt") = ${añoespecifico}
     GROUP BY 
         DATE_TRUNC('month', "createdAt")
     ORDER BY 
         DATE_TRUNC('month', "createdAt");
+    `;
+    try {
+        console.log("Iniciando consulta de ventas...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:", result);
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
+
+export const getVentasProductosService = async () => {
+    const query = `
+    SELECT 
+        p.nombre AS producto,
+        SUM(s.cantidad) AS total_vendido
+    FROM 
+        productos p
+    JOIN 
+        solicitudes s ON p.id = s."id_Producto" 
+    GROUP BY 
+        p.nombre
+    ORDER BY 
+        total_vendido DESC;
+    `;
+    try {
+        console.log("Iniciando consulta de ventas...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:", result);
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
+
+export const getPeriodoService = async () => {
+    const query = `
+        SELECT 
+      CASE 
+        WHEN EXTRACT(HOUR FROM s."createdAt") < 9 THEN 'Antes de 09:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 9 AND 10 THEN '09:00 - 11:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 11 AND 12 THEN '11:00 - 13:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 13 AND 14 THEN '13:00 - 15:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 15 AND 16 THEN '15:00 - 17:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 17 AND 18 THEN '17:00 - 19:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 19 AND 20 THEN '19:00 - 21:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 21 AND 22 THEN '21:00 - 23:00'
+        ELSE 'Después de 23:00'
+      END AS horario,
+      COUNT(*) AS cantidad
+    FROM solicitudes s 
+    GROUP BY 
+      CASE 
+        WHEN EXTRACT(HOUR FROM s."createdAt") < 9 THEN 'Antes de 09:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 9 AND 10 THEN '09:00 - 11:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 11 AND 12 THEN '11:00 - 13:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 13 AND 14 THEN '13:00 - 15:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 15 AND 16 THEN '15:00 - 17:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 17 AND 18 THEN '17:00 - 19:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 19 AND 20 THEN '19:00 - 21:00'
+        WHEN EXTRACT(HOUR FROM s."createdAt") BETWEEN 21 AND 22 THEN '21:00 - 23:00'
+        ELSE 'Después de 23:00'
+      END
+    ORDER BY cantidad DESC
     `;
     try {
         console.log("Iniciando consulta de ventas...");

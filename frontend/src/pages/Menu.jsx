@@ -1,4 +1,4 @@
-import Taable from "../components/Table";
+
 import useProducto from '@hooks/productos/useGetProductos.jsx';
 import { useState } from "react";
 
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 
 
 const Menu = () => {
+
     const { productos } = useProducto();
     console.log(productos);
     const opcionesP = productos.map(producto => ({
