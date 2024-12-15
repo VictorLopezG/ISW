@@ -6,7 +6,6 @@ export default function PopupProducto({ show, setShow, data, action }) {
     const productData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formData) => {
-        console.log(formData)
         action(formData);
     };
 

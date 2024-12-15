@@ -123,6 +123,8 @@ export async function createProductoService(producto) {
 
         const { nombre, valor, stock, categoria } = producto;
 
+        const categoriasvalidas = ["entrada","bebestible","postre","ensalada","plato de fondo"];
+
         const createErrorMessage = (DataInfo, message) => ({
             DataInfo,
             message
@@ -135,6 +137,15 @@ export async function createProductoService(producto) {
         });
 
         if (existingNombre) return [null,createErrorMessage("Nombre","Nombre ya en uso")];
+        
+        if (valor < 0 || valor > 1000000) 
+        return [null,createErrorMessage("Valor","El valor debe de estar entre 0 y 1000000")];
+
+        if(stock < 0 || stock >1000)
+        return [null,createErrorMessage("Stock","El stock debe de estar entre 0 y 1000")];
+        
+        if(!categoriasvalidas.includes(categoria))
+        return[null,createErrorMessage("Categoria","La categoria seleccionada no es valida")];
 
         const newProducto = productoRepository.create({
             nombre:nombre, 

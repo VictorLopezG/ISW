@@ -126,7 +126,7 @@ export async function createProducto(req,res) {
         const [newProducto, errornewProducto] = await createProductoService(body);
 
         if(errornewProducto) 
-            return handleErrorClient(res,400,"Error al crear el producto");
+            return handleErrorClient(res,400,errornewProducto);
         
         handleSuccess(res,201,"Producto creado con exito", newProducto);
 

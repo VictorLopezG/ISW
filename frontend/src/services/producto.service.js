@@ -13,10 +13,9 @@ export async function createProducto(data) {
             categoria:categoria
 
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error.response.data.message.message;
     }
 }
 
@@ -32,11 +31,11 @@ export async function getProductos() {
 export async function getProducto(id) {
     try {
         const response = await axios.get(`/producto/${id}`);
-        console.log(response.data);
+        //console.log(response.data);
         return response.data.data;
     } catch (error) {
 
-        console.log(error);
+        //console.log(error);
         return error.response.data;
     }
 }
@@ -44,11 +43,10 @@ export async function getProducto(id) {
 export async function updateProducto(data, id) {
     try {
         const response = await axios.put(`/producto/${id}`, data);
-        console.log(response.data);
+        //console.log(response.data);
         return response.data.data;
     } catch (error) {
-
-        console.log(error);
+        console.error(error);
         return error.response.data;
     }
 }

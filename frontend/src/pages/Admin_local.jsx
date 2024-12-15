@@ -41,9 +41,7 @@ const Admin_local = () => {
     }
 
     const {
-
         handleDelete
-
     } = useDeleteProducto(fetchProductos, setDataProducto);
 
     const handleIdFilterChange = (e) => {
