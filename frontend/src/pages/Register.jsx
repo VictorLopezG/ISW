@@ -51,6 +51,20 @@ const Register = () => {
                         patternMessage: "Debe contener solo letras y espacios",
                     },
                     {
+                        label: "Rut",
+                        name: "rut",
+                        placeholder: "xx.xxx.xxx-x",
+                        fieldType: 'input',
+                        type: "text",
+                        minLength: 9,
+                        maxLength: 12,
+                        pattern: patternRut,
+                        patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
+                        required: true,
+                        errorMessageData: errorRut,
+                        onChange: (e) => handleInputChange('rut', e.target.value)
+                    },
+                    {
                         label: "Correo electrónico",
                         name: "email",
                         placeholder: "ejemplo@gmail.cl",
@@ -66,20 +80,6 @@ const Register = () => {
                         onChange: (e) => handleInputChange('email', e.target.value)
                     },
                     {
-                        label: "Rut",
-                        name: "rut",
-                        placeholder: "xx.xxx.xxx-x",
-                        fieldType: 'input',
-                        type: "text",
-                        minLength: 9,
-                        maxLength: 12,
-                        pattern: patternRut,
-                        patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
-                        required: true,
-                        errorMessageData: errorRut,
-                        onChange: (e) => handleInputChange('rut', e.target.value)
-                    },
-                    {
                         label: "Contraseña",
                         name: "password",
                         placeholder: "**********",
@@ -90,6 +90,19 @@ const Register = () => {
                         maxLength: 26,
                         pattern: /^[a-zA-Z0-9]+$/,
                         patternMessage: "Debe contener solo letras y números",
+                    },
+                    {
+                        label: "Rol",
+                        name: "rol",
+                        fieldType: 'select',
+                        required: true,
+                        options:[
+                            { value: 'administrador', label: 'Administrador' },
+                            { value: 'Admin Local', label: 'Administrador Local' },
+                            { value: 'mesero', label: 'Mesero' },
+                            { value: 'cocinero', label: 'Cocinero' },
+                            { value: 'cajero', label: 'Cajero' },
+                        ]
                     },
                 ]}
                 buttonText="Registrar"
