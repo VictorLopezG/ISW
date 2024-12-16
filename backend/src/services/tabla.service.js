@@ -126,17 +126,31 @@ export const getVentasTotalService = async () => {
 
 export const getVentasAnualService = async (añoespecifico) => {
     const query = `
-    SELECT 
-        TO_CHAR(DATE_TRUNC('month', "createdAt"), 'Month') AS mes,
-        SUM(total) AS total_recaudado
-    FROM 
-        pedidos
-    WHERE 
-        EXTRACT(YEAR FROM "createdAt") = ${añoespecifico}
-    GROUP BY 
-        DATE_TRUNC('month', "createdAt")
-    ORDER BY 
-        DATE_TRUNC('month', "createdAt");
+SELECT
+    CASE TO_CHAR(DATE_TRUNC('month', "createdAt"), 'FMMonth')
+        WHEN 'January' THEN 'Enero'
+        WHEN 'February' THEN 'Febrero'
+        WHEN 'March' THEN 'Marzo'
+        WHEN 'April' THEN 'Abril'
+        WHEN 'May' THEN 'Mayo'
+        WHEN 'June' THEN 'Junio'
+        WHEN 'July' THEN 'Julio'
+        WHEN 'August' THEN 'Agosto'
+        WHEN 'September' THEN 'Septiembre'
+        WHEN 'October' THEN 'Octubre'
+        WHEN 'November' THEN 'Noviembre'
+        WHEN 'December' THEN 'Diciembre'
+    END AS mes,
+    SUM(total) AS total_recaudado
+FROM
+    pedidos
+WHERE
+    EXTRACT(YEAR FROM "createdAt") = ${añoespecifico}
+GROUP BY
+    DATE_TRUNC('month', "createdAt")
+ORDER BY
+    DATE_TRUNC('month', "createdAt");
+
     `;
     try {
         console.log("Iniciando consulta de ventas...");
@@ -215,6 +229,43 @@ export const getPeriodoService = async () => {
         ELSE 'Después de 23:00'
       END
     ORDER BY cantidad DESC
+    `;
+    try {
+        console.log("Iniciando consulta de ventas...");
+
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+
+        const result = await AppDataSource.query(query);
+
+        console.log("Consulta exitosa:", result);
+        return result;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw new Error("Error al obtener los datos.");
+    }
+}
+
+export const getDiasRankingService = async () => {
+    const query = `
+    SELECT
+    CASE TO_CHAR("createdAt" ::timestamp, 'FMDay')
+        WHEN 'Monday' THEN 'Lunes'
+        WHEN 'Tuesday' THEN 'Martes'
+        WHEN 'Wednesday' THEN 'Miércoles'
+        WHEN 'Thursday' THEN 'Jueves'
+        WHEN 'Friday' THEN 'Viernes'
+        WHEN 'Saturday' THEN 'Sábado'
+        WHEN 'Sunday' THEN 'Domingo'
+    END AS dia_semana,
+    COUNT(*) AS total_solicitudes
+FROM
+    solicitudes
+GROUP BY
+    TO_CHAR("createdAt" ::timestamp, 'FMDay')
+ORDER BY
+    total_solicitudes DESC;
     `;
     try {
         console.log("Iniciando consulta de ventas...");

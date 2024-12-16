@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getVentasTotal, getVentasAnual, getVentasProductos, getPeriodoService  } from '@/services/cocinaConsulta.service.js';
+import { getVentasTotal, getVentasAnual, getVentasProductos, getPeriodoService, getVentasDias } from '@/services/cocinaConsulta.service.js';
 
 import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
@@ -29,6 +29,8 @@ const RankingPage = () => {
   const [rankingProductos, setRankingProductos] = useState([]);
   const [productoEstrella, setProductoEstrella] = useState(null);
   const [horarioPeack, setHorarioPeack] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(2024);
+  const [diapeack, setDiaPeack] = useState([]); // Estado para el ranking de días
 
   useEffect(() => {
     const fetchVentasTotal = async () => {
@@ -44,9 +46,9 @@ const RankingPage = () => {
       }
     };
 
-    const fetchVentasPorAnual = async () => {
+    const fetchVentasPorAnual = async (year) => {
       try {
-        const ventas = await getVentasAnual(2024);
+        const ventas = await getVentasAnual(year);
         setVentasPorMes(ventas);
       } catch (error) {
         console.error('Error al obtener los datos de ventas por mes:', error);
@@ -75,18 +77,27 @@ const RankingPage = () => {
       }
     };
 
+    const fetchVentasDias = async () => {
+      try {
+        const dias = await getVentasDias();
+        setDiaPeack(dias);
+      } catch (error) {
+        console.error('Error al obtener el ranking de días:', error);
+      }
+    };
 
     fetchVentasTotal();
-    fetchVentasPorAnual();
+    fetchVentasPorAnual(selectedYear); // Llamar con el año seleccionado
     fetchRankingProductos();
     fetchHorarioPeack();
-  }, []);
+    fetchVentasDias(); // Llamar para obtener el ranking de días
+  }, [selectedYear]); // Añadir selectedYear como dependencia
 
   const chartConfig = {
     total_recaudado: {
       label: "total_recaudado",
       color: "hsl(var(--chart-1))",
-    },
+    },  
   };
 
   const opcionesP = rankingProductos.map(producto => ({
@@ -127,8 +138,6 @@ const RankingPage = () => {
             </CardContent>
           </Card>
 
-
-
           <Card className="max-w-sm bg-white w-72">
             <CardHeader>
               <h3 className="text-sm text-muted-foreground text-black">Total Pedidos del Mes</h3>
@@ -138,8 +147,6 @@ const RankingPage = () => {
               <p className="text-sm text-green-500">Total Pedidos: </p>
             </CardContent>
           </Card>
-
-
 
           <Card className="max-w-sm bg-white w-72">
             <CardHeader>
@@ -160,17 +167,27 @@ const RankingPage = () => {
               <p className="text-sm text-green-500">Cant. vendidas: {horarioPeack[0]?.cantidad || "null"}</p>
             </CardContent>
           </Card>
-
-
         </div>
 
         <div className='flex flex-row space-x-8'>
-          <Card>
+          <Card >
             <CardHeader>
-              <CardTitle>Ventas desde hace un año</CardTitle>
-              <CardDescription>2023-2024</CardDescription>
+              <CardTitle>Ventas Anuales</CardTitle>
+              <CardDescription>Seleccionar Año</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="mb-4">
+                <select
+                  id="year-select"
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                  className="mt-1 block w-30 pl-3 pr-10 py-2 text-base bg-[#efefef] border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value={2023}>2023</option>
+                  <option value={2024}>2024</option>
+                  <option value={2025}>2025</option>
+                </select>
+              </div>
               <ChartContainer config={chartConfig} className="h-80">
                 <BarChart accessibilityLayer data={ventasPorMes}>
                   <CartesianGrid vertical={false} />
@@ -178,7 +195,7 @@ const RankingPage = () => {
                     dataKey="mes"
                     tickLine={false}
                     tickMargin={10}
-                    axisLine={false}
+                    axisLine={true}
                     tickFormatter={(value) => value.slice(0, 3)}
                   />
                   <ChartTooltip
@@ -191,7 +208,7 @@ const RankingPage = () => {
             </CardContent>
           </Card>
 
-          <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-96">
+          <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80">
             <Table>
               <TableCaption className="py-1">Ranking historico de Productos</TableCaption>
               <TableHeader>
@@ -201,7 +218,7 @@ const RankingPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {currentItems.map((invoice) => (
+                {currentItems.map((invoice, index) => (
                   <TableRow key={invoice.label}>
                     <TableCell className="font-medium">{invoice.label}</TableCell>
                     <TableCell className="">{invoice.stock}</TableCell>
@@ -214,12 +231,12 @@ const RankingPage = () => {
                 variant="outlined"
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="px-4 py-1 text-black rounded hover:bg-gray-200"
+                className="px-4 py-1 text-[#212121] rounded hover:bg-gray-200"
               >
                 Anterior
               </Button>
 
-              <span>
+              <span className="text-sm text-[#212121]">
                 Página {currentPage} de {Math.ceil(opcionesP.length / itemsPerPage)}
               </span>
 
@@ -227,11 +244,33 @@ const RankingPage = () => {
                 variant="outlined"
                 onClick={nextPage}
                 disabled={currentPage === Math.ceil(opcionesP.length / itemsPerPage)}
-                className="px-4 py-1 text-black rounded hover:bg-gray-200"
+                className="px-4 py-1 text-[#212121] rounded hover:bg-gray-200"
               >
                 Siguiente
               </Button>
             </div>
+          </div>
+
+          <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80">
+            <Table>
+              <TableCaption className="py-1">Ranking de dias</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="py-1 font-bold">Top</TableHead>
+                  <TableHead className="py-1 font-bold">Día</TableHead>
+
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {diapeack.map((dia, index) => (
+                  <TableRow key={dia.dia_semana}>
+                    <TableCell className="font-medium">#{index + 1}</TableCell>
+                    <TableCell className="font-medium">{dia.dia_semana}</TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ import {
     getVentasTotal,
     getVentasAnual,
     getVentasProductos,
-    getPeriodo
+    getPeriodo,
+    getDiasRanking
 } from "../controllers/tabla.controller.js";
 
 const router = Router();
@@ -18,7 +19,8 @@ router
     .get("/ventas", getVentasTotal)
     .get("/anual/:date", getVentasAnual)
     .get("/productos", getVentasProductos )
-    .get("/periodo", getPeriodo);
+    .get("/periodo", getPeriodo)
+    .get("/dias", getDiasRanking);
 
 
 export default router;

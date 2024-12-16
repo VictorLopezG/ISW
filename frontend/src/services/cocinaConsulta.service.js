@@ -73,3 +73,15 @@ export async function getPeriodoService() {
 
     }
 }
+
+export async function getVentasDias() {
+    try {
+        const response = await axios.get("/tabla/dias");
+        return response.data;
+    } catch (error) {
+        console.log("Error en cocinaConsulta.service.js");
+        console.log(error);
+        return error.response.data;
+
+    }
+}
