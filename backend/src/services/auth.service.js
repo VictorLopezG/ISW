@@ -53,7 +53,7 @@ export async function registerService(user) {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
-    const { nombreCompleto, rut, email } = user;
+    const { nombreCompleto, rut, email, rol} = user;
 
     user.rut=formatRut(rut)
 
@@ -83,7 +83,7 @@ export async function registerService(user) {
       email,
       rut,
       password: await encryptPassword(user.password),
-      rol: "usuario",
+      rol
     });
 
     await userRepository.save(newUser);

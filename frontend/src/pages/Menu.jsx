@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 const Menu = () => {
 
     const { productos } = useProducto();
-    console.log(productos);
+    //console.log(productos);
     const opcionesP = productos.map(producto => ({
         value: producto.id,
         label: producto.nombre,
