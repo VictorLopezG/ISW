@@ -13,6 +13,7 @@ const useEditMesa = (setMesas) => {
     };
 
     const handleUpdate = async (updatedMesasData) => {
+
         if (updatedMesasData) {
             try {
                 const updateMesas = await updateMesa(updatedMesasData, dataMesas[0].id)

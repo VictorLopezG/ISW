@@ -9,7 +9,7 @@ const useGetConsumo = (id_Pedido) => {
     const fetchConsumo = async () => {
         try {
             const response = await getconsumo(id_Pedido);
-            console.log(response);
+          
             const datos=response.map(solicitudes=>({
                 id_Pedido: solicitudes.id_Pedido,
                 id_Producto: solicitudes.id_Producto,

@@ -10,12 +10,12 @@ import gorritoChef from '../assets/chefHatIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { getSolicitudes } from '@services/cocinaConsulta.service.js';
 
-//import { getCocinas } from '@services/cocinaConsulta.service.js';
+
 
 const Cocineria = () => {
     const [solicitudes, setSolicitudes] = useState([]);
 
-    // Define fetchSolicitudes para poder llamarla donde sea necesario
+
     const fetchSolicitudes = async () => {
         const fechaActual= new Date();
         const opciones = { month: 'numeric', day: 'numeric' , hour: 'numeric', minute: 'numeric'};
@@ -41,10 +41,9 @@ const Cocineria = () => {
     };
 
     useEffect(() => {
-        fetchSolicitudes(); // Cargar datos inicialmente
+        fetchSolicitudes(); 
     }, []);
 
-    //EDITAR SOLICITUDES
     const {
         handleUpdateStatus,
         DataSolicitud,
@@ -52,18 +51,18 @@ const Cocineria = () => {
         handleDelete
     } = useEditSolicitud(fetchSolicitudes);
 
-    //BUSCAR SOLICITUDES
+   
     const [filterId, setFilterId] = useState('');
     const handleIdFilterChange = (e) => {
         setFilterId(e.target.value);
     };
 
     const handleSelectionChange = useCallback((selectedSolicitud) => {
-        console.log("Solicitud seleccionada:", selectedSolicitud);
+     
         setDataSolicitud(selectedSolicitud);
     }, [setDataSolicitud]);
 
-    //ELIMINAR SOLICITUDES
+ 
 
 
 
@@ -118,7 +117,7 @@ const Cocineria = () => {
                         initialSortName="mesa"
                         onSelectionChange={(selectedData) => {
                             console.log("Datos seleccionados desde la tabla:", selectedData);
-                            handleSelectionChange(selectedData); // Pasa los datos seleccionados
+                            handleSelectionChange(selectedData); 
                         }}
                     />
                 </div>

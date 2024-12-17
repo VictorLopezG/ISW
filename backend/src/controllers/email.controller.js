@@ -7,20 +7,19 @@ import {
 } from '../handlers/responseHandlers.js';
 
 export const sendCustomEmail = async (req, res) => {
-    console.log(req.body);
+
     const { email, subject, message } = req.body;
 
-    console.log("email controller", email);
-    console.log("subject controller", subject);
-    console.log("message controller", message);
+
+
 
     try {
-        // Separar el JSON de los pedidos y el total
+      
         const [pedidosJson, totalLine] = message.split('Total: $');
         const pedidos = JSON.parse(pedidosJson);
         const total = parseInt(totalLine, 10);
 
-        // Construir las filas de la tabla con los datos
+   
         const messageRows = pedidos.map(pedido => {
             return `
                 <tr>
@@ -31,7 +30,6 @@ export const sendCustomEmail = async (req, res) => {
             `;
         }).join('');
 
-        // Generar el HTML de la tabla
         const htmlMessage = `
 <!DOCTYPE html>
 <html>
@@ -84,8 +82,8 @@ export const sendCustomEmail = async (req, res) => {
         }
 
         table {
-            width: 60%; /* Reduce el tamaño de la tabla */
-            margin: 20px auto; /* Centra la tabla */
+            width: 60%; 
+            margin: 20px auto; 
             border-collapse: collapse;
         }
 

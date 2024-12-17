@@ -9,7 +9,7 @@ import {
 import {
     pedidoBodyValidation,
     pedidoQueryValidation,
-} from "../validations/pedido.validation.js";//falta hacer las validaciones
+} from "../validations/pedido.validation.js";
 import {
     handleErrorClient,
     handleErrorServer,
@@ -82,9 +82,9 @@ export async function updatePedido(req, res) {
 export async function deletePedido(req, res) {
     try {
 
-        console.log("entro a controller backend")
+    
         const { id} = req.params;
-        console.log(id)
+ 
 
         const pedidoFound = await getPedidoService({ id });
 
@@ -121,7 +121,7 @@ export async function createPedido(req, res) {
     }
 }
 
-//funcion con consulta sql para la tabla de cocinería viva chile
+
 export async function getPedidosCocina(req, res) {
     try {
         const { body } = req;

@@ -84,10 +84,10 @@ const Admin_mesas = () => {
                         <div className="flex flex-col items-center justify-between ">
 
                             <div className="flex flex-row">
-                                {/*Boton para agregar productos */}
+                          
 
                                 <button
-                                    // Llama a togglePopup para mostrar el pop-up
+                                  
                                     className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
                                     onClick={handlecreateclick}
                                 >
@@ -95,7 +95,7 @@ const Admin_mesas = () => {
                                     <span>Agregar Mesa</span>
                                 </button>
 
-                                {/*Boton para agregar eliminar prodcutos */}
+                       
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
                                     onClick={() => handleDelete(dataMesas)} disabled={dataMesas.length === 0}
@@ -109,7 +109,7 @@ const Admin_mesas = () => {
                                     <span>Eliminar Mesa</span>
                                 </button>
 
-                                {/*boton para actualizar un producto*/}
+                             
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
                                     onClick={handleClickUpdate} disabled={dataMesas.length === 0}

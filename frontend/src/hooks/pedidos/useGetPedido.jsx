@@ -4,7 +4,7 @@ import { getPedidos } from '@services/pedido.service.js';
 const usePedidos = () => {
     const [pedidos, setPedidos] = useState([]);
 
-//observar finally
+
     const fetchPedidos = async () => {
 
         const opciones = { year: 'numeric', month: 'short', day: 'numeric' , hour: 'numeric', minute: 'numeric', second: 'numeric'};

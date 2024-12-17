@@ -33,33 +33,33 @@ const Pedidos = () => {
         const { valor, label, stock } = await disponibles.find(prod => prod.value == data.id_Producto);
         if (data.cantidad > stock) {
             showErrorAlert("No hay suficiente Stock",`El stock restante de ${label} es de ${stock}`);
-            //console.log("no hay suficiente stock del producto");
+            
             return;
         }
         const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad, precio: valor, nombre: label };
-        // Verificar si el producto ya existe en solicitudes
+       
         const updatedSolicitudes = solicitudes.map((solicitud) => {
             if (solicitud.id_Producto === sol.id_Producto) {
                 if (sol.cantidad > 0) {
-                    return { ...solicitud, cantidad: sol.cantidad }; // Actualizar cantidad
+                    return { ...solicitud, cantidad: sol.cantidad }; 
                 }
-                return null; // Marcar para eliminar
+                return null; 
             }
-            return solicitud; // No modificar si no coincide
-        }).filter(solicitud => solicitud !== null); // Eliminar los marcados como null
-        //console.log(updatedSolicitudes);
+            return solicitud; 
+        }).filter(solicitud => solicitud !== null); 
+        
         if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto)
             && sol.cantidad > 0 && sol.id_Producto) {
-            updatedSolicitudes.push(sol); // Agregar si no existía y la cantidad es > 0
+            updatedSolicitudes.push(sol); 
         }
         setSolicitudes(updatedSolicitudes);
         total = 0;
         updatedSolicitudes.map(a => { total += a.precio * a.cantidad });
-        //console.log(updatedSolicitudes);
+        
     }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8); // Puedes ajustar la cantidad de ítems por página
+    const [itemsPerPage] = useState(8); 
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -87,7 +87,7 @@ const Pedidos = () => {
         const { IDmesa, descripcion } = data;
         if (solicitudes.length!==0) {
             const pedido = { IDmesa, descripcion, total };
-            //console.log(data);
+            
             try {
                 const response = await createPedido(pedido);
                 if (response.status === 'Client error') {
@@ -108,7 +108,7 @@ const Pedidos = () => {
                 const { label, stock, categoria, precio } = await disponibles.find(prod => prod.value == id_Producto);
                 await createSolicitud({ id_Pedido, id_Producto, cantidad, estado: 'pendiente' });
                 await updateProducto({ nombre: label, valor: precio, stock: stock - cantidad, categoria: categoria }, id_Producto)
-                //console.log({ id_Pedido, id_Producto, cantidad });
+        
                 showSuccessAlert("Pedido registrado",`Total del pedido $${total}`); 
             } catch (error) {
                 console.error(error);

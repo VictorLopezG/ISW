@@ -17,9 +17,9 @@ router.use(authenticateJwt);
 
 router
     .get("/all/",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"),getProductos)
-    .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"),getProducto) // Ids Funciona
+    .get("/:id",authorizeRoles("administrador", "mesero","usuario","cajero","cocinero"),getProducto) 
     .post("/crearProducto",authorizeRoles("administrador","cajero","cocinero"),createProducto)
-    .put("/:id",authorizeRoles("administrador","cajero", "cocinero"),updateProducto) // Ids
-    .delete("/eliminarProductoID/:id",authorizeRoles("administrador", "cocinero"),deleteproducto) // Id
+    .put("/:id",authorizeRoles("administrador","cajero", "cocinero"),updateProducto) 
+    .delete("/eliminarProductoID/:id",authorizeRoles("administrador", "cocinero"),deleteproducto)
 
 export default router;

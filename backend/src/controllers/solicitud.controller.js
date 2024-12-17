@@ -26,7 +26,7 @@ export async function getSolicitud(req, res) {
 
         const [solicitudFound,error ]= await getSolicitudService({ id_Pedido,id_Producto});
 
-        console.log("Solicitud encontrada:", solicitudFound);
+    
 
 
         if (!solicitudFound) {
@@ -43,11 +43,11 @@ export async function getSolicitud(req, res) {
 }
 
 export async function getSolicitudesByPedido(req ,res){
-    console.log('hola')
+ 
     try {
         const { id_Pedido} = req.query; 
         const [solicitudesData,error ]= await getSolicitudesByPedidoService({id_Pedido});
-        console.log("Solicitud encontrada:", solicitudesData);
+ 
         if (!solicitudesData) {
             return handleErrorClient(res, 404, "Solicitud no encontrada o no existe");
         }

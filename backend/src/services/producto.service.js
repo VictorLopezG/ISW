@@ -24,7 +24,6 @@ export async function getProductoService(query) {
     }
 }
 
-
 export async function getProductosService() {
     try {
 

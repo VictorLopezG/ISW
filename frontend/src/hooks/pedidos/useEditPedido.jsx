@@ -28,9 +28,9 @@ const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
                 const formattedPedido = formatPedidoData(updatedPedido);
 
                 setPedidos(prevPedidos => prevPedidos.map(pedido => {
-                    console.log("Pedido actual:", pedido);
+                   // console.log("Pedido actual:", pedido);
                     if (pedido.id === formattedPedido.id) {
-                        console.log("Reemplazando con:", formattedPedido);
+                      //  console.log("Reemplazando con:", formattedPedido);
                     }
                     return pedido.id === formattedPedido.id ? formattedPedido : pedido;
                 })

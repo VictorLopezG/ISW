@@ -34,7 +34,7 @@ const Cocineria = () => {
   const { handleDelete } = useDeletePedido(fetchPedidos, setDataPedido);
 
   
-  //revisar
+
   useEffect(() => {
     fetchPedidos();
   }, [])
