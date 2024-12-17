@@ -11,6 +11,7 @@ import '@styles/users.css';
 import useEditUser from '@hooks/users/useEditUser';
 import useDeleteUser from '@hooks/users/useDeleteUser';
 
+
 const Users = () => {
   const { users, fetchUsers, setUsers } = useUsers();
   const [filterRut, setFilterRut] = useState('');
@@ -43,10 +44,10 @@ const Users = () => {
   ];
 
   return (
-    <div className='main-container '>
-      <div className='w-5/6 h-5/6 table-container bg-white p-5'>
+    <div className='main-container'>
+      <div className='w-full h-full table-container bg-white p-20 space-y-2'>
         <div className='top-table'>
-          <h1 className='title-table'>Usuarios</h1>
+          <h1 className='title-table font-bold'>Usuarios</h1>
           <div className='filter-actions'>
             <Search value={filterRut} onChange={handleRutFilterChange} placeholder={'Filtrar por rut'} />
             <button onClick={handleClickUpdate} disabled={dataUser.length === 0}>
@@ -73,8 +74,9 @@ const Users = () => {
           initialSortName={'nombreCompleto'}
           onSelectionChange={handleSelectionChange}
         />
+         <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} clas/>
       </div>
-      <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} />
+     
     </div>
   );
 };

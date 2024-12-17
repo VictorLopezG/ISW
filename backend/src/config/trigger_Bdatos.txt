@@ -3,7 +3,7 @@
 CREATE OR REPLACE FUNCTION actualizar_estado_pedido()
 RETURNS TRIGGER AS $$
 BEGIN
- tienen el estado 'listo'
+
     IF (SELECT COUNT(*) FROM solicitudes WHERE "id_Pedido" = NEW."id_Pedido" AND estado != 'listo') = 0 THEN
        
         UPDATE pedidos SET estado = 'listo' WHERE id = NEW."id_Pedido";
@@ -18,3 +18,8 @@ AFTER UPDATE ON solicitudes
 FOR EACH ROW
 WHEN (NEW.estado = 'listo')
 EXECUTE FUNCTION actualizar_estado_pedido();
+
+
+
+
+
