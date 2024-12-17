@@ -6,14 +6,21 @@ const usePedidos = () => {
 
 //observar finally
     const fetchPedidos = async () => {
+
+        const opciones = { year: 'numeric', month: 'short', day: 'numeric' , hour: 'numeric', minute: 'numeric', second: 'numeric'};
+
+
         try {
             const response = await getPedidos();
+
+
+
             const formattedData = response.data.map(pedido => ({
                 id: pedido.id,
                 descripcion: pedido.descripcion,
                 total: pedido.total,
                 mesaID: pedido.mesaID,
-                createdAt: pedido.createdAt,
+                createdAt: new Date(pedido.createdAt).toLocaleDateString("es-ES",opciones),
                 estado: pedido.estado
             }));
   

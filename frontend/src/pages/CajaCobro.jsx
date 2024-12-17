@@ -16,6 +16,9 @@ import { Input } from "@/components/ui/input"
 
 
 import update_icon from '../assets/ViewIcon.svg';
+import CartIcon2 from '../assets/CartIcon2.svg';
+
+
 import { enviarMail } from '@/services/email.service';
 
 
@@ -53,10 +56,10 @@ const CajaCobro = () => {
 
 
   const columns = [
-    { title: "ID", field: "id", width: 100, responsive: 3 },
-    { title: "Estado", field: "estado", width: 100, responsive: 2 },
-    { title: "MesaID", field: "mesaID", width: 100, responsive: 0 },
-    { title: "Creado", field: "createdAt", width: 100, responsive: 3 },
+
+    { title: "Estado", field: "estado", width: 200, responsive: 2 },
+    { title: "Mesa", field: "mesaID", width: 100, responsive: 0 },
+    { title: "Creado", field: "createdAt", width: 200, responsive: 3 },
     { title: "Total", field: "total", width: 200, responsive: 1 },
   ];
 
@@ -103,11 +106,10 @@ const CajaCobro = () => {
           valor: item.precio
         })));
 
-        await enviarMail(inputValue, "Ticket de consumo", consumoFormateado + `Total: $${pedido.total}`);
+        await enviarMail(inputValue, "CyG.App", consumoFormateado + `Total: $${pedido.total}`);
       }
 
       await handleUpdateStatus2("Pagado", pedido.id);
-      alert("Correo enviado y pedido actualizado con éxito.");
       togglePopup();
       setInputValue('');
     } catch (error) {
@@ -143,7 +145,7 @@ const CajaCobro = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-[#212121]">Pedidos</h1>
             <div className="flex space-x-4 items-center">
-              <Search value={filterId} onChange={(e) => setFilterId(e.target.value)} placeholder="Filtrar por ID" />
+              <Search value={filterId} onChange={(e) => setFilterId(e.target.value)} placeholder="Filtrar por Mesa" />
               <button
                 className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-full"
                 onClick={togglePopup}
@@ -159,8 +161,8 @@ const CajaCobro = () => {
             data={pedidosListos}
             columns={columns}
             filter={filterId}
-            dataToFilter="id"
-            initialSortName="id"
+            dataToFilter="mesaID"
+            initialSortName="mesaID"
             onSelectionChange={(data) => handleselectionChange(data)}
           />
         </div>
@@ -238,7 +240,7 @@ const CajaCobro = () => {
                 className="flex items-center px-4 py-2 bg-lime-500 text-white rounded-full  "
                 onClick={handleSubmit}
                 disabled={!pedido} >
-                <img src={update_icon} alt="edit" className="mr-2" />
+                <img src={CartIcon2} alt="edit" className="mr-2" />
                 <span>Pagar</span>
               </button>
 

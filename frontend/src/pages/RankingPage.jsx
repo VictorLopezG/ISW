@@ -82,16 +82,16 @@ const RankingPage = () => {
         const dias = await getVentasDias();
         setDiaPeack(dias);
       } catch (error) {
-        console.error('Error al obtener el ranking de días:', error);
+        console.error('Error al obtener el ranking de Días:', error);
       }
     };
 
     fetchVentasTotal();
-    fetchVentasPorAnual(selectedYear); // Llamar con el año seleccionado
+    fetchVentasPorAnual(selectedYear); 
     fetchRankingProductos();
     fetchHorarioPeack();
-    fetchVentasDias(); // Llamar para obtener el ranking de días
-  }, [selectedYear]); // Añadir selectedYear como dependencia
+    fetchVentasDias(); 
+  }, [selectedYear]); 
 
   const chartConfig = {
     total_recaudado: {
@@ -134,7 +134,7 @@ const RankingPage = () => {
             </CardHeader>
             <CardContent className="text-left">
               <p className="text-3xl font-bold text-black">${totalRecaudado}</p>
-              <p className="text-sm text-green-500">Total ventas: </p>
+              <p className="text-sm text-green-500">Total ventas en CLP </p>
             </CardContent>
           </Card>
 
@@ -160,7 +160,7 @@ const RankingPage = () => {
 
           <Card className="max-w-sm bg-white w-72">
             <CardHeader>
-              <h3 className="text-sm text-muted-foreground text-black">horario peack</h3>
+              <h3 className="text-sm text-muted-foreground text-black">Horario peak</h3>
             </CardHeader>
             <CardContent className="text-left">
               <p className="text-3xl font-bold text-black">{horarioPeack[0]?.horario|| "null"}</p>
@@ -210,11 +210,11 @@ const RankingPage = () => {
 
           <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80">
             <Table>
-              <TableCaption className="py-1">Ranking historico de Productos</TableCaption>
+              <TableCaption className="py-1">Ranking Histórico de Productos</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead className="py-1 font-bold">Nombre</TableHead>
-                  <TableHead className="py-1 font-bold">cant. vendidas</TableHead>
+                  <TableHead className="py-1 font-bold">cant. Vendidas</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -253,7 +253,7 @@ const RankingPage = () => {
 
           <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80">
             <Table>
-              <TableCaption className="py-1">Ranking de dias</TableCaption>
+              <TableCaption className="py-1">Ranking de Días</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead className="py-1 font-bold">Top</TableHead>

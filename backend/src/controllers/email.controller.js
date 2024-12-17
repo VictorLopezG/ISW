@@ -125,10 +125,10 @@ export const sendCustomEmail = async (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            ISW
+            Ticket de Consumo
         </div>
         <div class="title">
-            ¡Gracias por comprar en Ingeniería de Software!
+            ¡Gracias por comprar en Cocinería Icinf!
         </div>
         <div class="table-container">
             <table>
@@ -145,6 +145,7 @@ export const sendCustomEmail = async (req, res) => {
             </table>
         </div>
         <p>Total: <span style="font-weight: bold;">$${total}</span></p>
+        <p>TICKET NO VÁLIDO COMO BOLETA</p>
     </div>
 </body>
 </html>
