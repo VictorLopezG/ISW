@@ -31,14 +31,6 @@ const Homecaja = () => {
         Ir a Caja de Cobro
       </button>
 
-      <button
-        onClick={() => navigate('/cocineria')}
-        className="bg-[#efefef] text-[#212121] border-solid border-4 border-black py-5 px-7 rounded-3xl hover:bg-[#CDCDCD] 
-                   hover:text-black text-1xl w-64 h-64"
-      >
-        <img src={CategoriesIcon} alt="edit" />
-        Cocinería
-      </button>
     </div>
 
   );

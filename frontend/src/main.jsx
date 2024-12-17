@@ -31,12 +31,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/ranking',
-        element: <RankingPage />
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <RankingPage />
+          </ProtectedRoute>
+        ),
       },
-
       {
         path: '/cocineria',
-        element: <Cocineria />
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local', 'cocinero']}>
+            <Cocineria />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/menu',
@@ -48,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/homecaja',
-        element: <Homecaja />
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local', 'cajero']}>
+            <Homecaja />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/users',
@@ -61,7 +72,7 @@ const router = createBrowserRouter([
       {
         path: '/admin_local',
         element: (
-          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local', 'cocinero']}>
             <Admin_local />
           </ProtectedRoute>
         ),
@@ -84,11 +95,18 @@ const router = createBrowserRouter([
       },
       {
         path: '/CajaCobro',
-        element: <CajaCobro />
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local', 'cajero', 'mesero']}>
+            <CajaCobro />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/gestionarPedidos',
-        element: <GestionarPedidos />
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'administrador_local']}>
+            <GestionarPedidos />
+          </ProtectedRoute>)
       },
       {
 
