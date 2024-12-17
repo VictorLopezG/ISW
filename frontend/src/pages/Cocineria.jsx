@@ -1,26 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-
 import Table from "../components/Table";
-
 import Search from '../components/Search';
-
-
 import useSolicitud from '../hooks/tablaCocina/useGetCocina';
 import useEditSolicitud from '../hooks/solicitud/useEditSolicitud';
 import useDeleteSolicitud from '../hooks/solicitud/useDeleteSolicitud.jsx';
-
 import DeleteIcon from '../assets/deleteIcon.svg';
 import gorritoChefAmarillo from '../assets/chefHatIconAmarillo.svg';
 import gorritoChef from '../assets/chefHatIcon.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-
 import { getSolicitudes } from '@services/cocinaConsulta.service.js';
 
-
-
-
 //import { getCocinas } from '@services/cocinaConsulta.service.js';
-
 
 const Cocineria = () => {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -49,21 +39,13 @@ const Cocineria = () => {
         fetchSolicitudes(); // Cargar datos inicialmente
     }, []);
 
-
-
     //EDITAR SOLICITUDES
-
     const {
         handleUpdateStatus,
         DataSolicitud,
         setDataSolicitud,
         handleDelete
     } = useEditSolicitud(fetchSolicitudes);
-
-
-
-
-
 
     //BUSCAR SOLICITUDES
     const [filterId, setFilterId] = useState('');
