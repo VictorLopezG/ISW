@@ -21,22 +21,22 @@ const useEditSolicitud = (fetchSolicitudes) => {
         console.log("dataSolicitud::::::", dataSolicitud);
         if (dataSolicitud.length > 0) {
             try {
-                //console.log("dataSolicitud", dataSolicitud);
+                
                 const solicitudToUpdate = dataSolicitud[0];
                 const updatedSolicitudData = { ...solicitudToUpdate, estado: "listo" };
                 const { id_Pedido, id_Producto, ...rest } = updatedSolicitudData;
 
                 const payload = { ...rest, id_Pedido, id_Producto };
 
-                // Realiza la actualización
+                
                 const updatedSolicitud = await updateSolicitud(payload, id_Pedido, id_Producto);
 
                 showSuccessAlert('¡Actualizado!', 'La solicitud ha sido actualizada correctamente.');
 
-                // Vuelve a cargar los datos después de la actualización
+                
                 await fetchSolicitudes();
 
-                setDataSolicitud([]); // Limpia la selección
+                setDataSolicitud([]); 
              
             } catch (error) {
                 console.error('Error al actualizar la solicitud:', error);

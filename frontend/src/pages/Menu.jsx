@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 const Menu = () => {
 
     const { productos } = useProducto();
-    //console.log(productos);
+    
     const opcionesP = productos.map(producto => ({
         value: producto.id,
         label: producto.nombre,
@@ -27,7 +27,7 @@ const Menu = () => {
 
       /**------------------------------------------------------------------------------------------------------------- */
       const [currentPage, setCurrentPage] = useState(1);
-      const [itemsPerPage] = useState(8); // Puedes ajustar la cantidad de ítems por página
+      const [itemsPerPage] = useState(8); 
     
       const indexOfLastItem = currentPage * itemsPerPage;
       const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -105,5 +105,5 @@ const Menu = () => {
         </main >
     )
 }
-//nombre valor stock
+
 export default Menu;

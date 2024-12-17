@@ -85,8 +85,7 @@ export async function deleteproducto(req, res) {
     try {
         const { id } = req.params;
 
-        //Por ahora el codigo solo valida con ID no se me ocurre como hacer 
-        //para diferenciar el nombre y el postman esta funcinoando con el id
+
 
         const { error: queryError } = productoQueryValidation.validate({
             id

@@ -97,7 +97,7 @@ export async function deletePedidoService(query) {
         if (pedidoFound.estado === "pagado") {
             return [null, "No se puede eliminar un pedido una vez pagado"];
         }
-        //errrorrrrr
+        
 
         const pedidoDeleted = await pedidoRepository.remove(pedidoFound);
 
