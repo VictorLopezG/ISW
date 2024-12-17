@@ -26,7 +26,7 @@ const useEditProducto = (setProductos) => {
                 setIsPopupOpen(false);
                 return producto.id === updateProduc[1].id ? updateProduc[1] : producto;
             }));
-
+            
             }  else {
                 showErrorAlert("Error", updateProduc.details.message)
             }
