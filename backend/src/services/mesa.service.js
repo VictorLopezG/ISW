@@ -19,7 +19,6 @@ export async function getMesaService(query) {
 
         const { ...mesaData } = mesaFound;
 
-
         return [mesaData, null];
     } catch (error) {
         console.error("Error obtener el pedidp:", error);
@@ -48,12 +47,35 @@ export async function getMesasService() {
 export async function updateMesaService(query, body) {
     try {
         const { id } = query;
-        const { descripcion, capacidad } = body;
 
         const mesaRepository = AppDataSource.getRepository(Mesa);
 
+        const createErrorMessage = (DataInfo, message) => ({
+            DataInfo,
+            message
+        })
+
+        const MesaFound = await mesaRepository.findOne({
+            where: [{ id: id }],
+        });
+
+        if (!MesaFound)
+            return [null,
+            createErrorMessage("Mesa no encontrada", "La mesa no ha sido encontrada")];
+
+        const existingMesa = await mesaRepository.findOne({
+            where: [{ descripcion: body.descripcion }],
+        });
+
+        if(existingMesa && existingMesa.id !== MesaFound.id){
+            return[null,
+                createErrorMessage("Descripcion","Descripcion ya en uso")]
+        }
+
+        if(body.capacidad < 0 || body.capacidad > 15)
+            return [null,createErrorMessage("Capacidad","La capacidad debe de estar 0 y 15")];
+
         const dataMesaUpdate = {
-            id: id,
             capacidad: body.capacidad,
             descripcion: body.descripcion,
         };
@@ -113,8 +135,21 @@ export async function createMesaService(mesa) {
             message
         });
 
+        const existingMesa = await mesaRepository.findOne({
+            where:{
+                descripcion,
+            },
+        });
+
+        if (existingMesa)
+            return [null,createErrorMessage("Descripcion","Descripcion ya en uso")];
+
+        if(capacidad < 0 || capacidad > 15)
+            return [null,createErrorMessage("Capacidad","La capacidad debe de estar 0 y 15")];
+
         const newMesa = mesaRepository.create({
-            descripcion, capacidad
+            descripcion: descripcion, 
+            capacidad: capacidad,
         });
 
         await mesaRepository.save(newMesa);
@@ -123,7 +158,7 @@ export async function createMesaService(mesa) {
 
         return [dataMesa, null];
     } catch (error) {
-        console.error("Error al crear la mesa", error);
+        console.error("Error al crear la mesa ", error);
         return [null, "Error interno del servidor"];
     }
 }

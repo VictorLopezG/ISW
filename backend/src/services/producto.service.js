@@ -24,8 +24,6 @@ export async function getProductoService(query) {
     }
 }
 
-
-
 export async function getProductosService() {
     try {
 
@@ -42,7 +40,6 @@ export async function getProductosService() {
         return [null, "Error interno del servidor"];
     }
 }
-
 
 export async function updateProductoService(query, body) {
     try {
@@ -71,7 +68,7 @@ export async function updateProductoService(query, body) {
 
         if (existingProducto && existingProducto.id !== productoFound.id) {
         return [null,
-                createErrorMessage("Nombre", "Ya existe un producto con el mismo nombre")];
+            createErrorMessage("Nombre", "Ya existe un producto con el mismo nombre")];
         }
 
         if (body.valor < 0 || body.valor > 1000000)
@@ -80,7 +77,7 @@ export async function updateProductoService(query, body) {
 
         if ( body.stock < 0 ||  body.stock > 1000)
             return [null,
-        createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
+            createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
 
 
         if (!categoriasvalidas.includes(body.categoria))

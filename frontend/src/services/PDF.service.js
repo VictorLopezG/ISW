@@ -18,7 +18,6 @@ export async function PDFDelDia() {
 
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
-        console.log(response);
         return response;
     } catch (error) {
         console.error('Error descargando el PDF:', error);

@@ -1,10 +1,8 @@
 import axios from './root.service.js';
-import { convertirMinusculas } from '@helpers/formatData.js';
 
 export async function crearMesa(datamesa) {
     try {
-        const dataRegister = convertirMinusculas(datamesa);
-        const { descripcion , capacidad} = dataRegister;
+        const { descripcion , capacidad} = datamesa;
         const response = await axios.post('/mesa/createM', {
             descripcion: descripcion,
             capacidad: capacidad,
@@ -12,7 +10,7 @@ export async function crearMesa(datamesa) {
         return response.data;
     }
     catch (error) {
-        return error.response.data;
+        return error.response.data.details.message;
     }
 }
 
@@ -29,9 +27,8 @@ export async function updateMesa(data, id) {
     try {
         const response = await axios.put(`/mesa/${id}`, data);
         //console.log(response);
-        return response.data.data;
+        return  [response.data,response.data.data];
     } catch (error) {
-        //console.log(error);
         return error.response.data;
     }
 }

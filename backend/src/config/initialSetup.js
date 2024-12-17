@@ -1,7 +1,9 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import Mesa from "../entity/mesa.entity.js";
-import Producto from "../entity/producto.entity.js"
+import Producto from "../entity/producto.entity.js";
+import Pedidos from "../entity/pedido.entity.js";
+import Solicitudes from "../entity/solicitud.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -11,7 +13,11 @@ async function createUsers() {
 
     const mesaRepository = AppDataSource.getRepository(Mesa);
 
-    const productoRepository = AppDataSource.getRepository(Producto)
+    const productoRepository = AppDataSource.getRepository(Producto);
+
+    const pedidosRepository = AppDataSource.getRepository(Pedidos);
+    
+    const solicitudesRepository = AppDataSource.getRepository(Solicitudes);
 
     const countM = await mesaRepository.count();
 
@@ -19,7 +25,11 @@ async function createUsers() {
 
     const countP = await productoRepository.count();
 
-    if (count > 0 && countM > 0 && countP > 0) return;
+    const countPe = await pedidosRepository.count();
+
+    const countS = await solicitudesRepository.count();
+
+    if (count > 0 && countM > 0 && countP > 0 && countPe > 0 && countS > 0) return;
 
     if (count == 0) {
       await Promise.all([
@@ -142,10 +152,105 @@ async function createUsers() {
         ),
       ]);
     }
+    if(countPe == 0){
+      await Promise.all([
+        pedidosRepository.save(
+        pedidosRepository.create({
+          descripcion: "Pepsi sin azucar",
+          total: 3500,
+          estado: "Pagado",
+          mesaID: 1,
+          createdAt: "2024-12-17 17:10:00.324 -0300",
+          updatedAt: "2024-12-17 17:20:00.324 -0300"
+        }),
+      ),
+      pedidosRepository.save(
+        pedidosRepository.create({
+          descripcion: "Sin ketchup",
+          total: 4000,
+          estado: "pagado",
+          mesaID: 1,
+          createdAt: "2024-12-15 17:05:00.324 -0300",
+          updatedAt: "2024-12-15 17:16:00.324 -0300"
+        }),
+      ),
+      pedidosRepository.save(
+        pedidosRepository.create({
+          descripcion: "",
+          total: 4000,
+          estado: "Pagado",
+          mesaID: 1,
+          createdAt: "2024-11-14 17:00:00.324 -0300",
+          updatedAt: "2024-11-14 17:10:00.324 -0300"
+        }),
+      ),
+      pedidosRepository.save(
+        pedidosRepository.create({
+          descripcion: "extra de mayo",
+          total: 4000,
+          estado: "Pagado",
+          mesaID: 1,
+          createdAt: "2024-10-14 17:00:00.324 -0300",
+          updatedAt: "2024-10-14 17:10:00.324 -0300"
+        }),
+      ),
+    ]);
+    }
 
-    console.log("* => Usuarios creados exitosamente");
+    if(countS == 0){
+      await Promise.all([
+        solicitudesRepository.save(
+          solicitudesRepository.create({
+            id_Pedido: 1,
+            id_Producto:4,
+            estado: "listo",
+            cantidad: 1,
+            createdAt: "2024-12-17 17:00:00.324 -0300"
+          }),
+        ),
+        solicitudesRepository.save(
+          solicitudesRepository.create({
+            id_Pedido: 1,
+            id_Producto: 5,
+            estado: "listo",
+            cantidad: 1,
+            createdAt: "2024-12-17 17:00:00.324 -0300"
+          }),
+        ),
+        solicitudesRepository.save(
+          solicitudesRepository.create({
+            id_Pedido: 2,
+            id_Producto: 1,
+            estado: "listo",
+            cantidad: 2,
+            createdAt: "2024-12-15 17:00:00.324 -0300"
+          }),
+        ),
+        solicitudesRepository.save(
+          solicitudesRepository.create({
+            id_Pedido: 3,
+            id_Producto: 1,
+            estado: "listo",
+            cantidad: 2,
+            createdAt: "2024-11-14 17:00:00.324 -0300"
+          }),
+        ),
+        solicitudesRepository.save(
+          solicitudesRepository.create({
+            id_Pedido: 4,
+            id_Producto: 1,
+            estado: "listo",
+            cantidad: 2,
+            createdAt: "2024-10-14 17:00:00.324 -0300"
+          }),
+        ),
+
+      ]);
+    }
+
+    console.log("* => Datos creados exitosamente");
   } catch (error) {
-    console.error("Error al crear usuarios:", error);
+    console.error("Error al crear Datos:", error);
   }
 }
 

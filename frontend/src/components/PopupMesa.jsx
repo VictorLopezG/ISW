@@ -8,7 +8,6 @@ export default function PopupProducto({ show, setShow, data, action }) {
     const mesaData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formdata) => {
-       
         action(formdata);
     }
 
@@ -32,18 +31,19 @@ export default function PopupProducto({ show, setShow, data, action }) {
                                 type: "text",
                                 required: true,
                                 maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                patternMessage: "Debe contener solo letras y espacios",
+                                pattern: /^(?!0)[\d\n]+$/,
+                                patternMessage: "Debe contener solo numeros y no puede iniciar por 0",
                             },
                             {
                                 label: "Capacidad mesa",
                                 name: "capacidad",
                                 defaultValue: mesaData.capacidad || "",
-                                placeholder: 0,
+                                placeholder: 1,
                                 fieldType: 'input',
                                 type: "number",
                                 required: true,
-                                max: 100000,
+                                min: 1,
+                                max: 15,
                             },
                         ]}
                         onSubmit={handleSubmit}

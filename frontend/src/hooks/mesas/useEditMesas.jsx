@@ -13,26 +13,32 @@ const useEditMesa = (setMesas) => {
     };
 
     const handleUpdate = async (updatedMesasData) => {
-        if (updatedMesasData){
-            try{
-                const updateMesas = await updateMesa(updatedMesasData,dataMesas[0].id)
-                showSuccessAlert('¡Actualizado!','La mesa ha sido actualizado correctamente.');
-                setIsPopupOpen(false);
-                setMesas(prevMesas => prevMesas.map(mesa =>{
-                    if(mesa.id === updateMesas.id){
-                     
-                    }
-                    return mesa.id === updateMesas.id ? updateMesas : mesa;
-                })
-                );
+
+        if (updatedMesasData) {
+            try {
+                const updateMesas = await updateMesa(updatedMesasData, dataMesas[0].id)
+                if (updateMesas.status === 'Client error') {
+                    return showErrorAlert("Error", updateMesas.details.message)
+                }
+
+                if (updateMesas[0].status === 'Success') {
+                    showSuccessAlert('¡Actualizado!', 'La mesa ha sido actualizado correctamente.');
+                    setMesas(prevMesas => prevMesas.map(mesa => {
+                        if (mesa.id === updateMesas.id) {
+                            console.log("Reemplazando con:", updateMesas);
+                        }
+                        setIsPopupOpen(false);
+                        return mesa.id === updateMesas[1].id ? updateMesas[1] : mesa;
+                    }));
+                }
                 setDataMesas([]);
-            }catch (error){
+            } catch (error) {
                 console.error('Error al actualizar la mesa:', error);
-                showErrorAlert('Cancelado','Ocurrio un error al actualizar la mesa.');
+                showErrorAlert('Cancelado', 'Ocurrio un error al actualizar la mesa.');
             }
         }
     };
-    return{
+    return {
         handleClickUpdate,
         handleUpdate,
         isPopupOpen,
