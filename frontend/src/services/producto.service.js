@@ -42,11 +42,12 @@ export async function getProducto(id) {
 
 export async function updateProducto(data, id) {
     try {
+        convertirMinusculas(data);
         const response = await axios.put(`/producto/${id}`, data);
-        //console.log(response.data);
-        return response.data.data;
+        //console.log("data",response.data);
+        return  [response.data,response.data.data];
     } catch (error) {
-        console.error(error);
+        //console.log(error);
         return error.response.data;
     }
 }

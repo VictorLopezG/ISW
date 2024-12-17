@@ -8,7 +8,7 @@ import { AppDataSource } from "../config/configDb.js";
 //lista,usando el id del producto o su nombre
 export async function getProductoService(query) {
     try {
-        const { id  } = query;
+        const { id } = query;
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
@@ -53,26 +53,48 @@ export async function updateProductoService(query, body) {
 
         const productoRepository = AppDataSource.getRepository(Producto)
 
+        const categoriasvalidas = ["entrada", "bebestible", "postre", "ensalada", "plato de fondo"];
+
+        const createErrorMessage = (DataInfo, message) => ({
+            DataInfo,
+            message
+        })
+
         const productoFound = await productoRepository.findOne({
             where: [{ id: id }],
         });
 
         if (!productoFound)
-            return [null, "Producto no encontrado"];
+        return [null,
+        createErrorMessage("Producto no encontrado", "El Producto no ha sido encontrado")];
 
         const existingProducto = await productoRepository.findOne({
             where: [{ nombre: body.nombre }],
         });
 
         if (existingProducto && existingProducto.id !== productoFound.id) {
-            return [null, "Ya existe un producto con el mismo nombre"];
+        return [null,
+                createErrorMessage("Nombre", "Ya existe un producto con el mismo nombre")];
         }
+
+        if (body.valor < 0 || body.valor > 1000000)
+            return [null,
+            createErrorMessage("Valor", "El valor debe de estar entre 0 y 1000000")];
+
+        if ( body.stock < 0 ||  body.stock > 1000)
+            return [null,
+        createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
+
+
+        if (!categoriasvalidas.includes(body.categoria))
+            return [null,
+            createErrorMessage("Categoria", "La categoria seleccionada no es valida")];
 
         const dataProductoUpdate = {
             nombre: body.nombre,
             valor: body.valor,
             stock: body.stock,
-            categoria:body.categoria,
+            categoria: body.categoria,
             updatedAt: new Date(),
         };
         await productoRepository.update({ id: id }, dataProductoUpdate);
@@ -82,8 +104,8 @@ export async function updateProductoService(query, body) {
         });
 
         if (!productoData) {
-            return [null, "Producto no encontrado despues de actualizar"];
-
+            return [null, createErrorMessage("Producto no encontrado",
+                "El Producto no ha sido encontrado despues de actualizar")];
         }
 
         return [productoData, null];
@@ -98,13 +120,17 @@ export async function deleteProductoService(query) {
     try {
         const { id } = query;
         const productoRepository = AppDataSource.getRepository(Producto)
+        const createErrorMessage = (DataInfo, message) => ({
+            DataInfo,
+            message
+        })
         const productoFound = await productoRepository.findOne(
             {
                 where: [{ id: id }],
             }
         );
         if (!productoFound)
-            return [null, "Producto no encontrado"];
+            return [null, createErrorMessage("Producto no encontrado", "El Producto no ha sido encontrado")];
 
         const productoDeleted = await productoRepository.remove(productoFound);
 
@@ -123,7 +149,7 @@ export async function createProductoService(producto) {
 
         const { nombre, valor, stock, categoria } = producto;
 
-        const categoriasvalidas = ["entrada","bebestible","postre","ensalada","plato de fondo"];
+        const categoriasvalidas = ["entrada", "bebestible", "postre", "ensalada", "plato de fondo"];
 
         const createErrorMessage = (DataInfo, message) => ({
             DataInfo,
@@ -136,22 +162,23 @@ export async function createProductoService(producto) {
             },
         });
 
-        if (existingNombre) return [null,createErrorMessage("Nombre","Nombre ya en uso")];
-        
-        if (valor < 0 || valor > 1000000) 
-        return [null,createErrorMessage("Valor","El valor debe de estar entre 0 y 1000000")];
+        if (existingNombre)
+            return [null, createErrorMessage("Nombre", "Nombre ya en uso")];
 
-        if(stock < 0 || stock >1000)
-        return [null,createErrorMessage("Stock","El stock debe de estar entre 0 y 1000")];
-        
-        if(!categoriasvalidas.includes(categoria))
-        return[null,createErrorMessage("Categoria","La categoria seleccionada no es valida")];
+        if (valor < 0 || valor > 1000000)
+            return [null, createErrorMessage("Valor", "El valor debe de estar entre 0 y 1000000")];
+
+        if (stock < 0 || stock > 1000)
+            return [null, createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
+
+        if (!categoriasvalidas.includes(categoria))
+            return [null, createErrorMessage("Categoria", "La categoria seleccionada no es valida")];
 
         const newProducto = productoRepository.create({
-            nombre:nombre, 
-            valor:valor, 
-            stock:stock,
-            categoria:categoria
+            nombre: nombre,
+            valor: valor,
+            stock: stock,
+            categoria: categoria
         });
 
         await productoRepository.save(newProducto);

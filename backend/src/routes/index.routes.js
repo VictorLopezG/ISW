@@ -8,6 +8,7 @@ import productoRoutes from "./producto.routes.js";
 import solicitudRoutes from "./solicitud.routes.js";
 import tablaRoutes from "./tabla.routes.js";
 import emailRoutes from "./email.routes.js";
+import PDFRoutes from "./PDF.routes.js";
 
 const router = Router();
 
@@ -19,6 +20,7 @@ router
     .use("/producto",productoRoutes)
     .use("/sol",solicitudRoutes)
     .use("/tabla", tablaRoutes)
+    .use("/PDF", PDFRoutes)
     .use("/email", emailRoutes);
     
     

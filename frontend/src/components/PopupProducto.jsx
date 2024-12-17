@@ -40,7 +40,8 @@ export default function PopupProducto({ show, setShow, data, action }) {
                                 fieldType: 'input',
                                 type: "number",
                                 required: true,
-                                max: 100000,
+                                min: 1,
+                                max: 1000000,
                             },
                             {
                                 label: "Stock",
@@ -49,8 +50,8 @@ export default function PopupProducto({ show, setShow, data, action }) {
                                 placeholder: 0,
                                 fieldType: 'input',
                                 type: "number",
+                                min: 1,
                                 max: 1000,
-                                patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
                                 required: true,
                             },
                             {
