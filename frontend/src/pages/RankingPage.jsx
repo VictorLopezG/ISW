@@ -6,6 +6,8 @@ import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { Button } from "@/components/ui/button"
 
+import usePedidos from '@/hooks/pedidos/useGetPedido';
+
 import {
   Card,
   CardContent,
@@ -23,6 +25,8 @@ import {
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from "@/components/ui/table"
 
 const RankingPage = () => {
+  const { anos } = usePedidos();
+
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [totalRecaudado, setTotalRecaudado] = useState(0);
   const [ventasPorMes, setVentasPorMes] = useState([]);
@@ -41,6 +45,7 @@ const RankingPage = () => {
 
         setTotalPedidos(total_pedidos);
         setTotalRecaudado(total_recaudado);
+      
       } catch (error) {
         console.error('Error al obtener los datos de ventas:', error);
       }
@@ -71,7 +76,7 @@ const RankingPage = () => {
       try {
         const horario = await getPeriodoService();
         setHorarioPeack(horario || []);
-        console.log(horario);
+   
       } catch (error) {
         console.error('Error al obtener el horario peack:', error);
       }
@@ -82,7 +87,7 @@ const RankingPage = () => {
         const dias = await getVentasDias();
         setDiaPeack(dias);
       } catch (error) {
-        console.error('Error al obtener el ranking de Días:', error);
+        console.error('Error al obtener el ranking de días:', error);
       }
     };
 
@@ -134,17 +139,17 @@ const RankingPage = () => {
             </CardHeader>
             <CardContent className="text-left">
               <p className="text-3xl font-bold text-black">${totalRecaudado}</p>
-              <p className="text-sm text-green-500">Total ventas en CLP </p>
+              <p className="text-sm text-green-500">Total ventas en CLP</p>
             </CardContent>
           </Card>
 
           <Card className="max-w-sm bg-white w-72">
             <CardHeader>
-              <h3 className="text-sm text-muted-foreground text-black">Total Pedidos del Mes</h3>
+              <h3 className="text-1xl text-muted-foreground text-black">Total Pedidos del Mes</h3>
             </CardHeader>
             <CardContent className="text-left">
               <p className="text-3xl font-bold text-black">{totalPedidos}</p>
-              <p className="text-sm text-green-500">Total Pedidos: </p>
+             
             </CardContent>
           </Card>
 
@@ -183,9 +188,9 @@ const RankingPage = () => {
                   onChange={(e) => setSelectedYear(parseInt(e.target.value))}
                   className="mt-1 block w-30 pl-3 pr-10 py-2 text-base bg-[#efefef] border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                 >
-                  <option value={2023}>2023</option>
-                  <option value={2024}>2024</option>
-                  <option value={2025}>2025</option>
+                  {anos.map((ano) => (
+                    <option key={ano} value={ano}>{ano}</option>
+                  ))}
                 </select>
               </div>
               <ChartContainer config={chartConfig} className="h-80">
@@ -214,11 +219,11 @@ const RankingPage = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="py-1 font-bold">Nombre</TableHead>
-                  <TableHead className="py-1 font-bold">cant. Vendidas</TableHead>
+                  <TableHead className="py-1 font-bold">cant. vendidas</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {currentItems.map((invoice, index) => (
+                {currentItems.map((invoice) => (
                   <TableRow key={invoice.label}>
                     <TableCell className="font-medium">{invoice.label}</TableCell>
                     <TableCell className="">{invoice.stock}</TableCell>
@@ -231,12 +236,12 @@ const RankingPage = () => {
                 variant="outlined"
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="px-4 py-1 text-[#212121] rounded hover:bg-gray-200"
+                className="px-4 py-1 text-black rounded hover:bg-gray-200"
               >
                 Anterior
               </Button>
 
-              <span className="text-sm text-[#212121]">
+              <span className="text-sm text-black"> 
                 Página {currentPage} de {Math.ceil(opcionesP.length / itemsPerPage)}
               </span>
 
@@ -244,21 +249,21 @@ const RankingPage = () => {
                 variant="outlined"
                 onClick={nextPage}
                 disabled={currentPage === Math.ceil(opcionesP.length / itemsPerPage)}
-                className="px-4 py-1 text-[#212121] rounded hover:bg-gray-200"
+                className="px-4 py-1 text-black rounded hover:bg-gray-200"
               >
                 Siguiente
               </Button>
             </div>
           </div>
 
-          <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80">
+          <div className="bg-white bg-opacity-100 border-2 border-[#e3e8ef]  rounded-2xl p-4 w-80 ">
             <Table>
               <TableCaption className="py-1">Ranking de Días</TableCaption>
               <TableHeader>
                 <TableRow>
                   <TableHead className="py-1 font-bold">Top</TableHead>
                   <TableHead className="py-1 font-bold">Día</TableHead>
-
+                  <TableHead className="py-1 font-bold">Cant. Pedidos</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -266,7 +271,7 @@ const RankingPage = () => {
                   <TableRow key={dia.dia_semana}>
                     <TableCell className="font-medium">#{index + 1}</TableCell>
                     <TableCell className="font-medium">{dia.dia_semana}</TableCell>
-
+                    <TableCell className="">{dia.total_solicitudes}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

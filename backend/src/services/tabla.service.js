@@ -145,6 +145,7 @@ FROM
     pedidos
 WHERE
     EXTRACT(YEAR FROM "createdAt") = ${añoespecifico}
+    AND pedidos.estado = 'Pagado'
 GROUP BY
     DATE_TRUNC('month', "createdAt")
 ORDER BY
