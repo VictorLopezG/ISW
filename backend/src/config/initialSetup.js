@@ -134,7 +134,7 @@ async function createUsers() {
         ),
         productoRepository.save(
           productoRepository.create({
-            nombre: "essalada chilena",
+            nombre: "ensalada chilena",
             valor: "1500",
             stock: "10",
             categoria: "ensalada"

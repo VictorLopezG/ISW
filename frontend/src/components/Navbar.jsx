@@ -70,18 +70,7 @@ const Navbar = () => {
                             Menú del día
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink
-                            to="/pedidos"
-                            onClick={() => {
-                                setMenuOpen(false);
-                                addActiveClass();
-                            }}
-                            activeClassName="active"
-                        >
-                            Pedidos
-                        </NavLink>
-                    </li>
+
                     <li>
                         <NavLink
                             to="/cocineria"
@@ -103,7 +92,7 @@ const Navbar = () => {
                             }}
                             activeClassName="active"
                         >
-                            Caja
+                            Comandas
                         </NavLink>
                     </li>
 

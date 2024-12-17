@@ -59,7 +59,7 @@ const Cocineria = () => {
     };
 
     const handleSelectionChange = useCallback((selectedSolicitud) => {
-        console.log("Solicitud seleccionada:", selectedSolicitud);
+     
         setDataSolicitud(selectedSolicitud);
     }, [setDataSolicitud]);
 

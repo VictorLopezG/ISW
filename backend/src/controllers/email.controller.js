@@ -7,12 +7,11 @@ import {
 } from '../handlers/responseHandlers.js';
 
 export const sendCustomEmail = async (req, res) => {
-    console.log(req.body);
+
     const { email, subject, message } = req.body;
 
-    console.log("email controller", email);
-    console.log("subject controller", subject);
-    console.log("message controller", message);
+
+
 
     try {
         // Separar el JSON de los pedidos y el total

@@ -6,7 +6,7 @@ const useCreatePedido = () => {
     const createPedido = async () => {
         try {
             const response = await createPedido();
-            console.log(response);
+       
             const formattedData = response.map(pedido => ({
                 descripcion: pedido.descripcion,
                 total: pedido.total,

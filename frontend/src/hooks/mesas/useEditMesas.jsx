@@ -20,7 +20,7 @@ const useEditMesa = (setMesas) => {
                 setIsPopupOpen(false);
                 setMesas(prevMesas => prevMesas.map(mesa =>{
                     if(mesa.id === updateMesas.id){
-                        console.log("Reemplazando con:",updateMesas);
+                     
                     }
                     return mesa.id === updateMesas.id ? updateMesas : mesa;
                 })
