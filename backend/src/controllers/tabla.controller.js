@@ -44,10 +44,10 @@ export const getconsumo = async (req, res) => {
 
 export const getVentasTotal = async (req, res) => {
     try {
-        console.log("antes de consultas");
+ 
         
         const data = await getVentasTotalService();
-        console.log(data);
+      
         return res.json(data);
     } catch (error) {
         console.error("Error al obtener los datos", error);
@@ -59,7 +59,7 @@ export const getVentasTotal = async (req, res) => {
 export const getVentasAnual = async (req, res) => {
     try {
         const date = req.params.date
-        console.log(date);
+   
   
         const data = await getVentasAnualService(date);
         return res.json(data);

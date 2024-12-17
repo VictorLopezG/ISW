@@ -70,30 +70,7 @@ const Navbar = () => {
                             Menú del día
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink
-                            to="/pedidos"
-                            onClick={() => {
-                                setMenuOpen(false);
-                                addActiveClass();
-                            }}
-                            activeClassName="active"
-                        >
-                            Pedidos
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to="/cocineria"
-                            onClick={() => {
-                                setMenuOpen(false);
-                                addActiveClass();
-                            }}
-                            activeClassName="active"
-                        >
-                            Cocina
-                        </NavLink>
-                    </li>
+
                     <li>
                         <NavLink
                             to="/homecaja"
@@ -103,7 +80,7 @@ const Navbar = () => {
                             }}
                             activeClassName="active"
                         >
-                            Caja
+                            Comandas
                         </NavLink>
                     </li>
 
@@ -122,34 +99,8 @@ const Navbar = () => {
                         </li>
                     )}
 
-                    {userRole === 'administrador' && (
-                        <li>
-                            <NavLink
-                                to="/users"
-                                onClick={() => {
-                                    setMenuOpen(false);
-                                    addActiveClass();
-                                }}
-                                activeClassName="active"
-                            >
-                                Usuarios
-                            </NavLink>
-                        </li>
-                    )}
-                    {userRole === 'administrador' && (
-                        <li>
-                            <NavLink
-                                to="/register"
-                                onClick={() => {
-                                    setMenuOpen(false);
-                                    addActiveClass();
-                                }}
-                                activeClassName="active"
-                            >
-                                Registrar
-                            </NavLink>
-                        </li>
-                    )}
+
+
                     <li>
                         <NavLink
                             to="/auth"

@@ -24,7 +24,7 @@ export const getTablaDatosService = async () => {
     `;
 
     try {
-        console.log("Iniciando consulta...");
+      
 
 
         if (!AppDataSource.isInitialized) {
@@ -32,7 +32,7 @@ export const getTablaDatosService = async () => {
         }
 
         const result = await AppDataSource.query(query);
-        console.log("Consulta exitosa:");
+
 
         return result;
     } catch (error) {
@@ -48,14 +48,14 @@ export const getPedidoListoService = async () => {
     `;
 
     try {
-        console.log("Iniciando consulta...");
+    
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
         }
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:");
+
         return result;
     }
     catch (error) {
@@ -80,7 +80,7 @@ export const getconsumoService = async (id_pedido) => {
     `;
 
     try {
-        console.log("Iniciando consulta...");
+     
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -108,7 +108,7 @@ export const getVentasTotalService = async () => {
     `;
 
     try {
-        console.log("Iniciando consulta de ventas...");
+  
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -116,7 +116,6 @@ export const getVentasTotalService = async () => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:", result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
@@ -153,7 +152,7 @@ ORDER BY
 
     `;
     try {
-        console.log("Iniciando consulta de ventas...");
+
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -161,7 +160,6 @@ ORDER BY
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:", result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
@@ -184,7 +182,7 @@ export const getVentasProductosService = async () => {
         total_vendido DESC;
     `;
     try {
-        console.log("Iniciando consulta de ventas...");
+
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -192,7 +190,7 @@ export const getVentasProductosService = async () => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:", result);
+
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
@@ -231,7 +229,7 @@ export const getPeriodoService = async () => {
     ORDER BY cantidad DESC
     `;
     try {
-        console.log("Iniciando consulta de ventas...");
+       
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -239,7 +237,7 @@ export const getPeriodoService = async () => {
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:", result);
+
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);
@@ -268,7 +266,7 @@ ORDER BY
     total_solicitudes DESC;
     `;
     try {
-        console.log("Iniciando consulta de ventas...");
+ 
 
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
@@ -276,7 +274,6 @@ ORDER BY
 
         const result = await AppDataSource.query(query);
 
-        console.log("Consulta exitosa:", result);
         return result;
     } catch (error) {
         console.error("Error al ejecutar la consulta:", error);

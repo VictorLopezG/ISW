@@ -11,7 +11,7 @@ export async function getSolicitudService(query) {
         const solicitudFound = await solicitudRepository.findOne({
             where: { id_Pedido:id_Pedido, id_Producto:id_Producto },
         });
-        console.log("solicitudFound", solicitudFound);
+      
 
 
         if (!solicitudFound) return [null, "Solicitud no encontrada o no existe"];
@@ -32,7 +32,7 @@ export async function getSolicitudesByPedidoService(query) {
         const solicitudes = await solicitudRepository.find({
             where: {id_Pedido:id_Pedido} 
         });
-        console.log("solicitudFound", solicitudes);
+        // console.log("solicitudFound", solicitudes);
 
         if (!solicitudes || solicitudes.length === 0) return [null, "No hay solicitudes"];
 
@@ -101,27 +101,26 @@ export async function updateSolicitudService(query, body) {
 
 export async function deleteSolicitudService(query) {
     try {
-        console.log("query", query);
+    
         const { id_Pedido, id_Producto } = query;
 
 
 
         const solicitudRepository = AppDataSource.getRepository(Solicitud);
-        console.log("solicitudRepository", solicitudRepository);
-
+      
 
         const solicitudFound = await solicitudRepository.findOne({
             where: [{ id_Pedido: id_Pedido } && { id_Producto: id_Producto }],
         });
 
 
-        console.log("solicitudFound", solicitudFound);
+      
         
 
         if (!solicitudFound) return [null, "Solicitud no encontrada"];
 
         const solicitudDeleted = await solicitudRepository.remove(solicitudFound);
-        console.log("solicitudDeleted", solicitudDeleted);
+
 
         return [solicitudDeleted, null];
     } catch (error) {

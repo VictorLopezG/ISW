@@ -3,7 +3,7 @@ import { deleteDataAlert, showErrorAlert, showSuccessAlert} from '@helpers/sweet
 
 const useDeleteProducto = (fetchMesa, setDataMesa) => {
     const handleDelete = async (dataProducto) => {
-        console.log(dataProducto[0].id);
+      
         if (dataProducto.length > 0){
             try {
                 const result = await deleteDataAlert();

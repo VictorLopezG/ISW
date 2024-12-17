@@ -25,7 +25,7 @@ export default function PopupSolicitud({ show, setShow, data,id_Pedido }) {
                 const cant =response.data.cantidad;
                 try{
                     const resp= await updateSolicitud({id_Pedido,id_Producto,cantidad:cantidad+cant,estado:'pendiente'});
-                    console.log(resp.data);
+                
                 }catch(error){
                     console.log(error);
                 }
@@ -35,7 +35,7 @@ export default function PopupSolicitud({ show, setShow, data,id_Pedido }) {
         }
         try {
             response = await createSolicitud({id_Pedido,id_Producto,cantidad,estado:"pendiente"});
-            console.log(response.data);
+   
         } catch (error) {
             console.log(error);
         }
