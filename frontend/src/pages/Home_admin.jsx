@@ -1,5 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import cookbook from '../assets/cookbookIcon.svg';
+import IdentityCardIconcopia from '../assets/IdentityCardIcon - copia.svg';
+import CategoriesIcon from '../assets/CategoriesIcon.svg';
+import userIcon from '../assets/userIcon.svg';
+import PriceListIcon from '../assets/PriceListIcon.svg';
 
 const homeAdmin = () => {
     const navigate = useNavigate();
@@ -38,7 +42,7 @@ const homeAdmin = () => {
                    hover:text-black text-1xl w-52 h-52 shadow-2xl "
 
                 >
-                    <img src={cookbook} alt="edit" />
+                    <img src={PriceListIcon} alt="edit" />
                     Ranking
                 </button>
 
@@ -53,8 +57,8 @@ const homeAdmin = () => {
                    hover:text-black text-1xl w-52 h-52 shadow-2xl "
 
                 >
-                    <img src={cookbook} alt="edit" />
-                    Users
+                    <img src={userIcon} alt="edit" />
+                    Usuarios
                 </button>
 
                 <button
@@ -63,7 +67,7 @@ const homeAdmin = () => {
                    hover:text-black text-1xl w-52 h-52 shadow-2xl "
 
                 >
-                    <img src={cookbook} alt="edit" />
+                    <img src={IdentityCardIconcopia} alt="edit" />
                     Registrar
                 </button>
 
@@ -74,7 +78,7 @@ const homeAdmin = () => {
                    hover:text-black text-1xl w-52 h-52 shadow-2xl "
 
                 >
-                    <img src={cookbook} alt="edit" />
+                    <img src={CategoriesIcon} alt="edit" />
                     Gestionar Pedidos
                 </button>
 
