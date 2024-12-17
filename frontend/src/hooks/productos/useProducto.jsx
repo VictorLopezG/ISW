@@ -5,13 +5,14 @@ const useProducto = () =>{
     const [errorValor, setErrorValor] = useState('');
     const [errorStock, setErrorStock] = useState('');
     const [errorCategoria, setErrorCategoria] = useState('');
+    const [errorEncontrado, setErrorEncontrado] = useState('');
     const [inputData, setInputData] = useState({nombre:'',valor:'',stock:'',categoria:''})
     
         useEffect(() => {
             if (inputData.nombre) setErrorNombre('');
             if (inputData.valor) setErrorValor('');
             if (inputData.stock) setErrorStock('');
-            if (inputData.categoria) setErrorCategoria 
+            if (inputData.categoria) setErrorCategoria ('');
         }, [inputData.nombre, inputData.valor,inputData.stock,inputData.categoria]);
     
         const errorData = (dataMessage) => {
@@ -23,6 +24,8 @@ const useProducto = () =>{
                 setErrorStock(dataMessage.message);
             } else if (dataMessage.dataInfo=== 'Categoria'){
                 setErrorCategoria(dataMessage.message);
+            } else if (dataMessage.dataInfo === 'Producto no encontrado'){
+                setErrorEncontrado(dataMessage.message);
             }
         };
         
@@ -37,6 +40,7 @@ const useProducto = () =>{
         errorValor,
         errorStock,
         errorCategoria,
+        errorEncontrado,
         errorData,
         handleInputChange,
     };

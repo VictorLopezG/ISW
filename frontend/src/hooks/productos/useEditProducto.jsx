@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { updateProducto } from '@services/producto.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
-
 const useEditProducto = (setProductos) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [dataProducto, setDataProducto] = useState([]);
@@ -17,16 +16,21 @@ const useEditProducto = (setProductos) => {
         if (updatedProductoData) {
             try{
             /*Recuerda dps hacer todas a minusculas*/ 
-            const updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
+            let updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
+            if (updateProduc[0].status === 'Success'){
             showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
-            setIsPopupOpen(false);
             setProductos(prevProductos => prevProductos.map(producto =>{
                 if(producto.id === updateProduc.id){
                     console.log("Reemplazando con:",updateProduc);
                 }
-                return producto.id === updateProduc.id ? updateProduc : producto;
-            })
-            );
+                setIsPopupOpen(false);
+                return producto.id === updateProduc[1].id ? updateProduc[1] : producto;
+            }));
+            
+            }  else {
+                showErrorAlert("Error", updateProduc.details.message)
+            }
+            
             setDataProducto([]);
             }catch(error){
                 console.error('Error al actualizar el Producto:', error);

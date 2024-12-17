@@ -8,6 +8,7 @@ import PopupNuevoProducto from '../components/PopupNuevoProducto';
 import useEditProducto from '@hooks/productos/useEditProducto.jsx';
 import useProducto from '@hooks/productos/useGetProductos.jsx';
 import useDeleteProducto from '../hooks/productos/useDeleteProducto';
+import { PDFDelDia }  from '@services/PDF.service.js'
 /*Assets*/
 
 import check from '../assets/check.svg';
@@ -16,7 +17,6 @@ import update_icon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 
-/*Cambiar la categoria a un dato definido*/ 
 /*Revisar bien las validaciones o mensajes que devuelven en crear producto y actualizar*/ 
 
 const Admin_local = () => {
@@ -24,6 +24,7 @@ const Admin_local = () => {
     const { productos, fetchProductos, setProductos } = useProducto();
     const [filternombre, setFilternombre] = useState('');
     const [iscreatePopupopen,setIscreatePopupopen] = useState(false);
+    
 
     
 
@@ -131,13 +132,9 @@ const Admin_local = () => {
                                 {/*boton para generar informes*/}
 
                                 <button className="flex flex-auto items-center px-2 py-2 bg-gray-600 text-white rounded space-x-4 mr-2"
-                                    onClick={handleClickUpdate} disabled={dataProducto.length === 0}
-                                >
-                                    {dataProducto.length === 0 ? (
-                                        <img src={UpdateIconDisable} alt="edit-disabled" />
-                                    ) : (
+                                    onClick={PDFDelDia}
+                                >       
                                         <img src={update_icon} alt="edit" />
-                                    )}
 
                                     <span>Generar Informe</span>
                                 </button>
