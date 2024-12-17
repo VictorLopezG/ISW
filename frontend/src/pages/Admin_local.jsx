@@ -54,7 +54,6 @@ const Admin_local = () => {
     }, [setDataProducto]);
 
     const columns = [
-        { title: "ID", field: "id", width: 100, responsive: 0 },
         { title: "Nombre", field: "nombre", width: 200, responsive: 0 },
         { title: "Valor", field: "valor", width: 120, responsive: 0 },
         { title: "Stock", field: "stock", width: 120, responsive: 0 },
@@ -145,7 +144,6 @@ const Admin_local = () => {
                                 columns={columns}
                                 filter={filternombre}
                                 dataToFilter="nombre"
-                                initialSortName="id"
                                 onSelectionChange={handleSelectionChange}
                             />
 

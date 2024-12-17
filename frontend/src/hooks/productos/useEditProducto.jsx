@@ -14,32 +14,33 @@ const useEditProducto = (setProductos) => {
 
     const handleUpdate = async (updatedProductoData) => {
         if (updatedProductoData) {
-            try{
-            /*Recuerda dps hacer todas a minusculas*/ 
-            let updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
-            if (updateProduc[0].status === 'Success'){
-            showSuccessAlert('¡Actualizado!','El producto ha sido actualizado correctamente.');
-            setProductos(prevProductos => prevProductos.map(producto =>{
-                if(producto.id === updateProduc.id){
-                    console.log("Reemplazando con:",updateProduc);
+            try {
+                /*Recuerda dps hacer todas a minusculas*/
+                let updateProduc = await updateProducto(updatedProductoData, dataProducto[0].id)
+                if (updateProduc.status === 'Client error') {
+                    return showErrorAlert("Error", updateProduc.details.message)
                 }
-                setIsPopupOpen(false);
-                return producto.id === updateProduc[1].id ? updateProduc[1] : producto;
-            }));
-            
-            }  else {
-                showErrorAlert("Error", updateProduc.details.message)
-            }
-            
-            setDataProducto([]);
-            }catch(error){
+
+                if (updateProduc[0].status === 'Success') {
+                    showSuccessAlert('¡Actualizado!', 'El producto ha sido actualizado correctamente.');
+                    setProductos(prevProductos => prevProductos.map(producto => {
+                        if (producto.id === updateProduc.id) {
+                            console.log("Reemplazando con:", updateProduc);
+                        }
+                        setIsPopupOpen(false);
+                        return producto.id === updateProduc[1].id ? updateProduc[1] : producto;
+
+                    }));
+                }
+                setDataProducto([]);
+            } catch (error) {
                 console.error('Error al actualizar el Producto:', error);
-                showErrorAlert('Cancelado','Ocurrió un error al actualizar el Producto.');
+                showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el Producto.');
             }
         }
     };
 
-    return{
+    return {
         handleClickUpdate,
         handleUpdate,
         isPopupOpen,

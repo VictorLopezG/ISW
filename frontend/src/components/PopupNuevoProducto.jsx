@@ -54,7 +54,7 @@ export default function PopupProducto({ show, setShow, data, action }) {
                                     errorMessageData: errorNombre,
                                     onchange: (e) => handleInputChange('nombre', e.target.value),
                                     required: true,
-                                    maxLength: 50,
+                                    maxLength: 31,
                                     pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
                                     patternMessage: "Debe contener solo letras y espacios",
                                 },

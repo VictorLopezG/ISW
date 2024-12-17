@@ -47,7 +47,6 @@ export async function updateProducto(data, id) {
         //console.log("data",response.data);
         return  [response.data,response.data.data];
     } catch (error) {
-        //console.log(error);
         return error.response.data;
     }
 }

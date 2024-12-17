@@ -72,12 +72,13 @@ export async function generatePDFDia() {
 
             const table4 = {
                 title: { label: "Informe de ventas del año",color: "black" },
-                headers: ["Producto","Valor","Cantidad"],
+                headers: ["Producto","Valor","Cantidad","Mes"],
                 rows: consultdata4.map(consult => 
                     [   
                         consult.producto, 
                         consult.valor,
                         consult.cantidad,
+                        consult.mes,
                     ],
                 ),
             };
@@ -85,16 +86,16 @@ export async function generatePDFDia() {
             consultdata4.map(consult=> total4+=consult.valor*consult.cantidad)
 
             doc.table(table1, { startY:50 });
-            doc.text(`El total del dia es: ${total1}
+            doc.text(`El total del dia es: $${total1}
                 `);
             doc.table(table2, { startY:50 });
-            doc.text(`El total de la semana es: ${total2}
+            doc.text(`El total de la semana es: $${total2}
                 `);
             doc.table(table3, { startY:50 });
-            doc.text(`El total del mes es: ${total3}
+            doc.text(`El total del mes es: $${total3}
                 `);
             doc.table(table4, { startY:50 });
-            doc.text(`El total del año es: ${total4}
+            doc.text(`El total del año es: $${total4}
                 `);
             doc.end();
         });

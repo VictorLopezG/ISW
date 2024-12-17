@@ -3,9 +3,7 @@ import Producto from "../entity/producto.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 
-//Revisar como estan las ids de todos
-//Esta funcion busca un solo producto en la 
-//lista,usando el id del producto o su nombre
+
 export async function getProductoService(query) {
     try {
         const { id } = query;
@@ -27,7 +25,6 @@ export async function getProductoService(query) {
 }
 
 
-//Esta funcion busca todos los  productos en la lista
 export async function getProductosService() {
     try {
 
@@ -45,8 +42,6 @@ export async function getProductosService() {
     }
 }
 
-//Esta funcion busca actualizar un producto en especifico
-//creo que aca deberia estar la validacion para el rol no estoy seguro
 export async function updateProductoService(query, body) {
     try {
         const { id } = query;
@@ -74,7 +69,7 @@ export async function updateProductoService(query, body) {
 
         if (existingProducto && existingProducto.id !== productoFound.id) {
         return [null,
-                createErrorMessage("Nombre", "Ya existe un producto con el mismo nombre")];
+            createErrorMessage("Nombre", "Ya existe un producto con el mismo nombre")];
         }
 
         if (body.valor < 0 || body.valor > 1000000)
@@ -83,7 +78,7 @@ export async function updateProductoService(query, body) {
 
         if ( body.stock < 0 ||  body.stock > 1000)
             return [null,
-        createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
+            createErrorMessage("Stock", "El stock debe de estar entre 0 y 1000")];
 
 
         if (!categoriasvalidas.includes(body.categoria))
