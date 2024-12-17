@@ -67,6 +67,17 @@ const homeAdmin = () => {
                     Registrar
                 </button>
 
+                
+                <button
+                    onClick={() => navigate('/gestionarPedidos')}
+                    className="bg-[#efefef] text-[#212121] border-solid border-4 border-black px-7 rounded-3xl hover:bg-[#CDCDCD] 
+                   hover:text-black text-1xl w-52 h-52 shadow-2xl "
+
+                >
+                    <img src={cookbook} alt="edit" />
+                    Gestionar Pedidos
+                </button>
+
 
 
             </div>

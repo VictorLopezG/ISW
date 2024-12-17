@@ -1,45 +1,45 @@
-/* Encabezados */
+
 .table-container .tabulator .tabulator-col {
-    background-color: #FFFFFF; /* Amarillo dorado */
-    color: #212121; /* Texto negro */
+    background-color: #FFFFFF; 
+    color: #212121; 
     font-weight: bold;
     border: #F8C537;
     text-align: center;
 }
 
-/* Filas */
+
 .table-container .tabulator .tabulator-row {
-    background-color: #E0E8FF; /* Amarillo pálido */
-    color: #212121; /* Texto negro */
-    border-bottom: 1px solid #F8C537; /* Gris claro */
+    background-color: #E0E8FF; 
+    color: #212121; 
+    border-bottom: 1px solid #F8C537; 
 }
 
 .table-container .tabulator .tabulator-row:nth-child(even) {
-    background-color: #FFF8E1; /* Amarillo más suave */
+    background-color: #FFF8E1; 
 }
 
 .table-container .tabulator .tabulator-row:hover {
-    background-color: #C6C6FB; /* Naranja cálido */
-    color: #FFFFFF; /* Texto blanco */
+    background-color: #C6C6FB; 
+    color: #FFFFFF; 
 }
 
-/* Celdas */
+
 .table-container .tabulator .tabulator-cell {
     border: none;
     text-align: center;
 }
 
-/* Pie de tabla */
+
 .tabulator .tabulator-footer {
-    background-color: #FFFFFF; /* Amarillo dorado */
-    color: #212121; /* Texto negro */
-    border-top: 2px solid #F8C537; /* Amarillo más oscuro */
+    background-color: #FFFFFF; 
+    color: #212121; 
+    border-top: 2px solid #F8C537; 
 }
 
-/* Paginación */
+
 .tabulator .tabulator-footer .tabulator-page {
-    background-color: #FFD54F; /* Amarillo claro */
-    color: #212121; /* Texto negro */
+    background-color: #FFD54F; 
+    color: #212121; 
     border-radius: 4px;
     padding: 4px 8px;
     font-weight: bold;
@@ -47,21 +47,21 @@
 }
 
 .tabulator .tabulator-footer .tabulator-page.active {
-    background-color: #FFA000; /* Amarillo oscuro */
-    color: #FFFFFF; /* Texto blanco */
+    background-color: #FFA000; 
+    color: #FFFFFF; 
 }
 
-/* Búsqueda y filtros */
+
 .table-container .tabulator-header {
-    background-color: #FFC107; /* Amarillo dorado */
-    color: #212121; /* Texto negro */
+    background-color: #FFC107; 
+    color: #212121; 
     font-weight: bold;
 }
 
-/* Diseño general */
+
 .table-container {
-    font-family: 'Arial', sans-serif; /* Tipografía limpia */
-    border-radius: 8px; /* Bordes redondeados */
-    overflow: hidden; /* Evita desbordes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    font-family: 'Arial', sans-serif; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }

@@ -3,9 +3,7 @@ import Producto from "../entity/producto.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 
-//Revisar como estan las ids de todos
-//Esta funcion busca un solo producto en la 
-//lista,usando el id del producto o su nombre
+
 export async function getProductoService(query) {
     try {
         const { id } = query;
@@ -27,7 +25,7 @@ export async function getProductoService(query) {
 }
 
 
-//Esta funcion busca todos los  productos en la lista
+
 export async function getProductosService() {
     try {
 
@@ -45,8 +43,7 @@ export async function getProductosService() {
     }
 }
 
-//Esta funcion busca actualizar un producto en especifico
-//creo que aca deberia estar la validacion para el rol no estoy seguro
+
 export async function updateProductoService(query, body) {
     try {
         const { id } = query;

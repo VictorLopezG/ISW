@@ -17,7 +17,7 @@ const useProducto = () => {
                 stock:producto.stock,
                 categoria:producto.categoria,
                 cantidad:producto.cantidad
-                //createdAt: mesa.createdAt
+               
             }));
             setProductos(formattedData);
         } catch (error) {

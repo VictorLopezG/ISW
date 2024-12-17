@@ -39,15 +39,14 @@
 
 .form {
 	background-color: #FFFFFF;
-	/*Color del formulario*/;
+	
 	padding: 7vh;
 	display: flex;
 	flex-direction: column;
 	border-radius: 24px;
 	align-items: center;
 	
-		margin-top: 5%; /* Igual a la altura del navbar */
-		 /* Ajusta la altura total si es necesario */
+		margin-top: 5%; 
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -55,7 +54,7 @@
 
 	h1 {
 		color: #212121;
-		/*Color del titulo del formulario*/
+	
 		font-size: 30px;
 		font-weight: bold;
 		margin: 0;
@@ -66,12 +65,12 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		/*CAMBIO Y ARREGLO PARA TAELWIND*/
+
 	}
 
 	label {
 		color: #212121;
-		/*Color label de inputs del formulario*/
+
 		font-weight: bold;
 		margin-bottom: 0.7vh;
 	}
@@ -80,7 +79,7 @@
 	input {
 		display: flex;
 		border: 3px solid #212121;
-		/*Color del borde de inputs del formulario*/
+
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
@@ -108,7 +107,7 @@
 	select {
 		display: flex;
 		border: 3px solid #212121;
-		/*Color del borde de selects del formulario*/
+
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
@@ -142,7 +141,7 @@
 	textarea {
 		display: flex;
 		border: 3px solid #003366;
-		/*Color del borde de textareas del formulario*/
+	
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
@@ -181,7 +180,7 @@
 
 }
 
-/*se saca a button y buton:hoover del form para que funcionen los */
+
 .form button {
 	padding: auto;
 	display: flex;
@@ -191,15 +190,15 @@
 	border: none;
 	width: 100%;
 	background-color: #212121;
-	/*Color del boton del formulario*/
+
 	color: #efefef;
 	font-weight: bold;
 	font-size: 16px;
 	border: 3px solid #daa503;
-	/*Color del borde del boton*/
+
 	margin-top: 10px;
 }
-/*cuando se pasa por encima el cursor*/
+
 .form button:hover {
 	border: 3px solid #212121;
 	background-color: #efefef;
@@ -232,10 +231,7 @@
 	align-items: center;
 
 }
-/*
-input[type='email'] {
-	background-image: url('../assets/MentionIcon.svg');
-}*/
+
 
 input[name='rut'] {
 	background-image: url('../assets/IdentityCardIcon.svg');

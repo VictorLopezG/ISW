@@ -4,8 +4,8 @@
     top: 0;
     left: 0;
     display: flex;
-    justify-content: center; /* Centro horizontal */
-    align-items: center; /* Centro vertical */
+    justify-content: center; 
+    align-items: center; 
     background: #e9c989; 
     padding: 10px 20px;
     z-index: 1000;
@@ -14,8 +14,8 @@
 
 .navbar ul {
     display: flex;
-    justify-content: center; /* Centro horizontal */
-    align-items: center; /* Centro vertical */
+    justify-content: center; 
+    align-items: center; 
     font-weight: bold;
     list-style: none;
     padding: 0;

@@ -50,7 +50,7 @@ const CajaCobro = () => {
     }
 
     setIsPopupOpen((prev) => !prev);
-    setInputValue(''); // Vaciar el input después de cerrar el popup
+    setInputValue(''); 
   };
 
 

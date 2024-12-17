@@ -50,13 +50,13 @@ const PedidoSchema = new EntitySchema({
             onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
         },
-        // Relacion mesa-pedido
+     
         mesaID: {
             type: "int",
             nullable: false,
         },
     },
-    //clave foranea
+ 
     relations : {
         mesaID: {
             target: "mesas",
