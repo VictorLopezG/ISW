@@ -10,7 +10,7 @@ import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, Table
 import { Button } from "@/components/ui/button"
 
 let total = 0;
-let id_Pedido=-1;
+let id_Pedido = -1;
 const Pedidos = () => {
     let [solicitudes, setSolicitudes] = useState([]);
     const { productos } = useProducto();
@@ -32,34 +32,34 @@ const Pedidos = () => {
     const handlecreateclick = async (data) => {
         const { valor, label, stock } = await disponibles.find(prod => prod.value == data.id_Producto);
         if (data.cantidad > stock) {
-            showErrorAlert("No hay suficiente Stock",`El stock restante de ${label} es de ${stock}`);
-            
+            showErrorAlert("No hay suficiente Stock", `El stock restante de ${label} es de ${stock}`);
+
             return;
         }
         const sol = { id_Producto: data.id_Producto, cantidad: data.cantidad, precio: valor, nombre: label };
-       
+
         const updatedSolicitudes = solicitudes.map((solicitud) => {
             if (solicitud.id_Producto === sol.id_Producto) {
                 if (sol.cantidad > 0) {
-                    return { ...solicitud, cantidad: sol.cantidad }; 
+                    return { ...solicitud, cantidad: sol.cantidad };
                 }
-                return null; 
+                return null;
             }
-            return solicitud; 
-        }).filter(solicitud => solicitud !== null); 
-        
+            return solicitud;
+        }).filter(solicitud => solicitud !== null);
+
         if (!updatedSolicitudes.some(solicitud => solicitud.id_Producto === sol.id_Producto)
             && sol.cantidad > 0 && sol.id_Producto) {
-            updatedSolicitudes.push(sol); 
+            updatedSolicitudes.push(sol);
         }
         setSolicitudes(updatedSolicitudes);
         total = 0;
         updatedSolicitudes.map(a => { total += a.precio * a.cantidad });
-        
+
     }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8); 
+    const [itemsPerPage] = useState(8);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -85,9 +85,9 @@ const Pedidos = () => {
 
     const submitPedido = async (data) => {
         const { IDmesa, descripcion } = data;
-        if (solicitudes.length!==0) {
+        if (solicitudes.length !== 0) {
             const pedido = { IDmesa, descripcion, total };
-            
+
             try {
                 const response = await createPedido(pedido);
                 if (response.status === 'Client error') {
@@ -98,8 +98,8 @@ const Pedidos = () => {
             } catch (error) {
                 console.error(error);
             }
-        }else{
-            showErrorAlert("Pedido vacio","Primero debe seleccionar un producto");
+        } else {
+            showErrorAlert("Pedido vacio", "Primero debe seleccionar un producto");
             return;
         }
         for (let i = 0; i < solicitudes.length; i++) {
@@ -108,8 +108,8 @@ const Pedidos = () => {
                 const { label, stock, categoria, precio } = await disponibles.find(prod => prod.value == id_Producto);
                 await createSolicitud({ id_Pedido, id_Producto, cantidad, estado: 'pendiente' });
                 await updateProducto({ nombre: label, valor: precio, stock: stock - cantidad, categoria: categoria }, id_Producto)
-        
-                showSuccessAlert("Pedido registrado",`Total del pedido $${total}`); 
+
+                showSuccessAlert("Pedido registrado", `Total del pedido $${total}`);
             } catch (error) {
                 console.error(error);
             }
@@ -120,106 +120,113 @@ const Pedidos = () => {
     };
 
     return (
-        <div className='flex flex-columns'>
-            <main className="container space-x-8 ">
-                <Form
-                    title="Crear un pedido"
-                    fields={[
-                        {
-                            label: 'Seleccionar producto',
-                            fieldType: 'select',
-                            options: disponibles,
-                            name: 'id_Producto',
-                            required:true
-                        },
-                        {
-                            label: "Cantidad",
-                            name: "cantidad",
-                            min: 0,
-                            defaultValue: 1,
-                            fieldType: 'input',
-                            type: "number",
-                            required: true,
-                            max: 5
-                        },
-                    ]}
-                    buttonText="Agregar al pedido"
-                    onSubmit={handlecreateclick}
-                />
-                <div class="bg-[#efefef] bg-opacity-95 p-3 rounded-3xl flex flex-col items-center space-y-2 w-3/5 border-solid border-2 border-black">
-                    <strong><h3>Pedido</h3></strong>
-                    <Table>
-                        <TableCaption>*NOTA: para quitar un producto del pedido seleccionelo con cantidad 0</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="py-1 font-bold">Producto</TableHead>
-                                <TableHead className="py-1 font-bold">Cantidad</TableHead>
-                                <TableHead className="text-right py-1 font-bold">Valor</TableHead>
+        <div className='flex flex-col'>
+            <main className=" flex flex-col justify-center space-y-10">
+                <div className='flex flex-row justify-center '>
+                    <Form
+                        title="Crear un pedido"
+                        fields={[
+                            {
+                                label: 'Seleccionar producto',
+                                fieldType: 'select',
+                                options: disponibles,
+                                name: 'id_Producto',
+                                required: true
+                            },
+                            {
+                                label: "Cantidad",
+                                name: "cantidad",
+                                min: 0,
+                                defaultValue: 1,
+                                fieldType: 'input',
+                                type: "number",
+                                required: true,
+                                max: 5
+                            },
+                        ]}
+                        buttonText="Agregar al pedido"
+                        onSubmit={handlecreateclick}
+                    />
+                </div>
+                <div className='flex flex-row justify-center space-y-140'>
+                    <div class="bg-[#efefef] bg-opacity-95 p-3 rounded-3xl flex flex-col justify-center w-4/5 border-solid border-2 border-black">
+                        <strong><h3>Pedido</h3></strong>
+                        <Table>
+                            <TableCaption>*NOTA: para quitar un producto del pedido seleccionelo con cantidad 0</TableCaption>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="py-1 font-bold">Producto</TableHead>
+                                    <TableHead className="py-1 font-bold">Cantidad</TableHead>
+                                    <TableHead className="text-right py-1 font-bold">Valor</TableHead>
 
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {currentItems.map((invoice) => (
-                                <TableRow key={invoice.label}>
-                                    <TableCell className="font-medium">{invoice.nombre}</TableCell>
-                                    <TableCell className="">{invoice.cantidad}</TableCell>
-                                    <TableCell className="text-right ">{invoice.precio}</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                    <div className="flex justify-between items-center mt-4">
-                        <Button
-                            variant="outlined"
-                            onClick={prevPage}
-                            disabled={currentPage === 1}
-                            className="px-4 py-1 text-black rounded hover:bg-gray-200"
-                        >
-                            Anterior
-                        </Button>
+                            </TableHeader>
+                            <TableBody>
+                                {currentItems.map((invoice) => (
+                                    <TableRow key={invoice.label}>
+                                        <TableCell className="font-medium">{invoice.nombre}</TableCell>
+                                        <TableCell className="">{invoice.cantidad}</TableCell>
+                                        <TableCell className="text-right ">{invoice.precio}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
 
-                        <span>
-                            Página {currentPage} de {Math.ceil(solicitudes.length / itemsPerPage)}
-                        </span>
+                        <div className="flex justify-between items-center mt-4">
+                            <Button
+                                variant="outlined"
+                                onClick={prevPage}
+                                disabled={currentPage === 1}
+                                className="px-4 py-1 text-black rounded hover:bg-gray-200"
+                            >
+                                Anterior
+                            </Button>
 
-                        <Button
-                            variant="outlined"
-                            onClick={nextPage}
-                            disabled={currentPage === Math.ceil(solicitudes.length / itemsPerPage)}
-                            className="px-4 py-1 text-black rounded hover:bg-gray-200"
-                        >
-                            Siguiente
-                        </Button>
-                        <strong><h1>    Total: ${total} </h1></strong>
+                            <span>
+                                Página {currentPage} de {Math.ceil(solicitudes.length / itemsPerPage)}
+                            </span>
+
+                            <Button
+                                variant="outlined"
+                                onClick={nextPage}
+                                disabled={currentPage === Math.ceil(solicitudes.length / itemsPerPage)}
+                                className="px-4 py-1 text-black rounded hover:bg-gray-200"
+                            >
+                                Siguiente
+                            </Button>
+                            <strong><h1>    Total: ${total} </h1></strong>
+                        </div>
                     </div>
                 </div>
-                <Form title=""
-                    fields={[
-                        {
-                            label: "Mesa del pedido",
-                            name: "IDmesa",
-                            fieldType: 'select',
-                            type: "input",
-                            required: true,
-                            options: opcionesM,
-                        },
-                        {
-                            label: "Descripcion",
-                            name: "descripcion",
-                            placeholder: "Inserte descripcion del pedido",
-                            fieldType: 'textarea',
-                            type: "string",
-                            required: false,
-                            minLength: 0,
-                            maxLength: 255,
-                            pattern: /^[a-zA-Z0-9 ]+$/,
-                            patternMessage: "Debe contener solo letras y números",
+                <div className='flex flex-row justify-center'>
+                    <Form title=""
+                        fields={[
+                            {
+                                label: "Mesa del pedido",
+                                name: "IDmesa",
+                                fieldType: 'select',
+                                type: "input",
+                                required: true,
+                                options: opcionesM,
+                            },
+                            {
+                                label: "Descripcion",
+                                name: "descripcion",
+                                placeholder: "Inserte descripcion del pedido",
+                                fieldType: 'textarea',
+                                type: "string",
+                                required: false,
+                                minLength: 0,
+                                maxLength: 255,
+                                pattern: /^[a-zA-Z0-9 ]+$/,
+                                patternMessage: "Debe contener solo letras y números",
 
-                        },
-                    ]}
-                    buttonText="Finalizar"
-                    onSubmit={submitPedido}
-                />
+                            },
+                        ]}
+                        buttonText="Finalizar"
+                        onSubmit={submitPedido}
+                    />
+                </div>
             </main>
         </div>
     );

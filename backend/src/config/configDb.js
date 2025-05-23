@@ -9,6 +9,7 @@ export const AppDataSource = new DataSource({
   username: `${DB_USERNAME}`,
   password: `${PASSWORD}`,
   database: `${DATABASE}`,
+  //ssl: {rejectUnauthorized: false}, al desplegar en droplet descomentar
   entities: ["src/entity/**/*.js"],
   synchronize: true,
   logging: false,

@@ -2,7 +2,7 @@
 	.form {
 		padding-left: 2px;
 		padding-right: 2px;
-		width: 90%;
+		width: 70%;
 	}
 
 	.form h1 {
@@ -27,7 +27,6 @@
 
 	.container {
 		padding: 0 10px;
-
 	}
 
 	.toggle-password-icon {
@@ -39,7 +38,7 @@
 
 .form {
 	background-color: #FFFFFF;
-	
+	width: 70%;
 	padding: 7vh;
 	display: flex;
 	flex-direction: column;

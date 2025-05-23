@@ -50,6 +50,10 @@ const useEditPedido = (setPedidos,estadoA, id, onSuccess) => {
             try {
                 
                 const pedidoToUpdate = dataPedido[0];
+                if(pedidoToUpdate.estado==='Pagado'){
+                    showErrorAlert('Pedido pagado','No se puede actualizar un pedido pagado');
+                    return;
+                }
                 const updatedPedidoData = { ...pedidoToUpdate, estado: estadoA };
                 const {createdAt,id, ...updatedPedidoData2}= updatedPedidoData;             
                 const updatedPedido = await updatePedido(updatedPedidoData2, pedidoToUpdate.id); 
